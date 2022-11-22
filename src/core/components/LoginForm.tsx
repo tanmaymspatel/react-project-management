@@ -5,33 +5,75 @@ import Button from "../../shared/components/UI/Button";
 
 import { ILoginDetails } from "../models/loginDetails.model";
 import getEmployees from "../services/loginServices";
+import { useNavigate } from 'react-router-dom';
 
+/**
+ * @name LoginForm
+ * @returns A login form
+ */
 function LoginForm() {
 
+    /**
+     * To navigate programmatically in an application
+     */
+    const navigate = useNavigate();
+
+    /**
+     * List of existing users in the database
+     */
+    let existingUSers: ILoginDetails[];
+
+    /**
+     * initial values for the login form
+     */
     const initialValues: ILoginDetails = {
         emailId: '',
         password: ''
     }
 
-    const onsubmit = (values: ILoginDetails) => {
-        console.log(values);
-
+    /**
+     * @name onSubmit
+     * @param values Sumitted form values
+     * @param param1 To reset the form after data submission
+     */
+    const onSubmit = (values: ILoginDetails, { resetForm }: any) => {
+        existingUSers.map(user => {
+            if (user.emailId === values.emailId && user.password === values.password) {
+                console.log("matched!");
+                localStorage.setItem('isLoggedin', "true")
+                navigate('/projects')
+            }
+            else console.log("No match")
+        },
+            resetForm({ initialValues }));
     }
 
+    /**
+     * Validation criteria for the login form fields
+     */
     const validationSchema = Yup.object({
         emailId: Yup.string().email('Invalid Email Format').required('Email id is Required!'),
         password: Yup.string().required('Password is Required!')
     })
 
+    /**
+     * @name getallUsers
+     * @description To fetch all the existing user data from the database 
+     */
     const getallUsers = async () => {
         const response = await getEmployees();
-        const data = await response.data;
-        console.log(data);
-
+        existingUSers = await response.data;
     }
 
+    /**
+     * to get list of all the existing users after the component is loaded
+     */
     useEffect(() => {
         getallUsers();
+        /**
+         * Claen up function
+         */
+        return () => { };
     }, [])
 
     return (
@@ -39,7 +81,7 @@ function LoginForm() {
             <div className='w-75 mx-auto'>
                 <h4>Welcome, Please Login!</h4>
                 <Formik initialValues={initialValues}
-                    onSubmit={onsubmit}
+                    onSubmit={onSubmit}
                     validationSchema={validationSchema}
                     enableReinitialize
                 >
@@ -56,7 +98,7 @@ function LoginForm() {
                         <div className="my-3">{/* password */}
                             <div className="d-flex align-items-center border border-2 px-2 border-radius">
                                 <label htmlFor="password"><span className="icon-password text-secondary"></span></label>
-                                <Field type="email" className="form-control border-0" id="password" name='password' placeholder="Enter email Id" />
+                                <Field type="password" className="form-control border-0" id="password" name='password' placeholder="Enter your password" />
                             </div>
                             <ErrorMessage name='password'>
                                 {errorMsg => <small className="text-danger">{errorMsg}</small>}

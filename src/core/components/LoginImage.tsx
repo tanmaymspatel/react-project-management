@@ -1,3 +1,7 @@
+/**
+ * @name LoginImage
+ * @returns A section with backgroung image
+ */
 function LoginImage() {
     return (
         <div className="login-image h-100 d-flex flex-column justify-content-evenly p-3">

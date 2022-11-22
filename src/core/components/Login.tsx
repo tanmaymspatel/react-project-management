@@ -1,6 +1,10 @@
-import LoginForm from "./LoginForm";
+import AuthLoginForm from "./AuthLoginForm";
 import LoginImage from "./LoginImage";
 
+/**
+ * @name Login
+ * @returns Login page for user authentication 
+ */
 function Login() {
     return (
         <div className="h-100 row g-0">
@@ -8,7 +12,7 @@ function Login() {
                 <LoginImage />
             </div>
             <div className="col-5 h-100">
-                <LoginForm />
+                <AuthLoginForm />
             </div>
         </div>
     )
