@@ -8,25 +8,22 @@ function AuthLoginForm() {
 
     const navigate = useNavigate();
 
-    console.log("login form");
-
-
     const { loginWithRedirect, isLoading, isAuthenticated } = useAuth0();
 
     useEffect(() => {
-        console.log(isAuthenticated);
-
         if (isAuthenticated) {
-            console.log('hi');
             navigate('/projects')
         }
-    })
 
+        if (isLoading) {
+            console.log('load');
+        }
+    })
     return (
-        <div className="h-100 d-flex flex-column justify-content-center align-items-center px-5">
-            {isLoading && isAuthenticated ? <h4>Loading...</h4> : null}
-            {!isAuthenticated && !isLoading ? <h4 className="py-3">Please Login to Continue!</h4> : <h4>Welcome!</h4>}
-            {!isAuthenticated && !isLoading ? <Button type='button' className="btn btn-secondary" handleClick={() => loginWithRedirect()}>Login</Button> : null}
+        <div className="h-100 d-flex flex-column justify-content-center align-items-center px-3 px-lg-5">
+
+            <h4 className="py-md-3 login-text">{!isAuthenticated ? 'Please Login to Continue!' : 'Welcome!'} </h4>
+            {!isAuthenticated ? <Button type='button' className="btn btn-secondary" handleClick={() => loginWithRedirect()}>Login</Button> : null}
         </div>
     );
 };
