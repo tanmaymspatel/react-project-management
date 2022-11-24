@@ -1,10 +1,10 @@
 import { Routes, Route } from 'react-router-dom'
 import Login from './Login';
 import Master from './Master';
-import Dashboard from './projects/Dashboard';
-import Project from './projects/Project';
-import Tasks from './projects/Tasks';
-import Teams from './projects/Teams';
+import Dashboard from '../../components/projects/Dashboard';
+import Project from '../../components/projects/Project';
+import Tasks from '../../components/projects/Tasks';
+import Teams from '../../components/projects/Teams';
 
 /**
  * @name MainRouting 

@@ -19,6 +19,11 @@ function AuthLoginForm() {
         }
     });
 
+    if (isLoading) {
+        return <h4>Loading...</h4>
+    }
+
+
     return (
         <div className="h-100 d-flex flex-column justify-content-center align-items-center px-3 px-lg-5">
             <h4 className="py-md-3 login-text">{!isAuthenticated ? 'Please Login to Continue!' : 'Welcome!'} </h4>
