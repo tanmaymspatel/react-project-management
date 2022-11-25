@@ -8,7 +8,7 @@ import { createContext } from "react";
 const UserContext = createContext({
     headerTitle: '',
     setHeaderTitle: (item: string) => { },
-    user: {} as any
+    currentUser: {} as any
 });
 
 export default UserContext

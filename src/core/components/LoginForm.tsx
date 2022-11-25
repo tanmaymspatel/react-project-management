@@ -1,10 +1,8 @@
-import { useEffect } from 'react'
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
 import Button from "../../shared/components/UI/Button";
 
 import { ILoginDetails } from "../models/loginDetails.model";
-import getEmployees from "../services/loginServices";
 import { useNavigate } from 'react-router-dom';
 
 /**
@@ -60,21 +58,21 @@ function LoginForm() {
      * @name getallUsers
      * @description To fetch all the existing user data from the database 
      */
-    const getallUsers = async () => {
-        const response = await getEmployees();
-        existingUSers = await response.data;
-    }
+    // const getallUsers = async () => {
+    //     const response = await getEmployees();
+    //     existingUSers = await response.data;
+    // }
 
     /**
      * to get list of all the existing users after the component is loaded
      */
-    useEffect(() => {
-        getallUsers();
-        /**
-         * Claen up function
-         */
-        return () => { };
-    }, [])
+    // useEffect(() => {
+    //     getallUsers();
+    //     /**
+    //      * Claen up function
+    //      */
+    //     return () => { };
+    // }, [])
 
     return (
         <div className="h-100 d-flex flex-column justify-content-center p-4">

@@ -1,6 +1,7 @@
 import { useAuth0 } from '@auth0/auth0-react';
 import { useState } from 'react'
 
+import coreServices from '../../core/services/coreServices';
 import UserContext from './userContext'
 
 /**
@@ -14,10 +15,21 @@ function UserProvider({ children }: any) {
      */
     const { user } = useAuth0();
 
+    const { getCurrentUSer } = coreServices;
+
     /**
      * @description State for changing the title of the header
      */
     const [headerTitle, setHeaderTitle] = useState<string>('Projects');
+    const [currentUser, setCurrentUSer] = useState({});
+
+    const getCurrentUserData = async () => {
+        let currentUser = await getCurrentUSer(user?.email);
+        const picture = user?.picture;
+        currentUser = { ...currentUser.data[0], picture };
+        setCurrentUSer(currentUser)
+    }
+    getCurrentUserData();
 
     /**
      * @description Values which are passed as props to context provider 
@@ -25,7 +37,7 @@ function UserProvider({ children }: any) {
     const userContext = {
         headerTitle,
         setHeaderTitle,
-        user
+        currentUser,
     };
 
     return (
