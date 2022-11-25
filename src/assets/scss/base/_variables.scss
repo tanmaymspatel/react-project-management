@@ -5,14 +5,18 @@ $font-size-base-sm: 0.875rem;
 
 // general
 $transition-timing : 0.4s;
-$border-radius : 20px;
+$border-radius : 12px;
 
 // header 
 $header-height : 80px;
+$header-profile-img-size : 40px;
 
 // Side Bar
 $sidebar-width : 250px;
 $side-header-height : $header-height;
+
+// nav - linkk
+$nav-link-padding-x: 0.75rem;
 
 //bootstrap spinner
 $spinner-size : 5rem;
