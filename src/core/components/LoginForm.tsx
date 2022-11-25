@@ -9,7 +9,7 @@ import { useNavigate } from 'react-router-dom';
 
 /**
  * @name LoginForm
- * @returns A login form
+ * @returns A form to log in the application
  */
 function LoginForm() {
 

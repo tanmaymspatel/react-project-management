@@ -3,20 +3,24 @@ import { useAuth0 } from "@auth0/auth0-react";
 
 import Header from "./Header";
 import Sidebar from "./Sidebar";
-import { useEffect } from "react";
 import UserProvider from "../../contexts/user-context/UserProvider";
+import Loader from "../../shared/components/UI/Loader";
 
+/**
+ * @returns a page containing header, sidebar and other routed components
+ */
 function Master() {
+
+    /**
+     * @description To do some action when the componenet is loading
+     */
     const { isLoading } = useAuth0();
-    // const { id } = useParams();
-    // const currentId = Number(id)
 
-    useEffect(() => {
-        // console.log(typeof currentId);
-    },)
-
+    /**
+     * @description Shows a loader when the componenet is loading
+     */
     if (isLoading) {
-        return <h4>Loading...</h4>
+        return <Loader />;
     }
 
     return (

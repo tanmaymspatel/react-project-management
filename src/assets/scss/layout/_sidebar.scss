@@ -1,6 +1,5 @@
 #sidebar {
     width: $sidebar-width;
-    flex-basis: 0 0 $sidebar-width;
 
     @include media-breakpoint-down(md) {
         position: absolute;
@@ -28,10 +27,12 @@
     }
 }
 
+// sidebar toggle icon
 .toggle {
     transform: rotate(90deg);
 }
 
+// mobile menu toggle icon
 .mobile-toggle {
     top: 0px;
     right: -10px;
@@ -39,6 +40,7 @@
     transform: translate(100%);
 }
 
+// after checking sidebar toggle checkbox
 #toggleSidebar:checked {
     &~#sidebar {
         width: 70px;
@@ -55,7 +57,7 @@
         .logo-text,
         .nav-text {
             position: absolute;
-            transform: translate(230px);
+            transform: translate(-230px);
         }
 
         .icon-signout {
@@ -68,6 +70,7 @@
     }
 }
 
+// after checking mobile checkbox
 #mobileToggle:checked {
     &~#sidebar {
         transform: translate(0%);
@@ -75,6 +78,5 @@
 
     &~.mobile-toggle {
         color: $light;
-        // transform: translate(100%);
     }
 }

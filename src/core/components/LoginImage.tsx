@@ -15,6 +15,7 @@ function LoginImage() {
                 - Joy Gumz
             </h2>
             <div className="d-md-none">
+                {/* added a component of auth login form for responsiveness */}
                 <AuthLoginForm />
             </div>
         </div>

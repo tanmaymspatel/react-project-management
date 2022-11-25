@@ -1,12 +1,5 @@
 // Global styles goes here
 
-*,
-::after,
-::before {
-    margin: 0;
-    padding: 0;
-}
-
 #root {
     height: 100%;
 }
@@ -24,8 +17,8 @@ body {
 .overflow-y-auto {
     overflow-y: auto;
     overflow-x: hidden;
-    // scrollbar-color: $secondary transparent;
-    // scrollbar-width: thin;
+    scrollbar-color: $secondary transparent;
+    scrollbar-width: thin;
 }
 
 .fs-xs {
