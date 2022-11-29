@@ -2,13 +2,17 @@ import { useContext, useEffect } from "react";
 
 import utlityServices from "../../shared/services/utilityServices";
 import UserContext from "../../contexts/user-context/userContext";
+import { useParams } from "react-router-dom";
 
 /**
  * @name Dasboard
  * @returns Dashboard of a selected id of a project
  */
 function Dashboard() {
-
+    /**
+     * @description project id which is clicked
+     */
+    const { id } = useParams();
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -23,7 +27,7 @@ function Dashboard() {
      */
     useEffect(() => {
         setHeaderTitle('Dashboard');
-        removeProjectsActiveClass();
+        removeProjectsActiveClass(id);
         return () => { };
     });
 

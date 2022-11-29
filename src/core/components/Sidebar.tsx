@@ -12,7 +12,7 @@ function Sidebar() {
     /**
      * @description id in the url, if id is not there then not to show the dashboard, tasks and teams links
      */
-    const { id } = useParams()
+    const { id } = useParams();
     /**
      * @description logout : method of useAuth0() hook for logging out of the application
      * @description user : Object of deatails of logged in user
@@ -51,19 +51,19 @@ function Sidebar() {
                                 </NavLink>
                             </li>
                             {id && <><li className='nav-item p-2'>
-                                <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + 1 + '/dashboard'}>
+                                <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/dashboard'}>
                                     <span className='icon-dashboard'></span>
                                     <span className='nav-text text-nowrap ps-2'>Dashboard</span>
                                 </NavLink>
                             </li>
                                 <li className='nav-item p-2'>
-                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + 1 + '/tasks'}>
+                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/tasks'}>
                                         <span className='icon-task'></span>
                                         <span className='nav-text text-nowrap ps-2'>Tasks</span>
                                     </NavLink>
                                 </li>
                                 <li className='nav-item p-2'>
-                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + 1 + '/teams'}>
+                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/teams'}>
                                         <span className='icon-users'></span>
                                         <span className='nav-text text-nowrap ps-2'>Teams</span>
                                     </NavLink>

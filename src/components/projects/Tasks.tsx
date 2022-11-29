@@ -1,4 +1,5 @@
 import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/user-context/userContext";
 import utlityServices from "../../shared/services/utilityServices";
 
@@ -7,7 +8,10 @@ import utlityServices from "../../shared/services/utilityServices";
  * @returns Tasks of a selected id of a project
  */
 function Tasks() {
-
+    /**
+     * @description project id which is clicked
+     */
+    const { id } = useParams();
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -22,7 +26,7 @@ function Tasks() {
      */
     useEffect(() => {
         setHeaderTitle('Tasks');
-        removeProjectsActiveClass();
+        removeProjectsActiveClass(id);
         return () => { };
     });
 
