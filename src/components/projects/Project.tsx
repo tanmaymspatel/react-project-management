@@ -1,8 +1,9 @@
 import { useCallback, useContext, useEffect, useState } from "react";
-import { useParams } from "react-router-dom";
+import { useNavigate, useParams } from "react-router-dom";
 
 import UserContext from "../../contexts/user-context/userContext";
 import projectServices from "../../services/projectServices";
+import Button from "../../shared/components/UI/Button";
 import utlityServices from "../../shared/services/utilityServices";
 import ProjectDetails from "./ProjectDetails";
 
@@ -11,6 +12,7 @@ import ProjectDetails from "./ProjectDetails";
  * @returns Assigned projects to the logged in user
  */
 function Project() {
+    const navigate = useNavigate();
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -88,6 +90,9 @@ function Project() {
 
     return (
         <div className="overflow-y-auto p-4">
+            <div className="pb-4 text-end">
+                <Button type='button' className="btn btn-secondary" handleClick={() => { navigate('add-project') }}>+ create Project</Button>
+            </div>
             <div className="row g-4">
                 {projectCards}
             </div>

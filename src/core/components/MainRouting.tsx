@@ -6,6 +6,7 @@ import Dashboard from '../../components/projects/Dashboard';
 import Project from '../../components/projects/Project';
 import Tasks from '../../components/projects/Tasks';
 import Teams from '../../components/projects/Teams';
+import AddNewProject from '../../components/projects/newProjectForm/AddNewProject';
 
 /**
  * @name MainRouting 
@@ -18,6 +19,7 @@ function MainRouting() {
             <Route path='/login' element={< Login />} />
             <Route path=':name/projects/*' element={< Master />} >
                 <Route path='' element={<Project />} />
+                <Route path='add-project' element={<AddNewProject />} />
                 <Route path=':id/dashboard' element={<Dashboard />} />
                 <Route path=':id/tasks' element={<Tasks />} />
                 <Route path=':id/teams' element={<Teams />} />
