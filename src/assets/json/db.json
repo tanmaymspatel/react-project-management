@@ -1,47 +1,45 @@
 {
-  "employees": [
-    {
-      "id": 1,
-      "firstName": "Tanmay",
-      "lastName": "Patel",
-      "emailId": "tanmay.patel@1rivet.com"
-    },
-    {
-      "id": 2,
-      "firstName": "Mehul",
-      "lastName": "Patel",
-      "emailId": "mehul.patel@1rivet.com"
-    },
-    {
-      "id": 3,
-      "firstName": "Aayushi",
-      "lastName": "Parmar",
-      "emailId": "aayushi.parmar@1rivet.com"
-    },
-    {
-      "id": 4,
-      "firstName": "Mrunal",
-      "lastName": "Patel",
-      "emailId": "mrunal.patel@1rivet.com"
-    },
-    {
-      "id": 5,
-      "firstName": "Abhishek",
-      "lastName": "Patel",
-      "emailId": "abhishek.patel@1rivet.com"
-    },
-    {
-      "firstName": "Aman",
-      "lastName": "Patel",
-      "emailId": "aman.patel@1rivet.com",
-      "id": 6
-    }
-  ],
   "users": [
     {
       "id": 1,
-      "emailId": "tanmay.patel@1rivet.com",
-      "password": "admin@123"
+      "emailId": "tanmay.1rivet@gmail.com",
+      "name": "Tanmay Patel",
+      "projectId": [
+        1,
+        2,
+        3
+      ]
+    },
+    {
+      "id": 2,
+      "emailId": "mehul.patel@gmail.com",
+      "name": "Mehul Patel",
+      "projectId": [
+        3
+      ]
+    }
+  ],
+  "projects": [
+    {
+      "id": 1,
+      "projectName": "Project 1",
+      "description": "A project description is a high-level overview of why you are doing a project. The document explains a project's objectives and its essential qualities. Think of it as the elevator pitch that focuses on what and why without delving into how. ",
+      "duration": "14 months",
+      "cost": "1.23 Crors"
+    },
+    {
+      "id": 2,
+      "projectName": "Project 2",
+      "description": "A project description is a high-level overview of why you are doing a project. The document explains a project's objectives and its essential qualities. Think of it as the elevator pitch that focuses on what and why without delving into how. ",
+      "duration": "18 months",
+      "cost": "1.23 Crors"
+    },
+    {
+      "id": 3,
+      "projectName": "Project 3",
+      "description": "A project description is a high-level overview of why you are doing a project. The document explains a project's objectives and its essential qualities. Think of it as the elevator pitch that focuses on what and why without delving into how. ",
+      "duration": "18 months",
+      "cost": "1.23 Crors"
     }
   ]
 }
