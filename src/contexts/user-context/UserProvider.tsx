@@ -14,10 +14,11 @@ function UserProvider({ children }: any) {
      * @description Object of details of loggeg in user
      */
     const { user } = useAuth0();
-    /**
-     * @description destructuring email and picture from the user object
-     */
-    if (user) { var { email, picture } = user; }
+
+    // /**
+    //  * @description destructuring email and picture from the user object
+    //  */
+    if (user) { var { email } = user; }
 
     const { getCurrentUSer } = coreServices;
 
@@ -34,11 +35,10 @@ function UserProvider({ children }: any) {
      * @description to get the modified data of the logged in user
      */
     const getCurrentUserData = useCallback(async () => {
-        let loggedinUser: any;
-        loggedinUser = await getCurrentUSer(email);
-        loggedinUser = { ...loggedinUser.data[0], picture } as object;
-        setCurrentUSer(loggedinUser);
-    }, [email, picture, getCurrentUSer])
+        const loggedinUser = await getCurrentUSer(email);
+        const data = loggedinUser.data[0];
+        setCurrentUSer(data);
+    }, [getCurrentUSer, email])
 
     /**
      * @description Values which are passed as props to context provider 
@@ -47,6 +47,7 @@ function UserProvider({ children }: any) {
         headerTitle,
         setHeaderTitle,
         currentUser,
+        email
     };
 
     /**

@@ -70,6 +70,10 @@ function Project() {
     }, [projectId, getProjectDetailsById,]);
 
 
+    const navigateToForm = () => {
+        if (projectId !== undefined) navigate('add-project')
+    }
+
     /**
      * @description To set the header title when the component is loaded, 
      */
@@ -79,19 +83,23 @@ function Project() {
     }, [getUserProjectData, setHeaderTitle]);
 
     useEffect(() => {
-        removeProjectsActiveClass(id)
+        removeProjectsActiveClass(id);
     });
+
+    useEffect(() => {
+        getUserProjectData();
+    }, [getUserProjectData, currentUser])
 
     const projectCards = currentProjects.map((project: any) => {
         return (
-            <ProjectDetails id={project.id} key={project.id} projectName={project.projectName} description={project.description} duration={project.duration} />
+            <ProjectDetails id={project.id} key={project.id} projectName={project.projectName} description={project.description} duration={project.duration} cost={project.cost} />
         )
     });
 
     return (
         <div className="overflow-y-auto p-4">
             <div className="pb-4 text-end">
-                <Button type='button' className="btn btn-secondary" handleClick={() => { navigate('add-project') }}>+ create Project</Button>
+                <Button type='button' className="btn btn-secondary" handleClick={navigateToForm}>+ create Project</Button>
             </div>
             <div className="row g-4">
                 {projectCards}
