@@ -1,4 +1,3 @@
-import { useAuth0 } from '@auth0/auth0-react';
 import { useCallback, useEffect, useState } from 'react'
 
 import coreServices from '../../core/services/coreServices';
@@ -9,16 +8,11 @@ import UserContext from './userContext'
  * @returns A wrapper of usercontext data around the componenet in which we need to pass the data or manipulate the data
  */
 function UserProvider({ children }: any) {
-
     /**
      * @description Object of details of loggeg in user
      */
-    const { user } = useAuth0();
 
-    // /**
-    //  * @description destructuring email and picture from the user object
-    //  */
-    if (user) { var { email } = user; }
+    const email: any = localStorage.getItem('email');
 
     const { getCurrentUSer } = coreServices;
 
@@ -47,7 +41,6 @@ function UserProvider({ children }: any) {
         headerTitle,
         setHeaderTitle,
         currentUser,
-        email
     };
 
     /**
@@ -58,6 +51,7 @@ function UserProvider({ children }: any) {
 
         return () => { };
     }, [getCurrentUserData])
+
 
     return (
         <UserContext.Provider value={userContext}>

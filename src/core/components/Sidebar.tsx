@@ -27,7 +27,8 @@ function Sidebar() {
      * @method logout : useAuth0() hook method for logging out of the application
      */
     const logoutHandler = () => {
-        logout({ returnTo: window.location.origin })
+        localStorage.removeItem('email');
+        logout({ returnTo: window.location.origin });
     }
 
     return (

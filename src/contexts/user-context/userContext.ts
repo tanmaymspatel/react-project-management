@@ -9,7 +9,6 @@ const UserContext = createContext({
     headerTitle: '',
     setHeaderTitle: (item: string) => { },
     currentUser: {} as any,
-    email: '' as string | undefined
 });
 
 export default UserContext

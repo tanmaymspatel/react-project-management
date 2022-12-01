@@ -3,9 +3,9 @@ import { ProjectFormDetails } from "../components/projects/models/formValues";
 
 const baseUrl = 'http://localhost:3000'
 
-const getProjectDetailsById = (id: string) => axios.delete(`${baseUrl}/projects/${id}`);
+const getProjectDetailsById = (id: string) => axios.get(`${baseUrl}/projects/${id}`);
 
-// const deleteProjectDetailsById = (id: string | undefined) => axios.get(`${baseUrl}/projects/${id}`);
+const deleteProjectDetailsById = (id: string | undefined) => axios.delete(`${baseUrl}/projects/${id}`);
 
 const addNewProject = (project: ProjectFormDetails) => axios.post(`${baseUrl}/projects`, project);
 
@@ -18,6 +18,6 @@ const projectServices = {
     addNewProject,
     editedProject,
     getAllProjects,
-    // deleteProjectDetailsById
+    deleteProjectDetailsById
 };
 export default projectServices;

@@ -1,10 +1,8 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useContext } from 'react';
 import { useNavigate } from 'react-router-dom';
 import * as Yup from 'yup';
-import UserContext from '../../../contexts/user-context/userContext';
-import coreServices from '../../../core/services/coreServices';
 
+import coreServices from '../../../core/services/coreServices';
 import projectServices from '../../../services/projectServices';
 import Button from '../../../shared/components/UI/Button';
 import { ProjectFormDetails } from "../models/formValues";
@@ -12,15 +10,14 @@ import { ProjectFormDetails } from "../models/formValues";
 function NewProjectForm() {
 
     const navigate = useNavigate();
-    const { email } = useContext(UserContext);
-    let user: any;
-
+    const email: any = localStorage.getItem('email');
+    let loggedUser: any;
     const { getCurrentUSer } = coreServices;
 
     const getCurrentUSerObject = async () => {
         let data = await getCurrentUSer(email);
-        user = data.data[0];
-        // console.log(user);
+        loggedUser = data.data[0];
+        console.log(loggedUser);
     }
 
     // console.log(Math.max(...projectId));
@@ -47,17 +44,17 @@ function NewProjectForm() {
      */
     const onSubmit = async (values: ProjectFormDetails, resetForm: any) => {
         try {
-            // getCurrentUSerObject();
+            getCurrentUSerObject();
             resetForm({ values: '' });
             navigate('../');
             let maxId: any;
             maxId = await maxProjectId();
-            let projectId = user.projectId;
+            let projectId = loggedUser.projectId;
             projectId = [...projectId, maxId + 1];
-            user = { ...user, projectId }
-            // addNewProject({ ...values, duration: '', cost: '' }).then(() => editedProject(user.id, user));
-
-            // window.location.reload();
+            loggedUser = { ...loggedUser, projectId };
+            await addNewProject({ ...values, duration: '', cost: '' });
+            await editedProject(loggedUser.id, loggedUser);
+            window.location.reload();
         }
         catch (err) {
             console.log(err);
