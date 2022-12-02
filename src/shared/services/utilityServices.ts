@@ -7,7 +7,6 @@ const removeProjectsActiveClass = (id: string | undefined) => {
     if (!id)
         document.querySelector(".projects-link")?.classList?.add('active')
 }
-
 /**
  * @name utlityServices
  * @description helper methods for easing the coed development

@@ -20,17 +20,18 @@ function Project() {
 
     useEffect(() => {
         if (email) {
-            getCurrentUSer(email)
-                .then(res => {
-                    setprojectId(res.data[0].projectId)
-                });
+            try {
+                getCurrentUSer(email)
+                    .then(res => {
+                        setprojectId(res.data[0].projectId)
+                    });
+            }
+            catch (err) {
+                console.log(err);
+            }
         }
 
     }, [email])
-
-    // let loggedUser: any;
-
-
 
     const navigate = useNavigate();
     /**

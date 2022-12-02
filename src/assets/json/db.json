@@ -1,6 +1,15 @@
 {
   "users": [
     {
+      "id": 2,
+      "emailId": "mehul.patel@gmail.com",
+      "name": "Mehul Patel",
+      "picture": "https://www.svgrepo.com/show/65453/avatar.svg",
+      "projectId": [
+        3
+      ]
+    },
+    {
       "id": 1,
       "emailId": "tanmay.1rivet@gmail.com",
       "name": "Tanmay Patel",
@@ -10,15 +19,6 @@
         2,
         3,
         4
-      ]
-    },
-    {
-      "id": 2,
-      "emailId": "mehul.patel@gmail.com",
-      "name": "Mehul Patel",
-      "picture": "https://www.svgrepo.com/show/65453/avatar.svg",
-      "projectId": [
-        3
       ]
     }
   ],
@@ -47,8 +47,8 @@
     {
       "projectName": "Project 4",
       "description": "A project description is a high-level overview of why you are doing a project. The document explains a project's objectives and its essential qualities. Think of it as the elevator pitch that focuses on what and why without delving into how.",
-      "duration": "",
-      "cost": "",
+      "duration": "5 month",
+      "cost": "12 Lakh",
       "id": 4
     }
   ]

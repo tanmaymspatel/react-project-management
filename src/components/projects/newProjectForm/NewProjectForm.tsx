@@ -1,5 +1,6 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useNavigate } from 'react-router-dom';
+import { useEffect, useState } from 'react';
+import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import coreServices from '../../../core/services/coreServices';
@@ -7,22 +8,62 @@ import projectServices from '../../../services/projectServices';
 import Button from '../../../shared/components/UI/Button';
 import { ProjectFormDetails } from "../models/formValues";
 
-function NewProjectForm() {
-
-    const navigate = useNavigate();
-    const email: any = localStorage.getItem('email');
-    let loggedUser: any;
-    const { getCurrentUSer } = coreServices;
-
-    const getCurrentUSerObject = async () => {
-        let data = await getCurrentUSer(email);
-        loggedUser = data.data[0];
-        console.log(loggedUser);
+/**
+ * @returns a form to add new project
+ */
+function NewProjectForm(props: any) {
+    /**
+     * @name maxProjectId
+     * @returns highest number of project id from the projects array
+     */
+    const maxProjectId = async () => {
+        const allProjects = await getAllProjects();
+        const newAllProjects = allProjects.data;
+        return Math.max(...newAllProjects.map((res: any) => res.id))
     }
+    /**
+     * @description To navigate to routes
+     */
+    const navigate = useNavigate();
+    /**
+     * @description email id of the logged in user
+     */
+    const email: any = localStorage.getItem('email');
+    /**
+     * @description state for the logged in user
+     */
+    let [loggedUser, setLoggedUser] = useState<any>([]);
+    /**
+     * @description id of the selected project
+     */
+    const { id } = useParams();
+    const { getCurrentUSer } = coreServices;
+    const { addNewProject, editedUser, getAllProjects, getProjectDetailsById, updateProject } = projectServices;
 
-    // console.log(Math.max(...projectId));
-
-    const { addNewProject, editedProject, getAllProjects } = projectServices;
+    /**
+     * @name getCurrentUserObject
+     * @description To get the details of currently logged in user in form of object
+     */
+    const getCurrentUserObject = async () => {
+        getCurrentUSer(email)
+            .then(res => {
+                setLoggedUser(res.data[0])
+            });
+    };
+    /**
+     * @description To call the loogedin user data
+     * @description To patch value in the form, when edit button is clicked on the perticular project
+     */
+    useEffect(() => {
+        getCurrentUserObject();
+        if (id) {
+            props.setTitle('Edit');
+            getProjectDetailsById(id)
+                .then(res => {
+                    setPatchValue(res.data)
+                })
+        }
+    }, [id]);
     /**
      * @description intial values object for formik
      */
@@ -32,34 +73,37 @@ function NewProjectForm() {
         duration: '',
         cost: ''
     };
-
-    const maxProjectId = async () => {
-        const allProjects = await getAllProjects();
-        const newAllProjects = allProjects.data;
-        return Math.max(...newAllProjects.map((res: any) => res.id))
-    }
+    /**
+     * @description State for the values associated with the form
+     */
+    const [patchValue, setPatchValue] = useState(intitialValues)
     /**
      * @name onSubmit
      * @param values form value object after clicking on submit button
      */
     const onSubmit = async (values: ProjectFormDetails, resetForm: any) => {
         try {
-            getCurrentUSerObject();
+            getCurrentUserObject();
             resetForm({ values: '' });
+            const maxId = await maxProjectId();
+            if (id) await updateProject(id, values);
+            if (!id) {
+                /**
+                 * Adding new project and editing the loggedin user according to changes in project id
+                 */
+                await addNewProject(values);
+                let projectId = loggedUser.projectId;
+                projectId = [...projectId, maxId + 1];
+                loggedUser = { ...loggedUser, projectId };
+                await editedUser(loggedUser.id, loggedUser);
+            }
             navigate('../');
-            let maxId: any;
-            maxId = await maxProjectId();
-            let projectId = loggedUser.projectId;
-            projectId = [...projectId, maxId + 1];
-            loggedUser = { ...loggedUser, projectId };
-            await addNewProject({ ...values, duration: '', cost: '' });
-            await editedProject(loggedUser.id, loggedUser);
-            window.location.reload();
+            // window.location.reload();
         }
         catch (err) {
             console.log(err);
         }
-    }
+    };
     /**
      * @name validationSchema
      * @description validation criteria for the form fields
@@ -67,15 +111,18 @@ function NewProjectForm() {
     const validationSchema = Yup.object({
         projectName: Yup.string().required('Project Name is required!'),
         description: Yup.string().required('Project Description is required!'),
-    })
-
+    });
+    /**
+     * @name onCancel
+     * @description navigate to the previous page
+     */
     const onCancel = () => {
         navigate(-1);
-    }
+    };
 
     return (
         <Formik
-            initialValues={intitialValues}
+            initialValues={patchValue}
             onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
             validationSchema={validationSchema}
             enableReinitialize

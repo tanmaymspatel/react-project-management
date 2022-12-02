@@ -20,6 +20,7 @@ function MainRouting() {
             <Route path=':name/projects/*' element={< Master />} >
                 <Route path='' element={<Project />} />
                 <Route path='add-project' element={<AddNewProject />} />
+                <Route path='edit-project/:id' element={<AddNewProject />} />
                 <Route path=':id/dashboard' element={<Dashboard />} />
                 <Route path=':id/tasks' element={<Tasks />} />
                 <Route path=':id/teams' element={<Teams />} />
