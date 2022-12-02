@@ -1,0 +1,14 @@
+// projects container
+.project-card {
+    .project-actions {
+        display: none;
+        top: 10%;
+        right: 10%
+    }
+
+    &:hover {
+        .project-actions {
+            display: block;
+        }
+    }
+}
