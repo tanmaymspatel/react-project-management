@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react";
+import { useCallback, useEffect, useState } from "react";
 import { useNavigate } from "react-router-dom";
 
 import coreServices from "../../core/services/coreServices";
@@ -21,19 +21,19 @@ function ProjectDetails(props: ProjectFormDetails) {
     /**
      * @description setting the details of the loggedin user and project ids 
      */
-    const getLoggedUser = async (email: any) => {
+    const getLoggedUser = useCallback(async (email: any) => {
         getCurrentUSer(email)
             .then(res => {
                 setCurrentUSer(res.data[0]);
                 setprojectId(res.data[0].projectId);
-            });
-    }
+            })
+    }, [getCurrentUSer]);
     /**
      * @description data of logged in user
      */
     useEffect(() => {
         getLoggedUser(email);
-    }, []);
+    }, [email, getLoggedUser]);
     /**
      * @param id id of the project which is clicked 
      */

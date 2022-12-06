@@ -31,13 +31,13 @@ function Project() {
             }
         }
 
-    }, [email])
+    }, [email, getCurrentUSer])
 
     const navigate = useNavigate();
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
-    const { setHeaderTitle, currentUser } = useContext(UserContext);
+    const { setHeaderTitle } = useContext(UserContext);
     /**
      *@description use to get the project details by its id 
      */
