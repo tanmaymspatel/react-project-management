@@ -32,8 +32,8 @@ function Dashboard() {
     });
 
     return (
-        <div>
-            Dashboard
+        <div className="h-100 d-flex justify-content-center align-items-center">
+            <h2> We are working on Dashboard! Stay connected!</h2>
         </div>
     );
 };
