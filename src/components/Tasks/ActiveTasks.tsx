@@ -4,9 +4,12 @@ function ActiveTasks(props: any) {
 
   const { activeTaskList } = props;
 
+  console.log({ activeTaskList });
+
+
   const activeList = activeTaskList?.map((item: any) => {
     return (
-      <TaskList key={item.id}
+      <TaskList key={item.taskName}
         id={item.id}
         taskName={item.taskName}
         completedSubTasks={item.completedSubTasks}

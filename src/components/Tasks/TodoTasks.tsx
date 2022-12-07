@@ -5,9 +5,11 @@ function TodoTasks(props: any) {
 
     const { todoList } = props;
 
+    console.log({ todoList });
+
     const todoTaskList = todoList?.map((item: any) => {
         return (
-            <TaskList key={item.id}
+            <TaskList key={item.taskName}
                 id={item.id}
                 taskName={item.taskName}
                 completedSubTasks={item.completedSubTasks}
@@ -16,7 +18,6 @@ function TodoTasks(props: any) {
                 priority={item.priority}
             />
         );
-
     });
 
     return (

@@ -1,12 +1,14 @@
 import { useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
 import UserContext from "../../contexts/user-context/userContext";
+
 import projectServices from "../../services/projectServices";
 import Button from "../../shared/components/UI/Button";
 import utlityServices from "../../shared/services/utilityServices";
-import ActiveTasks from "../Tasks/ActiveTasks";
-import CompletedTasks from "../Tasks/CompletedTasks";
-import TodoTasks from "../Tasks/TodoTasks";
+import ActiveTasks from "./ActiveTasks";
+import CompletedTasks from "./CompletedTasks";
+import NewTask from "./NewTask";
+import TodoTasks from "./TodoTasks";
 
 /**
  * @name Tasks
@@ -25,6 +27,17 @@ function Tasks() {
      * @description Remove active class from projects link when the dashboard link is selected
      */
     const { removeProjectsActiveClass } = utlityServices;
+    const { updateProject } = projectServices;
+
+    const [isOpen, setIsOpen] = useState(false);
+
+    const closeOverlay = () => {
+        setIsOpen(false);
+    };
+
+    const openOverlay = () => {
+        setIsOpen(true);
+    };
 
     /**
      * @description To set the header title and remove active class when the component is loaded
@@ -32,31 +45,58 @@ function Tasks() {
     useEffect(() => {
         setHeaderTitle('Tasks');
         removeProjectsActiveClass(id);
-        return () => { };
     });
 
     const { getProjectDetailsById } = projectServices;
-    const [todoList, setTodoList] = useState<any>([])
-    const [activeTaskList, setActiveTaskList] = useState<any>([])
-    const [completedTaskList, setCompletedTaskList] = useState<any>([])
+    const [projectDetails, setProjectDetails] = useState<any>({});
+    const [todoList, setTodoList] = useState<any>([]);
+    const [activeTaskList, setActiveTaskList] = useState<any>([]);
+    const [completedTaskList, setCompletedTaskList] = useState<any>([]);
+
+    async function getData() {
+        getProjectDetailsById(id as string)
+            .then((res: any) => {
+                setProjectDetails(res.data);
+                setTodoList(res.data.todoList);
+                setActiveTaskList(res.data.activeTaskList);
+                setCompletedTaskList(res.data.completedTaskList);
+            });
+    };
 
     useEffect(() => {
-        async function getData() {
-            getProjectDetailsById(id as string)
-                .then((res: any) => {
-                    setTodoList(res.data.todoList)
-                    setActiveTaskList(res.data.activeTaskList)
-                    setCompletedTaskList(res.data.completedTaskList)
-                });
-        };
         getData();
     }, [id, getProjectDetailsById]);
+
+    const modifyProjectDetails = async (values: any) => {
+        console.log(projectDetails);
+        if (values.status === 'todo') {
+            setTodoList((prevList: any) => [...prevList, values]);
+            setProjectDetails((prev: any) => ({ ...prev, todoList }))
+            console.log(projectDetails);
+            // updateProject(id, projectDetails);
+
+            // setProjectDetails((prev:any) => {..prev, to})
+        }
+        else if (values.status === 'active') {
+            setActiveTaskList((prevList: any) => [...prevList, values]);
+            setProjectDetails((prev: any) => ({ ...prev, activeTaskList }))
+            console.log(projectDetails);
+            // updateProject(id, projectDetails);
+        }
+        else if (values.status === 'completed') {
+            setCompletedTaskList((prevList: any) => [...prevList, values]);
+            setProjectDetails((prev: any) => ({ ...prev, completedTaskList }))
+            console.log(projectDetails);
+        };
+        await updateProject(id, projectDetails);
+    };
 
 
     return (
         <div className="h-100 px-4 d-flex flex-column">
             <div className="text-end pt-1 pb-4">
-                <Button type="button" className="btn btn-secondary" >+ New Task</Button>
+                <Button type="button" className="btn btn-secondary" handleClick={openOverlay}>+ New Task</Button>
+                {isOpen ? <NewTask closeOverlay={closeOverlay} modifyProjectDetails={modifyProjectDetails} /> : null}
             </div>
             <div className="flex-grow-1 overflow-hidden py-2">
                 <div className="row h-100">
