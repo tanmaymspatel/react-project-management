@@ -49,7 +49,6 @@ function UserProvider({ children }: any) {
     useEffect(() => {
         getCurrentUserData();
 
-        return () => { };
     }, [getCurrentUserData])
 
 

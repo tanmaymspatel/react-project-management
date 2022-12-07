@@ -28,7 +28,7 @@ function Master() {
                 <Sidebar />
             </div>
             <div className="flex-grow-1 d-flex flex-column">
-                <header id='header' className="bg-info">
+                <header id='header' className="bg-info flex-shrink-0">
                     <Header />
                 </header>
                 <main className="d-flex flex-column flex-grow-1 bg-primary p-4 overflow-hidden">
