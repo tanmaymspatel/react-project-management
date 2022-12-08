@@ -1,7 +1,8 @@
-import { useContext, useEffect, useState } from "react";
+import { useCallback, useContext, useEffect, useState } from "react";
 import { useParams } from "react-router-dom";
-import UserContext from "../../contexts/user-context/userContext";
 
+import TaskContext from "../../contexts/user-context/taskContext";
+import UserContext from "../../contexts/user-context/userContext";
 import projectServices from "../../services/projectServices";
 import Button from "../../shared/components/UI/Button";
 import utlityServices from "../../shared/services/utilityServices";
@@ -28,17 +29,21 @@ function Tasks() {
      */
     const { removeProjectsActiveClass } = utlityServices;
     const { updateProject } = projectServices;
-
+    const { setIsEdit } = useContext(TaskContext)
     const [isOpen, setIsOpen] = useState(false);
 
     const closeOverlay = () => {
         setIsOpen(false);
+        setIsEdit(false)
     };
 
     const openOverlay = () => {
         setIsOpen(true);
     };
 
+    const getMaxId = (taskList: any) => {
+        return Math.max(...taskList.map((task: any) => task.id));
+    }
     /**
      * @description To set the header title and remove active class when the component is loaded
      */
@@ -53,7 +58,7 @@ function Tasks() {
     const [activeTaskList, setActiveTaskList] = useState<any>([]);
     const [completedTaskList, setCompletedTaskList] = useState<any>([]);
 
-    async function getData() {
+    const getData = useCallback(async () => {
         getProjectDetailsById(id as string)
             .then((res: any) => {
                 setProjectDetails(res.data);
@@ -61,34 +66,45 @@ function Tasks() {
                 setActiveTaskList(res.data.activeTaskList);
                 setCompletedTaskList(res.data.completedTaskList);
             });
-    };
+    }, [id, getProjectDetailsById]);
 
     useEffect(() => {
         getData();
-    }, [id, getProjectDetailsById]);
+    }, [getData]);
 
     const modifyProjectDetails = async (values: any) => {
-        console.log(projectDetails);
-        if (values.status === 'todo') {
-            setTodoList((prevList: any) => [...prevList, values]);
-            setProjectDetails((prev: any) => ({ ...prev, todoList }))
-            console.log(projectDetails);
-            // updateProject(id, projectDetails);
+        if (values.id) {
+            console.log(values);
 
-            // setProjectDetails((prev:any) => {..prev, to})
+            if (values.status === 'todo') {
+
+            }
         }
-        else if (values.status === 'active') {
-            setActiveTaskList((prevList: any) => [...prevList, values]);
-            setProjectDetails((prev: any) => ({ ...prev, activeTaskList }))
-            console.log(projectDetails);
-            // updateProject(id, projectDetails);
+        else if (!values.id) {
+            if (values.status === 'todo') {
+                setTodoList((prevList: any) => {
+                    const maxid = getMaxId(prevList);
+                    return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
+                });
+                setProjectDetails((prevDetails: any) => (prevDetails.todoList = todoList));
+            }
+            else if (values.status === 'active') {
+                setActiveTaskList((prevList: any) => {
+                    const maxid = getMaxId(prevList);
+                    return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
+                });
+                setProjectDetails((prevDetails: any) => (prevDetails.activeTaskList = activeTaskList));
+            }
+            else if (values.status === 'completed') {
+                setCompletedTaskList((prevList: any) => {
+                    const maxid = getMaxId(prevList);
+                    return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
+                });
+                setProjectDetails((prevDetails: any) => (prevDetails.completedTaskList = completedTaskList));
+            };
         }
-        else if (values.status === 'completed') {
-            setCompletedTaskList((prevList: any) => [...prevList, values]);
-            setProjectDetails((prev: any) => ({ ...prev, completedTaskList }))
-            console.log(projectDetails);
-        };
         await updateProject(id, projectDetails);
+        await getData();
     };
 
 
@@ -107,7 +123,7 @@ function Tasks() {
                                 <span className="ps-2">({todoList.length})</span>
                             </h6>
                         </div>
-                        <TodoTasks todoList={todoList} />
+                        <TodoTasks openOverlay={openOverlay} todoList={todoList} />
                     </div>
                     <div className="col-4 h-100 d-flex flex-column overflow-hidden">
                         <div className="p-1">
@@ -116,7 +132,7 @@ function Tasks() {
                                 <span className="ps-2">({activeTaskList.length})</span>
                             </h6>
                         </div>
-                        <ActiveTasks activeTaskList={activeTaskList} />
+                        <ActiveTasks openOverlay={openOverlay} activeTaskList={activeTaskList} />
                     </div>
                     <div className="col-4 h-100 d-flex flex-column overflow-hidden">
                         <div className="p-1">
@@ -125,7 +141,7 @@ function Tasks() {
                                 <span className="ps-2">({completedTaskList.length})</span>
                             </h6>
                         </div>
-                        <CompletedTasks completedTaskList={completedTaskList} />
+                        <CompletedTasks openOverlay={openOverlay} completedTaskList={completedTaskList} />
                     </div>
                 </div>
             </div>

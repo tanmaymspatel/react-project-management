@@ -1,4 +1,4 @@
-import { useEffect, useState } from "react"
+import { useContext, useEffect, useState } from "react"
 import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
@@ -6,18 +6,30 @@ import Model from "../../shared/components/UI/Model";
 import { TaskDetails } from "../projects/models/formValues";
 import Button from "../../shared/components/UI/Button";
 import projectServices from "../../services/projectServices";
+import { useParams } from "react-router-dom";
+import TaskContext from "../../contexts/user-context/taskContext";
 
-function NewTask(props: any) {
+function NewTask({ modifyProjectDetails, closeOverlay, }: any) {
 
     const [formTitle, setFormTitle] = useState('Add');
     const [statusList, setStatusList] = useState<any>([]);
     const [priorityList, setPriorityList] = useState<any>([]);
-
+    const { id } = useParams();
     const { getStatus, getPriority } = projectServices;
 
     useEffect(() => {
         getStatus().then(res => setStatusList(res.data))
         getPriority().then(res => setPriorityList(res.data))
+    }, [getPriority, getStatus]);
+
+    const { taskTobeEdited, isEdit, setIsEdit } = useContext(TaskContext)
+
+    useEffect(() => {
+        if (isEdit) {
+            setFormTitle("Edit");
+            setPatchValue(taskTobeEdited);
+        }
+
     }, []);
 
     const statusDropDownOptions = statusList.map((item: any) => <option key={item.id} value={item.name}>{item.name}</option>
@@ -26,8 +38,8 @@ function NewTask(props: any) {
     // );
 
     /**
-    * @description intial values object for formik
-    */
+     * @description intial values object for formik
+     */
     const intitialValues: TaskDetails = {
         taskName: '',
         status: '',
@@ -35,6 +47,8 @@ function NewTask(props: any) {
         completedSubTasks: [],
         totalSubTasks: []
     };
+
+    const [patchValue, setPatchValue] = useState(intitialValues);
     /**
      * @name validationSchema
      * @description validation criteria for the form fields
@@ -49,18 +63,19 @@ function NewTask(props: any) {
      * @param values form value object after clicking on submit button
      */
     const onSubmit = (values: TaskDetails, resetForm: any) => {
-        props.modifyProjectDetails(values);
+        modifyProjectDetails(values);
         resetForm({ values: '' });
-        props.closeOverlay();
+        closeOverlay();
+        setIsEdit(false);
     }
 
     return (
-        <Model closeOverlay={props.closeOverlay}>
+        <Model closeOverlay={closeOverlay}>
             <div className="py-3 px-4">
                 <h4 className="text-center">{formTitle} Task</h4>
                 {/* Task form */}
                 <Formik
-                    initialValues={intitialValues}
+                    initialValues={patchValue}
                     onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
                     validationSchema={validationSchema}
                     enableReinitialize
@@ -77,6 +92,7 @@ function NewTask(props: any) {
                             <div className="col-md-6 my-3"> {/* status */}
                                 <label className='mb-1' htmlFor="status">Status : </label>
                                 <Field className="form-select" as="select" name="status">
+                                    <option value="select Status">Select Status</option>
                                     {statusDropDownOptions}
                                     {/* <option value="todo">Todo</option>
                                     <option value="active">Active</option>
@@ -90,6 +106,7 @@ function NewTask(props: any) {
                                 <label className='mb-1' htmlFor="priority">Priority : </label>
                                 <Field className="form-select" as="select" name="priority">
                                     {/* {priorityDropDownOptions} */}
+                                    <option value="select Priority">Select Priority</option>
                                     <option value="low">Low</option>
                                     <option value="medium">Medium</option>
                                     <option value="high">High</option>
@@ -100,7 +117,7 @@ function NewTask(props: any) {
                             </div>
                         </div>
                         <div className='text-end pt-4 pb-2'>
-                            <Button type='button' className='btn btn-danger text-light me-3' handleClick={props.closeOverlay}>Cancel</Button>
+                            <Button type='button' className='btn btn-danger text-light me-3' handleClick={closeOverlay}>Cancel</Button>
                             <Button type='submit' className='btn btn-secondary'>Submit</Button>
                         </div>
                     </Form>

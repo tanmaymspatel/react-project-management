@@ -5,11 +5,9 @@ function TodoTasks(props: any) {
 
     const { todoList } = props;
 
-    console.log({ todoList });
-
     const todoTaskList = todoList?.map((item: any) => {
         return (
-            <TaskList key={item.taskName}
+            <TaskList openOverlay={props.openOverlay} key={item.id}
                 id={item.id}
                 taskName={item.taskName}
                 completedSubTasks={item.completedSubTasks}

@@ -4,12 +4,9 @@ function CompletedTasks(props: any) {
 
     const { completedTaskList } = props;
 
-    console.log({ completedTaskList });
-
-
     const completedList = completedTaskList?.map((item: any) => {
         return (
-            <TaskList key={item.taskName}
+            <TaskList openOverlay={props.openOverlay} key={item.id}
                 id={item.id}
                 taskName={item.taskName}
                 completedSubTasks={item.completedSubTasks}
