@@ -958,7 +958,6 @@
         {
           "id": 1,
           "taskName": "Task 1",
-          "status": "todo",
           "completedSubTasks": [
             {
               "id": 1,
@@ -983,6 +982,7 @@
               "subTaskName": "Sub Task 3"
             }
           ],
+          "status": "todo",
           "priority": "low"
         },
         {
@@ -1018,7 +1018,6 @@
         {
           "id": 3,
           "taskName": "Task 3",
-          "status": "todo",
           "completedSubTasks": [
             {
               "id": 1,
@@ -1043,22 +1042,22 @@
               "subTaskName": "Sub Task 3"
             }
           ],
-          "priority": "low"
+          "status": "todo",
+          "priority": "medium"
         },
         {
-          "taskName": "dnsdlnc",
-          "status": "todo",
-          "priority": "medium",
+          "id": 4,
+          "taskName": "task 4",
           "completedSubTasks": [],
           "totalSubTasks": [],
-          "id": 4
+          "status": "todo",
+          "priority": "medium"
         }
       ],
       "activeTaskList": [
         {
           "id": 1,
           "taskName": "Task 1",
-          "status": "active",
           "completedSubTasks": [
             {
               "id": 1,
@@ -1083,6 +1082,7 @@
               "subTaskName": "Sub Task 3"
             }
           ],
+          "status": "active",
           "priority": "low"
         },
         {
@@ -1146,12 +1146,20 @@
           "priority": "low"
         },
         {
-          "taskName": "task 11",
-          "status": "active",
-          "priority": "medium",
+          "id": 4,
+          "taskName": "task 4",
           "completedSubTasks": [],
           "totalSubTasks": [],
-          "id": 4
+          "status": "active",
+          "priority": "medium"
+        },
+        {
+          "id": 5,
+          "taskName": "Task 5",
+          "completedSubTasks": [],
+          "totalSubTasks": [],
+          "status": "active",
+          "priority": "high"
         }
       ],
       "completedTaskList": [

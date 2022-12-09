@@ -44,6 +44,12 @@ function Tasks() {
     const getMaxId = (taskList: any) => {
         return Math.max(...taskList.map((task: any) => task.id));
     }
+
+    const editedTaskList = (TaskList: any[], updatedValues: any) => {
+        const index = TaskList.findIndex(item => item.id === updatedValues.id);
+        TaskList.splice(index, 1, updatedValues);
+        return TaskList;
+    }
     /**
      * @description To set the header title and remove active class when the component is loaded
      */
@@ -73,40 +79,51 @@ function Tasks() {
     }, [getData]);
 
     const modifyProjectDetails = async (values: any) => {
-        if (values.id) {
-            console.log(values);
 
-            if (values.status === 'todo') {
-
-            }
-        }
-        else if (!values.id) {
-            if (values.status === 'todo') {
-                setTodoList((prevList: any) => {
-                    const maxid = getMaxId(prevList);
-                    return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
-                });
-                setProjectDetails((prevDetails: any) => (prevDetails.todoList = todoList));
-            }
-            else if (values.status === 'active') {
-                setActiveTaskList((prevList: any) => {
-                    const maxid = getMaxId(prevList);
-                    return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
-                });
-                setProjectDetails((prevDetails: any) => (prevDetails.activeTaskList = activeTaskList));
-            }
-            else if (values.status === 'completed') {
-                setCompletedTaskList((prevList: any) => {
-                    const maxid = getMaxId(prevList);
-                    return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
-                });
-                setProjectDetails((prevDetails: any) => (prevDetails.completedTaskList = completedTaskList));
-            };
+        switch (values.status) {
+            case "todo":
+                if (values.id) {
+                    const newList = editedTaskList(todoList, values);
+                    setTodoList(newList);
+                }
+                else {
+                    setTodoList((prevList: any) => {
+                        const maxid = getMaxId(prevList);
+                        return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
+                    });
+                    setProjectDetails((prevDetails: any) => (prevDetails.todoList = todoList));
+                }
+                break;
+            case "active":
+                if (values.id) {
+                    const newList = editedTaskList(activeTaskList, values);
+                    setActiveTaskList(newList);
+                }
+                else {
+                    setActiveTaskList((prevList: any) => {
+                        const maxid = getMaxId(prevList);
+                        return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
+                    });
+                    setProjectDetails((prevDetails: any) => (prevDetails.activeTaskList = activeTaskList));
+                }
+                break;
+            case "completed":
+                if (values.id) {
+                    const newList = editedTaskList(completedTaskList, values);
+                    setCompletedTaskList(newList);
+                }
+                else {
+                    setCompletedTaskList((prevList: any) => {
+                        const maxid = getMaxId(prevList);
+                        return prevList.splice(prevList.length, 0, { id: maxid + 1, ...values });
+                    });
+                    setProjectDetails((prevDetails: any) => (prevDetails.completedTaskList = completedTaskList));
+                }
+                break;
         }
         await updateProject(id, projectDetails);
         await getData();
     };
-
 
     return (
         <div className="h-100 px-4 d-flex flex-column">
