@@ -3,11 +3,15 @@ import { useCallback, useEffect, useState } from 'react'
 import coreServices from '../../core/services/coreServices';
 import UserContext from './userContext'
 
+type UserContextProviderProps = {
+    children: React.ReactNode
+}
+
 /**
  * @name UserProvider
  * @returns A wrapper of usercontext data around the componenet in which we need to pass the data or manipulate the data
  */
-function UserProvider({ children }: any) {
+function UserProvider({ children }: UserContextProviderProps) {
     /**
      * @description Object of details of loggeg in user
      */

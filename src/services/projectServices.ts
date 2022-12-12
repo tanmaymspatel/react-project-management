@@ -14,6 +14,11 @@ const getAllProjects = () => axios.get(`${baseUrl}/projects`);
  */
 const getProjectDetailsById = (id: string) => axios.get(`${baseUrl}/projects/${id}`);
 /**
+ * @description use to edit the details of the existing project
+ * @param id project id of which data is to be edited
+ */
+const editProject = (id: string, project: any) => axios.get(`${baseUrl}/projects/${id}`, project);
+/**
  * @param id id of the project which is to be deleted 
  */
 const deleteProjectDetailsById = (id: string | undefined) => axios.delete(`${baseUrl}/projects/${id}`);
@@ -34,12 +39,24 @@ const editedUser = (id: any, user: ProjectFormDetails) => axios.put(`${baseUrl}/
 /**
  * @description all services in the form of object and can be destructured where it is to be used
  */
+/**
+ * @returns array of all status objects
+ */
+const getStatus = () => axios.get(`${baseUrl}/status`);
+/**
+* @returns array of all the priority objects
+*/
+const getPriority = () => axios.get(`${baseUrl}/priority`);
+
 const projectServices = {
     getProjectDetailsById,
     addNewProject,
     editedUser,
     getAllProjects,
     deleteProjectDetailsById,
-    updateProject
+    updateProject,
+    getStatus,
+    getPriority,
+    editProject
 };
 export default projectServices;
