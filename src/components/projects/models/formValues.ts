@@ -27,8 +27,7 @@ export class TaskDetails {
     taskName: string;
     status: string;
     priority: string;
-    completedSubTasks?: SubTaskDetails[];
-    totalSubTasks?: SubTaskDetails[];
+    subTasks?: SubTaskDetails[];
 
     constructor(taskName: string, status: string, priority: string) {
         this.taskName = taskName;
@@ -43,8 +42,10 @@ export class TaskDetails {
 export class SubTaskDetails {
     id?: string;
     subTaskName: string;
+    isCompleted: boolean;
 
-    constructor(subTaskName: string) {
+    constructor(subTaskName: string, isCompleted: boolean) {
         this.subTaskName = subTaskName;
+        this.isCompleted = isCompleted;
     }
 }

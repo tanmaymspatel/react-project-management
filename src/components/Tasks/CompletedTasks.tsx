@@ -1,26 +1,34 @@
+import { useContext } from "react";
+import TaskContext from "../../contexts/user-context/taskContext";
 import TaskList from "./TaskList";
 
-function CompletedTasks(props: any) {
+function CompletedTasks() {
 
-    const { completedTaskList } = props;
+    const { completedTaskList } = useContext(TaskContext);
 
     const completedList = completedTaskList?.map((item: any) => {
         return (
-            <TaskList openOverlay={props.openOverlay} key={item.id}
+            <TaskList key={item.id}
                 id={item.id}
                 taskName={item.taskName}
-                completedSubTasks={item.completedSubTasks}
-                totalSubTasks={item.totalSubTasks}
+                subTasks={item.subTasks}
                 status={item.status}
                 priority={item.priority}
             />
         );
     });
 
-    return (
+    return (<>
+        <div className="p-1">
+            <h6>
+                <span>Completed Task</span>
+                <span className="ps-2">({completedTaskList?.length})</span>
+            </h6>
+        </div>
         <div className="h-100 px-1 overflow-y-auto">
             {completedList}
         </div>
+    </>
     );
 }
 

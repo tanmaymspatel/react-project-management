@@ -6,16 +6,15 @@ import Model from "../../shared/components/UI/Model";
 import { TaskDetails } from "../projects/models/formValues";
 import Button from "../../shared/components/UI/Button";
 import projectServices from "../../services/projectServices";
-import { useParams } from "react-router-dom";
 import TaskContext from "../../contexts/user-context/taskContext";
 
-function NewTask({ modifyProjectDetails, closeOverlay, }: any) {
+function NewTask() {
 
     const [formTitle, setFormTitle] = useState('Add');
     const [statusList, setStatusList] = useState<any>([]);
     const [priorityList, setPriorityList] = useState<any>([]);
-    const { id } = useParams();
     const { getStatus, getPriority } = projectServices;
+    const { modifyProjectDetails, closeOverlay } = useContext(TaskContext)
 
     useEffect(() => {
         getStatus().then(res => setStatusList(res.data))
@@ -29,13 +28,10 @@ function NewTask({ modifyProjectDetails, closeOverlay, }: any) {
             setFormTitle("Edit");
             setPatchValue(taskTobeEdited);
         }
+    }, [isEdit, taskTobeEdited]);
 
-    }, []);
-
-    const statusDropDownOptions = statusList.map((item: any) => <option key={item.id} value={item.name}>{item.name}</option>
-    );
-    // const priorityDropDownOptions = priorityList.map((item: any) => <option key={item.id} value={item.name}>{item.name}</option>
-    // );
+    const statusDropDownOptions = statusList.map((item: any) => <option key={item.id} value={item.name}>{item.name}</option>);
+    const priorityDropDownOptions = priorityList.map((item: any) => <option key={item.id} value={item.name}>{item.name}</option>);
 
     /**
      * @description intial values object for formik
@@ -44,8 +40,7 @@ function NewTask({ modifyProjectDetails, closeOverlay, }: any) {
         taskName: '',
         status: '',
         priority: '',
-        completedSubTasks: [],
-        totalSubTasks: []
+        subTasks: []
     };
 
     const [patchValue, setPatchValue] = useState(intitialValues);
@@ -67,10 +62,10 @@ function NewTask({ modifyProjectDetails, closeOverlay, }: any) {
         resetForm({ values: '' });
         closeOverlay();
         setIsEdit(false);
-    }
+    };
 
     return (
-        <Model closeOverlay={closeOverlay}>
+        <Model>
             <div className="py-3 px-4">
                 <h4 className="text-center">{formTitle} Task</h4>
                 {/* Task form */}
@@ -94,9 +89,6 @@ function NewTask({ modifyProjectDetails, closeOverlay, }: any) {
                                 <Field className="form-select" as="select" name="status">
                                     <option value="select Status">Select Status</option>
                                     {statusDropDownOptions}
-                                    {/* <option value="todo">Todo</option>
-                                    <option value="active">Active</option>
-                                    <option value="completed">Completed</option> */}
                                 </Field>
                                 <ErrorMessage name='status'>
                                     {errorMsg => <small className="text-danger">{errorMsg}</small>}
@@ -105,11 +97,8 @@ function NewTask({ modifyProjectDetails, closeOverlay, }: any) {
                             <div className="col-md-6 my-3"> {/* priority */}
                                 <label className='mb-1' htmlFor="priority">Priority : </label>
                                 <Field className="form-select" as="select" name="priority">
-                                    {/* {priorityDropDownOptions} */}
                                     <option value="select Priority">Select Priority</option>
-                                    <option value="low">Low</option>
-                                    <option value="medium">Medium</option>
-                                    <option value="high">High</option>
+                                    {priorityDropDownOptions}
                                 </Field>
                                 <ErrorMessage name='priority' >
                                     {errorMsg => <small className="text-danger">{errorMsg}</small>}

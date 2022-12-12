@@ -1,15 +1,20 @@
 import { useContext } from "react";
+
 import TaskContext from "../../contexts/user-context/taskContext";
+import { TaskDetails } from "../projects/models/formValues";
 
-function TaskList({ openOverlay, ...taskDetails }: any) {
+function TaskList({ ...taskDetails }: TaskDetails) {
 
-    const { setTaskTobeEdited, setIsEdit } = useContext(TaskContext);
+    const { setTaskTobeEdited, setIsEdit, openOverlay } = useContext(TaskContext);
 
     const editHandler = (task: any) => {
-        openOverlay();
+        openOverlay("NEW_TASK_OVERLAY");
         setIsEdit(true);
         setTaskTobeEdited(task);
     }
+
+    const completedSubTasks = taskDetails.subTasks?.filter(subTask => subTask.isCompleted === true);
+    console.log(completedSubTasks);
 
     return (
         <div className="card my-2 p-3 cursor-pointer">
@@ -21,9 +26,9 @@ function TaskList({ openOverlay, ...taskDetails }: any) {
             </div>
             <div className="progress-bar">
                 <p className="mb-0">-------------------------</p>
-                <p className="text-end mb-0">
+                <p className="text-end mb-0" onClick={() => openOverlay("SUB_TASK_OVERLAY")}>
                     <span className="icon-task me-2"></span>
-                    <span>{taskDetails.completedSubTasks.length}/{taskDetails.totalSubTasks.length}</span>
+                    <span>{completedSubTasks?.length}/{taskDetails.subTasks?.length}</span>
                 </p>
             </div>
             <div className="d-flex justify-content-start align-items-center pt-2">
