@@ -42,7 +42,7 @@ export class TaskDetails {
 export class SubTaskDetails {
     id?: string;
     subTaskName: string;
-    isCompleted: boolean;
+    isCompleted?: boolean;
 
     constructor(subTaskName: string, isCompleted: boolean) {
         this.subTaskName = subTaskName;

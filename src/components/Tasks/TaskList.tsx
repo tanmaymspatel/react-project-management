@@ -14,7 +14,6 @@ function TaskList({ ...taskDetails }: TaskDetails) {
     }
 
     const completedSubTasks = taskDetails.subTasks?.filter(subTask => subTask.isCompleted === true);
-    console.log(completedSubTasks);
 
     return (
         <div className="card my-2 p-3 cursor-pointer">
