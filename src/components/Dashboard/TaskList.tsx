@@ -16,7 +16,7 @@ function TaskList({ taskList }: any) {
     */
     const name = user?.nickname;
 
-    const taskData = taskList?.slice(0, 5)?.map((task: any, index: number) => {
+    const taskData = taskList?.slice(0, 4)?.map((task: any, index: number) => {
         return (
             <tr key={index}>
                 <td>{task?.status}</td>

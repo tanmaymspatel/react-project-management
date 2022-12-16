@@ -1,22 +1,22 @@
 const DashboardStates = [
     {
         phase: "Planning",
-        progress: "100%",
+        progress: 100,
         status: "Done"
     },
     {
         phase: "Design",
-        progress: "100%",
+        progress: 100,
         status: "Done"
     },
     {
         phase: "Development",
-        progress: "30%",
+        progress: 75,
         status: "in progress"
     },
     {
         phase: "Testing",
-        progress: "0%",
+        progress: 0,
         status: "Waiting"
     }
 ]
