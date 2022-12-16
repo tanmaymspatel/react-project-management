@@ -84,14 +84,12 @@ function Dashboard() {
                     <TaskList taskList={taskList} />
                 </div>
                 <div className="col-4">
-                    <div className="card p-3 ">
-                        <div className=" py-3 px-2">
-                            <div className="d-flex justify-content-around border-bottom border-info py-4">
-                                <span className="dashboard-icon icon-time d-flex align-items-center text-secondary"></span>
-                                <div className="py-1">
-                                    <p className="m-0 py-2">Duration:</p>
-                                    <p>{projectDuration}</p>
-                                </div>
+                    <div className="card p-3">
+                        <div className="d-flex justify-content-around py-4 px-2 border-bottom border-info">
+                            <span className="dashboard-icon icon-time d-flex align-items-center text-secondary"></span>
+                            <div className="py-1">
+                                <p className="m-0 py-2">Duration:</p>
+                                <p>{projectDuration}</p>
                             </div>
                         </div>
                         <div className="d-flex justify-content-around py-4 px-2">
