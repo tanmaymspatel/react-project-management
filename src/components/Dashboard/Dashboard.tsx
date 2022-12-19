@@ -46,8 +46,6 @@ function Dashboard() {
 
     const getTaskList = useCallback(async () => {
         getProjectDetailsById(id as string).then(res => {
-            console.log(res.data);
-
             const activeTaskList = res.data.activeTaskList;
             const todoTaskList = res.data.todoList;
             const completedTaskList = res.data.completedTaskList;
