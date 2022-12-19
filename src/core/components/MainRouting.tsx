@@ -5,7 +5,7 @@ import Master from './Master';
 import Dashboard from '../../components/Dashboard/Dashboard';
 import Project from '../../components/projects/Project';
 import Tasks from '../../components/Tasks/Tasks';
-import Teams from '../../components/projects/Teams';
+import Teams from '../../components/Teams/Teams';
 import AddNewProject from '../../components/projects/newProjectForm/AddNewProject';
 
 /**
