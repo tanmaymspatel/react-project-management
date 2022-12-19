@@ -28,7 +28,7 @@
       "projectName": "Project 1",
       "description": "A project description is a high-level overview of why you are doing a project. The document explains a project's objectives and its essential qualities. Think of it as the elevator pitch that focuses on what and why without delving into how. ",
       "duration": "14 months",
-      "cost": "1.23 Crors",
+      "cost": "1.23 Cr",
       "teamId": 1,
       "todoList": [
         {
@@ -504,7 +504,7 @@
       "projectName": "Project 2",
       "description": "A project description is a high-level overview of why you are doing a project. The document explains a project's objectives and its essential qualities. Think of it as the elevator pitch that focuses on what and why without delving into how. ",
       "duration": "18 months",
-      "cost": "1.23 Crors",
+      "cost": "1.23 Cr",
       "teamId": 1,
       "todoList": [
         {
@@ -881,7 +881,7 @@
       "projectName": "Project 3",
       "description": "A project description is a high-level overview of why you are doing a project. The document explains a project's objectives and its essential qualities. Think of it as the elevator pitch that focuses on what and why without delving into how. ",
       "duration": "18 months",
-      "cost": "1.23 Crors",
+      "cost": "1.23 Cr",
       "teamId": 1,
       "todoList": [
         {

@@ -47,6 +47,10 @@ const getStatus = () => axios.get(`${baseUrl}/status`);
 * @returns array of all the priority objects
 */
 const getPriority = () => axios.get(`${baseUrl}/priority`);
+/**
+* @returns array of all the priority objects
+*/
+const getTeamsById = (id: string) => axios.get(`${baseUrl}/teams/${id}`);
 
 const projectServices = {
     getProjectDetailsById,
@@ -57,6 +61,7 @@ const projectServices = {
     updateProject,
     getStatus,
     getPriority,
-    editProject
+    editProject,
+    getTeamsById
 };
 export default projectServices;
