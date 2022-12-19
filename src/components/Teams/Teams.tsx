@@ -4,6 +4,9 @@ import utlityServices from "../../shared/services/utilityServices";
 import UserContext from "../../contexts/user-context/userContext";
 import { useParams } from "react-router-dom";
 import projectServices from "../../services/projectServices";
+import Button from "../../shared/components/UI/Button";
+import TeamContext from "../../contexts/user-context/teamContext";
+import AddTeamMember from "./AddTeamMember";
 
 /**
  * @name Tasks
@@ -14,6 +17,7 @@ function Teams() {
      * @description project id which is clicked
      */
     const { id } = useParams();
+    const { openOverlay, setProjectId, isNewMemberOpen, projectId } = useContext(TeamContext);
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -22,14 +26,13 @@ function Teams() {
      * @description Remove active class from projects link when the dashboard link is selected
      */
     const { removeProjectsActiveClass } = utlityServices;
-
     /**
      * @description To set the header title and remove active class when the component is loaded
      */
     useEffect(() => {
         setHeaderTitle('Teams');
         removeProjectsActiveClass(id);
-        return () => { };
+        setProjectId(id);
     });
 
     const [teamMembers, setTeamMembers] = useState<any[]>([]);
@@ -71,6 +74,11 @@ function Teams() {
 
     return (
         <div className="h-100 p-4">
+            <div className="text-end pb-2 mb-4">
+                <Button className="btn btn-secondary" type="button" handleClick={openOverlay}><span className="me-1">+</span>Add Member</Button>
+                {isNewMemberOpen ? <p>true</p> : <p>false</p>}
+                {isNewMemberOpen ? <AddTeamMember /> : null}
+            </div>
             <div className="overflow-y-auto h-100 px-1">
                 <table className="w-100 team-table table table-hover position-relative align-middle mb-0">
                     <thead className="position-sticky top-0 bg-dark text-light">
