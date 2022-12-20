@@ -39,6 +39,7 @@ function Teams() {
     }, [id, removeProjectsActiveClass, setHeaderTitle, setProjectId]);
 
     const [teamMembers, setTeamMembers] = useState<any[]>([]);
+    const [teamData, setTeamData] = useState<any>([]);
     const [planningMemberList, setPlanningMemberList] = useState<any>([]);
     const [designMemberList, setDesignMemberList] = useState<any>([]);
     const [developmentMemberList, setDevelopmentMemberList] = useState<any>([]);
@@ -51,11 +52,9 @@ function Teams() {
         });
         const data = await getTeamsById(teamId);
         const teamData = await data.data;
+        setTeamData(teamData);
         setTeamMembers(teamData.members);
-        setPlanningMemberList(teamMembers?.filter((list: any) => list.department === "plannng"))
-        setDesignMemberList(teamMembers?.filter((list: any) => list.department === "Design"))
-        setDevelopmentMemberList(teamMembers?.filter((list: any) => list.department === "development"))
-        setTestingMemberList(teamMembers?.filter((list: any) => list.department === "Testing"))
+
     }, [getProjectDetailsById, id, teamId, getTeamsById]);
 
     useEffect(() => {
@@ -63,29 +62,63 @@ function Teams() {
     }, [getTeamList]);
 
 
+    const setDeptList = useCallback(() => {
+        setPlanningMemberList(teamMembers?.filter((list: any) => list.department === "plannng"))
+        setDesignMemberList(teamMembers?.filter((list: any) => list.department === "Design"))
+        setDevelopmentMemberList(teamMembers?.filter((list: any) => list.department === "development"))
+        setTestingMemberList(teamMembers?.filter((list: any) => list.department === "Testing"))
+    }, [teamMembers]);
+
+    useEffect(() => {
+        setDeptList();
+    }, [setDeptList])
+
     let teamMemberList = teamMembers?.map(item => item.teamMembers);
     teamMemberList = teamMemberList?.flat(1);
 
-    const getMaxId = (teamList: any) => {
-        return Math?.max(...teamList?.map((task: any) => task?.id));
+    const editTeamDetails = (deptList: any, values: TeamMemberDetails) => {
+        let list = deptList?.map((item: any) => item?.teamMembers);
+        list = list?.flat();
+        list?.splice(list?.length, 0, { id: list.length + 1, ...values })
+        let newDepObj: any;
+        newDepObj = deptList[0]
+        newDepObj = { ...newDepObj, teamMembers: list };
+        const index = teamMembers.findIndex(item => item.department === newDepObj.department)
+        teamMembers.splice(index, 1, newDepObj);
+        return teamMembers;
     }
 
     const modifyTeamDetails = async (values: TeamMemberDetails) => {
 
         switch (values.designation) {
-            case 'planning':
-                let list = planningMemberList?.map((item: any) => item?.teamMembers);
-                list = list?.flat();
-                const maxId = getMaxId(list);
-                list?.splice(list?.length, 0, { id: maxId + 1, ...values })
-                let newDepObj = planningMemberList[0]
-                newDepObj = { ...newDepObj, teamMembers: list };
-                const index = teamMembers.findIndex(item => item.department === newDepObj.department)
-                teamMembers.splice(index, 1, newDepObj);
-                const updatedTeamDetails = ({ id: teamId, members: teamMembers });
-                console.log({ updatedTeamDetails }, { teamMembers });
-                setTeamMembers(teamMembers);
-            // await updateTeamDetails(teamId, updatedTeamDetails);
+            case 'Planning': {
+                const newMembers = editTeamDetails(planningMemberList, values);
+                setTeamMembers(newMembers);
+                await updateTeamDetails(teamId, teamData);
+                return;
+            }
+
+            case "Web designer": {
+                const newMembers = editTeamDetails(designMemberList, values);
+                setTeamMembers(newMembers);
+                await updateTeamDetails(teamId, teamData);
+                return;
+            }
+
+            case "Front-end Developer":
+            case "Back-end Developer": {
+                const newMembers = editTeamDetails(developmentMemberList, values);
+                setTeamMembers(newMembers);
+                await updateTeamDetails(teamId, teamData);
+                return;
+            }
+
+            case "Tester": {
+                const newMembers = editTeamDetails(testingMemberList, values);
+                setTeamMembers(newMembers);
+                await updateTeamDetails(teamId, teamData);
+                return;
+            }
         }
     }
 

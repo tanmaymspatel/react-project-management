@@ -63,7 +63,7 @@ function AddTeamMember({ modifyTeamDetails }: any) {
                             </ ErrorMessage>
                         </div>
                         <div className="my-3"> {/* Task name */}
-                            <label className='mb-1' htmlFor="emailId">Team Member Name : </label>
+                            <label className='mb-1' htmlFor="emailId">Team Member Email id : </label>
                             <Field type="email" className="form-control" id="emailId" name='emailId' placeholder="john.doe@abc.com" />
                             <ErrorMessage name='emailId' >
                                 {errorMsg => <small className="text-danger">{errorMsg}</small>}
@@ -89,7 +89,7 @@ function AddTeamMember({ modifyTeamDetails }: any) {
                                 <option value="web designer">Web Designer</option>
                                 <option value="front-end Developer">Front-end Developer</option>
                                 <option value="back-end Developer">Back-end Developer</option>
-                                <option value="tester">Tester</option>
+                                <option value="Tester">Tester</option>
                             </Field>
                             <ErrorMessage name='designation' >
                                 {errorMsg => <small className="text-danger">{errorMsg}</small>}
