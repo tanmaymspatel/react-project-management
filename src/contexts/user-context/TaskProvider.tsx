@@ -46,7 +46,6 @@ function TaskProvider({ children }: TaskContextProviderProps) {
         }
     }, [id, getProjectDetailsById]);
 
-
     useEffect(() => {
         getData();
     }, [getData]);

@@ -18,12 +18,17 @@ function TeamContextProvider({ children }: TeamContextProviderProps) {
         setIsNewMemberOpen(true);
     };
 
+    const getMaxId = (teamList: any) => {
+        return Math.max(...teamList.map((task: any) => task.id));
+    }
+
     const teamCtx = {
         setProjectId,
         closeOverlay,
         openOverlay,
         isNewMemberOpen,
-        projectId
+        projectId,
+        getMaxId
     };
 
     return (

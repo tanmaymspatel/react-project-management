@@ -49,3 +49,23 @@ export class SubTaskDetails {
         this.isCompleted = isCompleted;
     }
 }
+
+/**
+ *@description data model for the team member details
+ */
+export class TeamMemberDetails {
+    id?: string;
+    name: string;
+    profilePicture: string;
+    emailId: string;
+    status: string;
+    designation: string;
+
+    constructor(name: string, profilePicture: string, emailId: string, status: string, designation: string) {
+        this.name = name;
+        this.profilePicture = profilePicture;
+        this.emailId = emailId;
+        this.status = status;
+        this.designation = designation;
+    }
+}
