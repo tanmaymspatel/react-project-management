@@ -20,6 +20,9 @@ const TaskContext = createContext({
     isOpen: false,
     isSubTaskOpen: false,
     setId: (value: any) => { },
+    setTodoList: (value: any) => { },
+    setActiveTaskList: (value: any) => { },
+    setCompletedTaskList: (value: any) => { },
 });
 
 export default TaskContext

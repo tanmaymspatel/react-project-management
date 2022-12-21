@@ -1,4 +1,5 @@
 import { useRef, useState } from "react";
+import Loader from "../../shared/components/UI/Loader";
 
 import { TeamMemberDetails } from "../projects/models/formValues";
 import TeamRow from "./TeamRow";
@@ -51,6 +52,8 @@ function TeamMemberList({ teamMemberList, setTeamList }: any) {
             </tr>
         );
     });
+
+    if (teamMemberList?.length === 0) return <Loader />;
 
     return (
         <div className="overflow-y-auto h-100 px-1">
