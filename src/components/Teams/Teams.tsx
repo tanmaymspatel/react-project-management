@@ -1,13 +1,14 @@
 import { useCallback, useContext, useEffect, useState } from "react";
+import { useParams } from "react-router-dom";
 
 import utlityServices from "../../shared/services/utilityServices";
 import UserContext from "../../contexts/user-context/userContext";
-import { useParams } from "react-router-dom";
 import projectServices from "../../services/projectServices";
 import Button from "../../shared/components/UI/Button";
 import TeamContext from "../../contexts/user-context/teamContext";
 import AddTeamMember from "./AddTeamMember";
 import { TeamMemberDetails } from "../projects/models/formValues";
+import TeamMemberList from "./TeamMemberList";
 
 /**
  * @name Tasks
@@ -19,7 +20,7 @@ function Teams() {
      */
     const { id } = useParams();
 
-    const { openOverlay, setProjectId, isNewMemberOpen, setTeamMemberTobeEdited, setIsEdit } = useContext(TeamContext);
+    const { openOverlay, setProjectId, isNewMemberOpen } = useContext(TeamContext);
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -44,6 +45,7 @@ function Teams() {
     const [designMemberList, setDesignMemberList] = useState<any>([]);
     const [developmentMemberList, setDevelopmentMemberList] = useState<any>([]);
     const [testingMemberList, setTestingMemberList] = useState<any>([]);
+    const [teamMemberList, setTeamMemberList] = useState<any>([]);
     const [teamId, setTeamId] = useState('');
 
     const getTeamList = useCallback(async () => {
@@ -62,19 +64,19 @@ function Teams() {
     }, [getTeamList]);
 
 
-    const setDeptList = useCallback(() => {
+    const setList = useCallback(() => {
         setPlanningMemberList(teamMembers?.filter((list: any) => list.department === "plannng"))
         setDesignMemberList(teamMembers?.filter((list: any) => list.department === "Design"))
         setDevelopmentMemberList(teamMembers?.filter((list: any) => list.department === "development"))
         setTestingMemberList(teamMembers?.filter((list: any) => list.department === "Testing"))
+        let teamList = teamMembers?.map(item => item.teamMembers);
+        teamList = teamList?.flat(1);
+        setTeamMemberList(teamList);
     }, [teamMembers]);
 
     useEffect(() => {
-        setDeptList();
-    }, [setDeptList])
-
-    let teamMemberList = teamMembers?.map(item => item.teamMembers);
-    teamMemberList = teamMemberList?.flat(1);
+        setList();
+    }, [setList])
 
     const editTeamDetails = (deptList: any, values: TeamMemberDetails) => {
         let list = deptList?.map((item: any) => item?.teamMembers);
@@ -128,22 +130,11 @@ function Teams() {
     //     setTeamMemberTobeEdited(teamMember);
     // }
 
-    const teamMemberData = teamMemberList?.map((member, index) => {
-        return (
-            <tr key={index}>
-                <td>
-                    <figure className="default-avatar rounded-circle m-0">
-                        <img src={member?.profilePicture} alt="profile" title="profile image" />
-                    </figure>
-                </td>
-                <td>{member?.name}</td>
-                <td>{member?.emailId}</td>
-                <td>{member?.designation}</td>
-                <td>{member?.status}</td>
-                {/* <td><span className="icon-edit text-secondary cursor-pointer" onClick={() => onEditHandler(member)}></span></td> */}
-            </tr>
-        );
-    });
+    // const teamMemberData = 
+
+    const setTeamList = (newList: any) => {
+        setTeamMemberList(newList)
+    }
 
     return (
         <div className="h-100 p-4">
@@ -151,23 +142,7 @@ function Teams() {
                 <Button className="btn btn-secondary" type="button" handleClick={openOverlay}><span className="me-1">+</span>Add Member</Button>
                 {isNewMemberOpen ? <AddTeamMember modifyTeamDetails={modifyTeamDetails} /> : null}
             </div>
-            <div className="overflow-y-auto h-100 px-1">
-                <table className="w-100 team-table table table-hover position-relative align-middle mb-0">
-                    <thead className="position-sticky top-0 bg-dark text-light">
-                        <tr>
-                            <th>User</th>
-                            <th>Name</th>
-                            <th>Email Id</th>
-                            <th>Designation</th>
-                            <th>Status</th>
-                            {/* <th>Action</th> */}
-                        </tr>
-                    </thead>
-                    <tbody>
-                        {teamMemberData}
-                    </tbody>
-                </table>
-            </div>
+            <TeamMemberList teamMemberList={teamMemberList} setTeamList={setTeamList} />
         </div>
     );
 };
