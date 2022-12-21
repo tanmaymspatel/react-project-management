@@ -7,7 +7,11 @@ const TeamContext = createContext({
     openOverlay: () => { },
     isNewMemberOpen: false,
     projectId: '',
-    getMaxId: (list: any) => { }
+    getMaxId: (list: any) => { },
+    teamMemberTobeEdited: {} as TeamMemberDetails,
+    setTeamMemberTobeEdited: (task: TeamMemberDetails) => { },
+    isEdit: false,
+    setIsEdit: (value: any) => { }
 });
 
 export default TeamContext;

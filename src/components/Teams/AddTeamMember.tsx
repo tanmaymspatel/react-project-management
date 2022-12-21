@@ -10,7 +10,7 @@ import { TeamMemberDetails } from "../projects/models/formValues";
 function AddTeamMember({ modifyTeamDetails }: any) {
 
     const [formTitle, setFormTitle] = useState('Add');
-    const { closeOverlay } = useContext(TeamContext);
+    const { closeOverlay, teamMemberTobeEdited, isEdit } = useContext(TeamContext);
 
     /**
      * @description intial values object for formik
@@ -43,6 +43,13 @@ function AddTeamMember({ modifyTeamDetails }: any) {
         resetForm({ values: '' });
         closeOverlay();
     };
+
+    useEffect(() => {
+        if (isEdit) {
+            setFormTitle('Edit')
+            setPatchValue(teamMemberTobeEdited);
+        }
+    }, [teamMemberTobeEdited, isEdit])
 
     return (
         <Model>
@@ -85,10 +92,10 @@ function AddTeamMember({ modifyTeamDetails }: any) {
                             <label className='mb-1' htmlFor="designation">Designation : </label>
                             <Field className="form-select" as="select" name="designation">
                                 <option value="select Status">Select Designation</option>
-                                <option value="planning">Planning</option>
-                                <option value="web designer">Web Designer</option>
-                                <option value="front-end Developer">Front-end Developer</option>
-                                <option value="back-end Developer">Back-end Developer</option>
+                                <option value="Planning">Planning</option>
+                                <option value="Web designer">Web Designer</option>
+                                <option value="Front-end Developer">Front-end Developer</option>
+                                <option value="Back-end Developer">Back-end Developer</option>
                                 <option value="Tester">Tester</option>
                             </Field>
                             <ErrorMessage name='designation' >
