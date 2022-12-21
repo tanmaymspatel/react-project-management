@@ -19,7 +19,7 @@ function Teams() {
      */
     const { id } = useParams();
 
-    const { openOverlay, setProjectId, isNewMemberOpen } = useContext(TeamContext);
+    const { openOverlay, setProjectId, isNewMemberOpen, setTeamMemberTobeEdited, setIsEdit } = useContext(TeamContext);
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -122,6 +122,12 @@ function Teams() {
         }
     }
 
+    // const onEditHandler = (teamMember: TeamMemberDetails) => {
+    //     openOverlay();
+    //     setIsEdit(true);
+    //     setTeamMemberTobeEdited(teamMember);
+    // }
+
     const teamMemberData = teamMemberList?.map((member, index) => {
         return (
             <tr key={index}>
@@ -134,6 +140,7 @@ function Teams() {
                 <td>{member?.emailId}</td>
                 <td>{member?.designation}</td>
                 <td>{member?.status}</td>
+                {/* <td><span className="icon-edit text-secondary cursor-pointer" onClick={() => onEditHandler(member)}></span></td> */}
             </tr>
         );
     });
@@ -153,6 +160,7 @@ function Teams() {
                             <th>Email Id</th>
                             <th>Designation</th>
                             <th>Status</th>
+                            {/* <th>Action</th> */}
                         </tr>
                     </thead>
                     <tbody>
