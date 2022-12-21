@@ -52,6 +52,8 @@ const getPriority = () => axios.get(`${baseUrl}/priority`);
 */
 const getTeamsById = (id: string) => axios.get(`${baseUrl}/teams/${id}`);
 
+const updateTeamDetails = (teamId: string, updatedTeam: any) => axios.put(`${baseUrl}/teams/${teamId}`, updatedTeam)
+
 const projectServices = {
     getProjectDetailsById,
     addNewProject,
@@ -62,6 +64,7 @@ const projectServices = {
     getStatus,
     getPriority,
     editProject,
-    getTeamsById
+    getTeamsById,
+    updateTeamDetails
 };
 export default projectServices;
