@@ -1812,6 +1812,14 @@
               "emailId": "user@gmail.com",
               "status": "Active",
               "designation": "Back-end Developer"
+            },
+            {
+              "id": 5,
+              "name": "Paras Patel",
+              "profilePicture": "https://www.svgrepo.com/show/105032/avatar.svg",
+              "emailId": "paras.patel@1rivet.com",
+              "status": "Active",
+              "designation": "Back-end Developer"
             }
           ]
         },
