@@ -1,16 +1,16 @@
-import { useContext, useEffect, useState } from "react"
-import * as Yup from 'yup';
+import { useContext, useState } from "react"
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import TeamContext from "../../contexts/user-context/teamContext";
 import Button from "../../shared/components/UI/Button";
 import Model from "../../shared/components/UI/Model";
 import { TeamMemberDetails } from "../projects/models/formValues";
+import { teamValidationSchema } from "../../validations/teamFormValidations";
 
 function AddTeamMember({ modifyTeamDetails }: any) {
 
     const [formTitle, setFormTitle] = useState('Add');
-    const { closeOverlay, teamMemberTobeEdited, isEdit } = useContext(TeamContext);
+    const { closeOverlay } = useContext(TeamContext);
 
     /**
      * @description intial values object for formik
@@ -23,16 +23,6 @@ function AddTeamMember({ modifyTeamDetails }: any) {
         designation: ''
     };
     const [patchValue, setPatchValue] = useState(intitialValues);
-    /**
-     * @name validationSchema
-     * @description validation criteria for the form fields
-     */
-    const validationSchema = Yup.object({
-        name: Yup.string().required('Member Name is required!'),
-        emailId: Yup.string().required('Member Name is required!').email('Please enter a vallid email id!'),
-        status: Yup.string().required('Status is required!'),
-        designation: Yup.string().required('designation is required!')
-    });
 
     /**
      * @name onSubmit
@@ -44,12 +34,6 @@ function AddTeamMember({ modifyTeamDetails }: any) {
         closeOverlay();
     };
 
-    useEffect(() => {
-        if (isEdit) {
-            setFormTitle('Edit')
-            setPatchValue(teamMemberTobeEdited);
-        }
-    }, [teamMemberTobeEdited, isEdit])
 
     return (
         <Model>
@@ -58,7 +42,7 @@ function AddTeamMember({ modifyTeamDetails }: any) {
                 <Formik
                     initialValues={patchValue}
                     onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
-                    validationSchema={validationSchema}
+                    validationSchema={teamValidationSchema}
                     enableReinitialize
                 >
                     <Form>

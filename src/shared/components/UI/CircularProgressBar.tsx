@@ -1,3 +1,6 @@
+/**
+ * @returns a circular progress bar having asked percentage value 
+ */
 function CircularProgressBar({ percent }: any) {
 
   return (

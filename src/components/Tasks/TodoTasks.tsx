@@ -1,37 +1,19 @@
+import { useContext } from "react";
 
-import { useContext, useRef, useState } from "react";
 import TaskContext from "../../contexts/user-context/taskContext";
+import useDragDrop from "../Hooks/useDragDrop";
 import TaskList from "./TaskList";
 
 function TodoTasks() {
 
     const { todoList, setTodoList } = useContext(TaskContext);
-
-    const [dragging, setDragging] = useState<boolean>(false)
-
-    const draggingItem = useRef<any>(null);
-    const dragOverItem = useRef<any>(null);
-
-    const handleDragStart = (e: any, position: any) => {
-        setDragging(true);
-        draggingItem.current = position;
-    };
-
-    const handleDragEnter = (e: any, position: any) => {
-        dragOverItem.current = position;
-    };
-
-    const handleDragEnd = (e: any) => {
-        const listCopy = JSON.parse(JSON.stringify(todoList))
-        const draggingItemContent = listCopy[draggingItem.current];
-        listCopy.splice(draggingItem.current, 1);
-        listCopy.splice(dragOverItem.current, 0, draggingItemContent);
-        draggingItem.current = null;
-        dragOverItem.current = null;
-        setTodoList(listCopy);
-        setDragging(false);
-    };
-
+    /**
+     * @description Using the properties of the custom drag and drop hook
+     */
+    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(todoList, setTodoList)
+    /**
+     * @description Rendering of the list with the props related to drag functionality
+     */
     const todoTaskList = todoList?.map((item: any, index: number) => {
         return (
             <div
@@ -41,7 +23,7 @@ function TodoTasks() {
                 onDragEnter={(e) => handleDragEnter(e, index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => e.preventDefault()}
-                className={`${dragging && index === draggingItem.current ? "dragged-item" : "null"}`}
+                className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}
             >
                 <TaskList
                     id={item.id}

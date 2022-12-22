@@ -1,3 +1,6 @@
+/**
+ * @returns cardhaving details of total no tasks in the current project 
+ */
 function TaskStates({ taskList }: any) {
 
     return (
@@ -10,7 +13,7 @@ function TaskStates({ taskList }: any) {
                 <span className="icon-task fs-4 mt-3"></span>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default TaskStates
+export default TaskStates;

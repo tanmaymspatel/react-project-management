@@ -1,5 +1,8 @@
 import CircularProgressBar from "../../shared/components/UI/CircularProgressBar";
 
+/**
+ * @returns individual status card having respective project phase 
+ */
 function StatusCard({ phase, progress, status }: any) {
     return (
         <div className="col-3">

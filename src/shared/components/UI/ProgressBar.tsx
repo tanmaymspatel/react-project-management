@@ -1,3 +1,6 @@
+/**
+ * @returns a progress bar of asked percentage value and color 
+ */
 function ProgressBar({ progress, bgColor }: any) {
     return (
         <div className="bg-light rounded-4">

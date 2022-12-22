@@ -9,6 +9,8 @@ import TaskStates from "./TaskStates";
 import projectServices from "../../services/projectServices";
 import TeamStates from "./TeamStates";
 import TaskList from "./TaskList";
+import useTaskData from "../Hooks/useTaskData";
+import ProjectDetails from "./ProjectDetails";
 
 /**
  * @name Dasboard
@@ -37,22 +39,27 @@ function Dashboard() {
         return () => { };
     });
 
+    /**
+     * @description list values from custom hook
+     */
+    const [todoList, activeTaskList, completedTaskList] = useTaskData(id as string);
+
     const [taskList, setTasklist] = useState([]);
     const [teamMembers, setTeamMembers] = useState([]);
     const [projectDuration, setProjectDuration] = useState('');
     const [projectCost, setProjectCost] = useState('');
     const [teamId, setTeamId] = useState('');
-    const { getProjectDetailsById, getTeamsById } = projectServices;
 
+    const { getProjectDetailsById, getTeamsById } = projectServices;
+    /**
+     * @description Use to get team data associated with the id, project cost;duration
+     */
     const getTaskList = useCallback(async () => {
         getProjectDetailsById(id as string).then(res => {
-            const activeTaskList = res.data.activeTaskList;
-            const todoTaskList = res.data.todoList;
-            const completedTaskList = res.data.completedTaskList;
             setTeamId(res.data.teamId);
             setProjectCost(res.data.cost);
             setProjectDuration(res.data.duration);
-            setTasklist(todoTaskList.concat(activeTaskList, completedTaskList));
+            setTasklist(activeTaskList.concat(todoList, completedTaskList));
         })
         const data = await getTeamsById(teamId);
         const teamData = await data.data;
@@ -82,22 +89,7 @@ function Dashboard() {
                     <TaskList taskList={taskList} />
                 </div>
                 <div className="col-4">
-                    <div className="card p-3">
-                        <div className="d-flex justify-content-around py-4 px-2 border-bottom border-info">
-                            <span className="dashboard-icon icon-time d-flex align-items-center text-secondary"></span>
-                            <div className="py-1">
-                                <p className="m-0 py-2">Duration:</p>
-                                <p>{projectDuration}</p>
-                            </div>
-                        </div>
-                        <div className="d-flex justify-content-around py-4 px-2">
-                            <span className="dashboard-icon icon-rupee d-flex align-items-center text-success"></span>
-                            <div className="py-1">
-                                <p className="m-0 py-2">Cost:</p>
-                                <p>{projectCost}</p>
-                            </div>
-                        </div>
-                    </div>
+                    <ProjectDetails projectDuration={projectDuration} projectCost={projectCost} />
                 </div>
             </div>
         </div>
