@@ -40,8 +40,6 @@ function SubTasks() {
      * @param values form value object after clicking on submit button
      */
     const onSubmit = (values: any, resetForm: any) => {
-        debugger
-        console.log(values);
         resetForm({ values: '' });
         closeOverlay();
     };

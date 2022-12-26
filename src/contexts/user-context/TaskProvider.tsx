@@ -23,6 +23,10 @@ function TaskProvider({ children }: TaskContextProviderProps) {
         setIsSubTaskIsOpen(false)
     };
 
+    const setProjectId = (pid: string) => {
+        setId(pid);
+    }
+
     const openOverlay = (overlayType: string) => {
         if (overlayType === "NEW_TASK_OVERLAY") setIsOpen(true);
         else if (overlayType === "SUB_TASK_OVERLAY") setIsSubTaskIsOpen(true);
@@ -34,7 +38,7 @@ function TaskProvider({ children }: TaskContextProviderProps) {
         closeOverlay,
         openOverlay,
         modifyProjectDetails,
-        setId,
+        setProjectId,
         setTodoList,
         setActiveTaskList,
         setCompletedTaskList,

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import React, { SetStateAction, useCallback, useContext, useEffect, useState } from "react";
 
 import utlityServices from "../../shared/services/utilityServices";
 import UserContext from "../../contexts/user-context/userContext";
@@ -11,6 +11,9 @@ import TeamStates from "./TeamStates";
 import TaskList from "./TaskList";
 import useTaskData from "../Hooks/useTaskData";
 import ProjectDetails from "./ProjectDetails";
+import { TaskDetails } from "../projects/models/formValues";
+import { type } from "@testing-library/user-event/dist/type";
+import TaskContext from "../../contexts/user-context/taskContext";
 
 /**
  * @name Dasboard
@@ -21,6 +24,12 @@ function Dashboard() {
      * @description project id which is clicked
      */
     const { id } = useParams();
+
+    const { setProjectId } = useContext(TaskContext);
+
+    useEffect(() => {
+        setProjectId(id)
+    }, [])
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -39,12 +48,11 @@ function Dashboard() {
         return () => { };
     });
 
-    /**
-     * @description list values from custom hook
-     */
-    const [todoList, activeTaskList, completedTaskList] = useTaskData(id as string);
-
-    const [taskList, setTasklist] = useState([]);
+    const [taskList, setTasklist] = useState<TaskDetails[]>([]);
+    const [todoList, setTodolist] = useState<TaskDetails[]>([]);
+    const [projectDetails, setProjectDetails] = useState<any>({});
+    const [activeTaskList, setActiveTasklist] = useState<TaskDetails[]>([]);
+    const [completedTaskList, setCompletedTasklist] = useState<TaskDetails[]>([]);
     const [teamMembers, setTeamMembers] = useState([]);
     const [projectDuration, setProjectDuration] = useState('');
     const [projectCost, setProjectCost] = useState('');
@@ -56,10 +64,14 @@ function Dashboard() {
      */
     const getTaskList = useCallback(async () => {
         getProjectDetailsById(id as string).then(res => {
+            setProjectDetails(res.data);
             setTeamId(res.data.teamId);
             setProjectCost(res.data.cost);
             setProjectDuration(res.data.duration);
-            setTasklist(activeTaskList.concat(todoList, completedTaskList));
+            setActiveTasklist(res.data.activeTaskList);
+            setTodolist(res.data.todoList);
+            setCompletedTasklist(res.data.completedTaskList);
+            setTasklist(activeTaskList.concat((todoList), completedTaskList));
         })
         const data = await getTeamsById(teamId);
         const teamData = await data.data;
@@ -69,6 +81,16 @@ function Dashboard() {
     useEffect(() => {
         getTaskList();
     }, [getTaskList]);
+
+    const setList = useCallback(() => {
+        setTodolist(projectDetails.todoList);
+        setActiveTasklist(projectDetails.activeTaskList);
+        setCompletedTasklist(projectDetails.completedTaskList);
+    }, [projectDetails]);
+
+    useEffect(() => {
+        setList()
+    }, [setList]);
 
     return (
         <div className="h-100 p-4">

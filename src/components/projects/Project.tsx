@@ -94,17 +94,6 @@ function Project() {
         removeProjectsActiveClass(id);
     });
 
-    // useEffect(() => {
-    //     const getCurrentUSerObject = async () => {
-    //         let data = await getCurrentUSer(email);
-    //         const loggedUser = data.data[0];
-    //         console.log(loggedUser);
-    //     }
-    //     getCurrentUSerObject();
-    // }, [])
-
-    // 
-
     const projectCards = currentProjects.map((project: any) => {
         return (
             <ProjectDetails id={project.id} key={project.id} projectName={project.projectName} description={project.description} duration={project.duration} cost={project.cost} />

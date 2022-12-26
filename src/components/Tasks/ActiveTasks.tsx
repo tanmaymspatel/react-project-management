@@ -1,7 +1,10 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
+import { useParams } from "react-router-dom";
 
 import TaskContext from "../../contexts/user-context/taskContext";
 import useDragDrop from "../Hooks/useDragDrop";
+import useTaskData from "../Hooks/useTaskData";
+import { TaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
 
 /**
@@ -9,18 +12,26 @@ import TaskList from "./TaskList";
  */
 function ActiveTasks() {
 
-  const { activeTaskList, setActiveTaskList } = useContext(TaskContext);
+  const { id } = useParams()
+
+  const [, activeTaskList, , setActiveTaskList] = useTaskData(id as string);
+
   /**
    * @description Using the properties of the custom drag and drop hook
    */
-  const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(activeTaskList, setActiveTaskList);
+  const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(activeTaskList as TaskDetails[], setActiveTaskList as any);
+
+  // useEffect(() => {
+  //   setActiveTaskList(newList);
+  // }, [newList])
+
   /**
    * @description Rendering of the list with the props related to drag functionality
    */
-  const activeList = activeTaskList?.map((item: any, index: number) => {
+  const activeList = (activeTaskList as TaskDetails[])?.map((item: any, index: number) => {
     return (
       <div
-        key={item.id}
+        key={index}
         draggable
         onDragStart={() => handleDragStart(index)}
         onDragEnter={() => handleDragEnter(index)}

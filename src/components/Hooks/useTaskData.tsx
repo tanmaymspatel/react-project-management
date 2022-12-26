@@ -2,13 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 
 import projectServices from "../../services/projectServices";
 import utlityServices from "../../shared/services/utilityServices";
+import { TaskDetails } from "../projects/models/formValues";
 
 function useTaskData(id: string) {
 
     const [projectDetails, setProjectDetails] = useState<any>({});
-    const [todoList, setTodoList] = useState<any>([]);
-    const [activeTaskList, setActiveTaskList] = useState<any>([]);
-    const [completedTaskList, setCompletedTaskList] = useState<any>([]);
+    const [todoList, setTodoList] = useState<TaskDetails[]>([] as TaskDetails[]);
+    const [activeTaskList, setActiveTaskList] = useState<TaskDetails[]>([] as TaskDetails[]);
+    const [completedTaskList, setCompletedTaskList] = useState<TaskDetails[]>([] as TaskDetails[]);
 
     const { getMaxId, editedTaskList } = utlityServices;
     const { getProjectDetailsById, updateProject } = projectServices;
@@ -87,7 +88,8 @@ function useTaskData(id: string) {
         await getData();
     };
 
-    return [modifyProjectDetails, todoList, activeTaskList, completedTaskList, setActiveTaskList, setCompletedTaskList, setTodoList];
+
+    return [todoList, activeTaskList, completedTaskList, setActiveTaskList, setCompletedTaskList, setTodoList, modifyProjectDetails];
 }
 
 export default useTaskData;

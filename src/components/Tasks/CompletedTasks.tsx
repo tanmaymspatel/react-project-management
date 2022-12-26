@@ -1,23 +1,28 @@
-import { useContext } from "react";
+import React, { useContext } from "react";
+import { useParams } from "react-router-dom";
 
-import TaskContext from "../../contexts/user-context/taskContext";
 import useDragDrop from "../Hooks/useDragDrop";
+import useTaskData from "../Hooks/useTaskData";
+import { TaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
 
 function CompletedTasks() {
+    const { id } = useParams()
+    const [, , completedTaskList, , setCompletedTaskList] = useTaskData(id as string)
 
-    const { completedTaskList, setCompletedTaskList } = useContext(TaskContext);
+    console.log({ completedTaskList }, { setCompletedTaskList });
+
     /**
      * @description Using the properties of the custom drag and drop hook
      */
-    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(completedTaskList, setCompletedTaskList);
+    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(completedTaskList as TaskDetails[], setCompletedTaskList as any);
     /**
      * @description Rendering of the list with the props related to drag functionality
      */
-    const completedList = completedTaskList?.map((item: any, index: number) => {
+    const completedList = completedTaskList && (completedTaskList as TaskDetails[])?.map((item: any, index: number) => {
         return (
             <div
-                key={item.id}
+                key={index}
                 draggable
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDragEnter={(e) => handleDragEnter(e, index)}
@@ -26,11 +31,12 @@ function CompletedTasks() {
                 className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}
             >
                 <TaskList
-                    id={item.id}
-                    taskName={item.taskName}
-                    subTasks={item.subTasks}
-                    status={item.status}
-                    priority={item.priority}
+                    key={index}
+                    id={item?.id}
+                    taskName={item?.taskName}
+                    subTasks={item?.subTasks}
+                    status={item?.status}
+                    priority={item?.priority}
                 />
             </div>
         );
@@ -50,4 +56,4 @@ function CompletedTasks() {
     );
 }
 
-export default CompletedTasks
+export default React.memo(CompletedTasks)

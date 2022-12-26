@@ -3,7 +3,6 @@ import { TaskDetails } from "../projects/models/formValues";
 
 function useDragDrop(list: TaskDetails[], setList: React.Dispatch<React.SetStateAction<TaskDetails[]>>) {
 
-
     const [dragging, setDragging] = useState<boolean>(false);
     const draggingItem = useRef<any>(null);
     const dragOverItem = useRef<any>(null);

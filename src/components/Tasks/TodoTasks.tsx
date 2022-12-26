@@ -1,23 +1,29 @@
 import { useContext } from "react";
+import { useParams } from "react-router-dom";
 
 import TaskContext from "../../contexts/user-context/taskContext";
 import useDragDrop from "../Hooks/useDragDrop";
+import useTaskData from "../Hooks/useTaskData";
+import { TaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
 
 function TodoTasks() {
 
-    const { todoList, setTodoList } = useContext(TaskContext);
+    const { id } = useParams()
+
+    const [todoList, , , , setTodoList] = useTaskData(id as string);
+
     /**
      * @description Using the properties of the custom drag and drop hook
      */
-    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(todoList, setTodoList)
+    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(todoList as TaskDetails[], setTodoList as any)
     /**
      * @description Rendering of the list with the props related to drag functionality
      */
-    const todoTaskList = todoList?.map((item: any, index: number) => {
+    const todoTaskList = (todoList as TaskDetails[])?.map((item: any, index: number) => {
         return (
             <div
-                key={item.id}
+                key={index}
                 draggable
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDragEnter={(e) => handleDragEnter(e, index)}
@@ -26,11 +32,12 @@ function TodoTasks() {
                 className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}
             >
                 <TaskList
-                    id={item.id}
-                    taskName={item.taskName}
-                    subTasks={item.subTasks}
-                    status={item.status}
-                    priority={item.priority}
+                    key={index}
+                    id={item?.id}
+                    taskName={item?.taskName}
+                    subTasks={item?.subTasks}
+                    status={item?.status}
+                    priority={item?.priority}
                 />
             </div>
         );

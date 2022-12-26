@@ -8,10 +8,14 @@ import projectServices from '../../../services/projectServices';
 import Button from '../../../shared/components/UI/Button';
 import { ProjectFormDetails } from "../models/formValues";
 
+interface INewprojectProps {
+    setTitle: (title: string) => void
+}
+
 /**
  * @returns a form to add new project
  */
-function NewProjectForm(props: any) {
+function NewProjectForm(props: INewprojectProps) {
     /**
      * @name maxProjectId
      * @returns highest number of project id from the projects array
@@ -28,7 +32,7 @@ function NewProjectForm(props: any) {
     /**
      * @description email id of the logged in user
      */
-    const email: any = localStorage.getItem('email');
+    const email: string | null = localStorage.getItem('email');
     /**
      * @description state for the logged in user
      */
@@ -45,7 +49,7 @@ function NewProjectForm(props: any) {
      * @description To get the details of currently logged in user in form of object
      */
     const getCurrentUserObject = async () => {
-        getCurrentUSer(email)
+        getCurrentUSer(email as string)
             .then(res => {
                 setLoggedUser(res.data[0])
             });
