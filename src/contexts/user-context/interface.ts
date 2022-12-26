@@ -1,4 +1,5 @@
 import { TaskDetails } from "../../components/projects/models/formValues";
+import { IUserDetails } from "../../components/projects/models/user.model";
 
 export interface ITaskProvider {
     taskTobeEdited: TaskDetails,
@@ -18,4 +19,10 @@ export interface ITaskProvider {
     setTodoList: React.Dispatch<React.SetStateAction<TaskDetails[]>>,
     setActiveTaskList: React.Dispatch<React.SetStateAction<TaskDetails[]>>,
     setCompletedTaskList: React.Dispatch<React.SetStateAction<TaskDetails[]>>
+}
+
+export interface IUserContext {
+    headerTitle: string,
+    setHeaderTitle: (title: string) => void,
+    currentUser: {},
 }

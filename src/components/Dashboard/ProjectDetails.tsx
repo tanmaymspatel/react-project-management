@@ -1,8 +1,14 @@
 import ProjectDetailsCard from "./ProjectDetailsCard";
+
+interface IProjectDetails {
+    projectDuration: string,
+    projectCost: string
+}
+
 /**
  * @returns project details component which is used in dashboard
  */
-function ProjectDetails({ projectDuration, projectCost }: any) {
+function ProjectDetails({ projectDuration, projectCost }: IProjectDetails) {
     return (
         <div className="card p-3">
             < ProjectDetailsCard

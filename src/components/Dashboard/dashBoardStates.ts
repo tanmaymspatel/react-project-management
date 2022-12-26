@@ -1,4 +1,10 @@
-const DashboardStates = [
+interface IDashBoardStates {
+    phase: string,
+    progress: number,
+    status: string
+}
+
+const DashboardStates: IDashBoardStates[] = [
     {
         phase: "Planning",
         progress: 100,

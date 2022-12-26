@@ -1,7 +1,15 @@
+interface IProjectDetailCards {
+    projectDetail: string,
+    iconColor: string,
+    icon: string,
+    borderBottom: boolean,
+    title: string
+}
+
 /**
  * @returns a card component which is used in project details component  
  */
-function ProjectDetailsCard({ projectDetail, iconColor, icon, borderBottom, title }: any) {
+function ProjectDetailsCard({ projectDetail, iconColor, icon, borderBottom, title }: IProjectDetailCards) {
 
     return (
         <div className={`${borderBottom ? "border-bottom border-info" : null} d-flex justify-content-around py-4 px-2`}>

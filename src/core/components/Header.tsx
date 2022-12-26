@@ -1,4 +1,5 @@
 import { useContext } from "react"
+import { IUserDetails } from "../../components/projects/models/user.model";
 
 import UserContext from "../../contexts/user-context/userContext";
 
@@ -22,10 +23,10 @@ function Header() {
             <div className="d-flex align-items-center pe-1 px-md-5">
                 {/* avatar of the logged in user */}
                 <figure className="header-profile-img m-0 d-none d-md-block">
-                    <img className="img-fluid rounded-circle" src={currentUser?.picture} alt="Profile" />
+                    <img className="img-fluid rounded-circle" src={(currentUser as IUserDetails)?.picture} alt="Profile" />
                 </figure>
                 {/* Name of the logged in user */}
-                <h6 className="m-0 ps-2">Welcome, <span className="fw-bold">{currentUser?.name} !</span></h6>
+                <h6 className="m-0 ps-2">Welcome, <span className="fw-bold">{(currentUser as IUserDetails)?.name} !</span></h6>
             </div>
         </div>
     );

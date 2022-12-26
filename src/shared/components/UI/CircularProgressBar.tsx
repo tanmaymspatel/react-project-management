@@ -1,7 +1,11 @@
+interface ICircularProgress {
+  percent: number
+}
+
 /**
  * @returns a circular progress bar having asked percentage value 
  */
-function CircularProgressBar({ percent }: any) {
+function CircularProgressBar({ percent }: ICircularProgress) {
 
   return (
     <div className="card d-flex align-items-center justify-content-center">

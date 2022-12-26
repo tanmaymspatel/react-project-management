@@ -1,9 +1,13 @@
+interface ISingleTaskProps {
+    status: string,
+    taskName: string,
+    priority: string
+}
+
 /**
  * @returns a single task to be rendered in the task list tasble 
  */
-function SingleTask(props: any) {
-
-    const { status, taskName, priority } = props;
+function SingleTask({ status, taskName, priority }: ISingleTaskProps) {
 
     return (
         <tr>

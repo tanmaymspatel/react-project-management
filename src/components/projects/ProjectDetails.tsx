@@ -13,8 +13,7 @@ function ProjectDetails(props: ProjectFormDetails) {
     let [projectId, setprojectId] = useState<string[]>([]);
     const [currentUser, setCurrentUSer] = useState<IUserDetails>({} as IUserDetails);
     const navigate = useNavigate();
-    const { deleteProjectDetailsById } = projectServices;
-    const { getCurrentUSer, addNewUser } = coreServices;
+    const { getCurrentUSer } = coreServices;
     /***
      * @description email of the logged in user
      */

@@ -1,16 +1,19 @@
+import { TaskDetails } from "../projects/models/formValues";
 import SingleTask from "./SingleTask";
+
+interface ITaskListTable {
+    taskList: TaskDetails[]
+}
 
 /**
  * @returns Table which is to be shown on the dashboard 
  */
-function TaskListTable(props: any) {
-
-    const { taskList } = props;
+function TaskListTable({ taskList }: ITaskListTable) {
 
     /**
      * @description task List associated with the selected project
      */
-    const taskData = taskList?.slice(0, 4)?.map((task: any, index: number) => {
+    const taskData = taskList?.slice(0, 4)?.map((task: TaskDetails, index: number) => {
         return (
             <SingleTask
                 key={index}

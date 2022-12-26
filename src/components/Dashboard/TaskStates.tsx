@@ -1,7 +1,14 @@
 /**
  * @returns cardhaving details of total no tasks in the current project 
  */
-function TaskStates({ taskList }: any) {
+
+import { TaskDetails } from "../projects/models/formValues";
+
+interface ITaskStatesProps {
+    taskList: TaskDetails[];
+}
+
+function TaskStates({ taskList }: ITaskStatesProps) {
 
     return (
         <div className="card p-3 d-flex flex-row justify-content-between">

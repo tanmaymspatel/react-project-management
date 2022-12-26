@@ -6,6 +6,7 @@ import coreServices from "../../core/services/coreServices";
 import projectServices from "../../services/projectServices";
 import Button from "../../shared/components/UI/Button";
 import utlityServices from "../../shared/services/utilityServices";
+import { ProjectFormDetails } from "./models/formValues";
 import ProjectDetails from "./ProjectDetails";
 
 /**
@@ -16,7 +17,7 @@ function Project() {
     const [projectId, setprojectId] = useState([])
     const { getCurrentUSer } = coreServices;
 
-    const email: any = localStorage.getItem('email');
+    const email: string | null = localStorage.getItem('email');
 
     useEffect(() => {
         if (email) {
@@ -49,7 +50,7 @@ function Project() {
     /**
      * @description State for setting the projects list according to loggedin user
      */
-    const [currentProjects, setCurrentProjects] = useState([])
+    const [currentProjects, setCurrentProjects] = useState<ProjectFormDetails[]>([])
     /**
      * @description remove active link from 'project' navlink, when the active link is other then 'projects'
      */
@@ -59,7 +60,6 @@ function Project() {
      * @description to get the project details in form of array of objects of the current logged in user
      * @description useCallback : to prevent unnecessary rendering of the function everytime component loads
      */
-    // const projectId: any = [1, 2, 3];
     const getUserProjectData = useCallback(async () => {
         try {
             const projectDetails: any = [];
@@ -69,7 +69,7 @@ function Project() {
             /**
              * @description Store the data of project details after promise is resolved 
              */
-            const resolvedProjectData: any = await Promise.all(projectDetails);
+            const resolvedProjectData: ProjectFormDetails[] = await Promise.all(projectDetails);
             const projectData = resolvedProjectData.map((el: any) => el.data);
             setCurrentProjects(projectData);
         } catch (err) {
@@ -94,7 +94,8 @@ function Project() {
         removeProjectsActiveClass(id);
     });
 
-    const projectCards = currentProjects.map((project: any) => {
+
+    const projectCards = currentProjects.map((project: ProjectFormDetails) => {
         return (
             <ProjectDetails id={project.id} key={project.id} projectName={project.projectName} description={project.description} duration={project.duration} cost={project.cost} />
         )

@@ -17,10 +17,7 @@ const getProjectDetailsById = (id: string) => axios.get(`${baseUrl}/projects/${i
  * @description use to edit the details of the existing project
  * @param id project id of which data is to be edited
  */
-const editProject = (id: string, project: any) => axios.get(`${baseUrl}/projects/${id}`, project);
-/**
- * @param id id of the project which is to be deleted 
- */
+
 const deleteProjectDetailsById = (id: string | undefined) => axios.delete(`${baseUrl}/projects/${id}`);
 /**
  * @param id id of peoject which is to be edited
@@ -63,7 +60,6 @@ const projectServices = {
     updateProject,
     getStatus,
     getPriority,
-    editProject,
     getTeamsById,
     updateTeamDetails
 };
