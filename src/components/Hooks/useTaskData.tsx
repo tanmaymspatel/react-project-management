@@ -2,14 +2,14 @@ import { useCallback, useEffect, useState } from "react";
 
 import projectServices from "../../services/projectServices";
 import utlityServices from "../../shared/services/utilityServices";
-import { TaskDetails } from "../projects/models/formValues";
+import { ITaskDetails } from "../projects/models/formValues";
 
 function useTaskData(id: string) {
 
     const [projectDetails, setProjectDetails] = useState<any>({});
-    const [todoList, setTodoList] = useState<TaskDetails[]>([] as TaskDetails[]);
-    const [activeTaskList, setActiveTaskList] = useState<TaskDetails[]>([] as TaskDetails[]);
-    const [completedTaskList, setCompletedTaskList] = useState<TaskDetails[]>([] as TaskDetails[]);
+    const [todoList, setTodoList] = useState<ITaskDetails[]>([]);
+    const [activeTaskList, setActiveTaskList] = useState<ITaskDetails[]>([]);
+    const [completedTaskList, setCompletedTaskList] = useState<ITaskDetails[]>([]);
 
     const { getMaxId, editedTaskList } = utlityServices;
     const { getProjectDetailsById, updateProject } = projectServices;
@@ -41,7 +41,7 @@ function useTaskData(id: string) {
      * @description Use to add new task value and update existing value after clicking the submit button according to the status of the task, and after that updates the project details 
      * @param values Values of for submission
      */
-    const modifyProjectDetails = async (values: any) => {
+    const modifyProjectDetails = async (values: ITaskDetails) => {
 
         switch (values.status) {
             case "todo":
@@ -89,7 +89,7 @@ function useTaskData(id: string) {
     };
 
 
-    return [todoList, activeTaskList, completedTaskList, setActiveTaskList, setCompletedTaskList, setTodoList, modifyProjectDetails];
+    return [todoList, activeTaskList, completedTaskList, setActiveTaskList, setCompletedTaskList, setTodoList, modifyProjectDetails] as const;
 }
 
 export default useTaskData;

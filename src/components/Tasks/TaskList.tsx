@@ -1,13 +1,20 @@
 import { useContext } from "react";
 
-import TaskContext from "../../contexts/user-context/taskContext";
-import { TaskDetails } from "../projects/models/formValues";
+import TaskContext from "../../contexts/taskContext/taskContext";
+import { ITaskDetails } from "../projects/models/formValues";
 
-function TaskList({ ...taskDetails }: TaskDetails) {
+/**
+ * @returns Single task element
+ */
+function TaskList({ ...taskDetails }: ITaskDetails) {
 
     const { setTaskTobeEdited, setIsEdit, openOverlay } = useContext(TaskContext);
-
-    const editHandler = (task: any) => {
+    /**
+     * @name editHandler
+     * @description to open overlay, to edit the task 
+     * @param task new value of the task
+     */
+    const editHandler = (task: ITaskDetails) => {
         openOverlay("NEW_TASK_OVERLAY");
         setIsEdit(true);
         setTaskTobeEdited(task);

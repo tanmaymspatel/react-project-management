@@ -2,10 +2,10 @@ import { useContext, useState } from "react";
 import * as Yup from 'yup';
 import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 
-import TaskContext from "../../contexts/user-context/taskContext";
+import TaskContext from "../../contexts/taskContext/taskContext";
 import Button from "../../shared/components/UI/Button";
 import Model from "../../shared/components/UI/Model";
-import { SubTaskDetails } from "../projects/models/formValues";
+import { ISubTaskDetails } from "../projects/models/formValues";
 
 function SubTasks() {
 

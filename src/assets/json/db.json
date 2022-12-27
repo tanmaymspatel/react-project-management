@@ -1738,6 +1738,14 @@
               "emailId": "user@gmail.com",
               "status": "Active",
               "designation": "Planning"
+            },
+            {
+              "id": 6,
+              "name": "Viral Mahyavanshi",
+              "profilePicture": "https://www.svgrepo.com/show/105032/avatar.svg",
+              "emailId": "viral.n@1rivet.com",
+              "status": "Active",
+              "designation": "Planning"
             }
           ]
         },

@@ -1,12 +1,15 @@
+import { ITeamDepartment } from "../Teams/model/teamDetails";
 import TeamCard from "./TeamCard";
 
+interface ITeamStateProps {
+    teamMembers: ITeamDepartment[]
+}
 /**
  * @returns team member statistics 
  */
-function TeamStates({ teamMembers }: any) {
-
+function TeamStates({ teamMembers }: ITeamStateProps) {
     /**
-     * @description all the team card with members'  statistics
+     * @description all the team card with members' statistics
      */
     const teamCards = teamMembers?.map((team: any, index: any) => {
         return (

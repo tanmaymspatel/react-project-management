@@ -1,6 +1,6 @@
 import './App.css';
-import TaskProvider from './contexts/user-context/TaskProvider';
-import TeamContextProvider from './contexts/user-context/TeamContextProvider';
+import TaskProvider from './contexts/taskContext/TaskProvider';
+import TeamContextProvider from './contexts/teamContext/TeamContextProvider';
 import UserProvider from './contexts/user-context/UserProvider';
 import MainRouting from './core/components/MainRouting';
 

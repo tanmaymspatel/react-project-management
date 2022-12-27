@@ -1,12 +1,12 @@
 import { ErrorMessage, Field, Form, Formik } from 'formik';
-import { useEffect, useState } from 'react';
+import { useCallback, useEffect, useState } from 'react';
 import { useNavigate, useParams } from 'react-router-dom';
 import * as Yup from 'yup';
 
 import coreServices from '../../../core/services/coreServices';
 import projectServices from '../../../services/projectServices';
 import Button from '../../../shared/components/UI/Button';
-import { ProjectFormDetails } from "../models/formValues";
+import { IProjectFormDetails } from "../models/formValues";
 
 interface INewprojectProps {
     setTitle: (title: string) => void
@@ -15,7 +15,7 @@ interface INewprojectProps {
 /**
  * @returns a form to add new project
  */
-function NewProjectForm(props: INewprojectProps) {
+function NewProjectForm({ setTitle }: INewprojectProps) {
     /**
      * @name maxProjectId
      * @returns highest number of project id from the projects array
@@ -48,12 +48,12 @@ function NewProjectForm(props: INewprojectProps) {
      * @name getCurrentUserObject
      * @description To get the details of currently logged in user in form of object
      */
-    const getCurrentUserObject = async () => {
+    const getCurrentUserObject = useCallback(async () => {
         getCurrentUSer(email as string)
             .then(res => {
                 setLoggedUser(res.data[0])
             });
-    };
+    }, [email, getCurrentUSer]);
     /**
      * @description To call the loogedin user data
      * @description To patch value in the form, when edit button is clicked on the perticular project
@@ -61,17 +61,17 @@ function NewProjectForm(props: INewprojectProps) {
     useEffect(() => {
         getCurrentUserObject();
         if (id) {
-            props.setTitle('Edit');
+            setTitle('Edit');
             getProjectDetailsById(id)
                 .then(res => {
                     setPatchValue(res.data)
                 })
         }
-    }, [id]);
+    }, [id, getProjectDetailsById, setTitle, getCurrentUserObject]);
     /**
      * @description intial values object for formik
      */
-    const intitialValues: ProjectFormDetails = {
+    const intitialValues: IProjectFormDetails = {
         projectName: '',
         description: '',
         duration: '',
@@ -85,7 +85,7 @@ function NewProjectForm(props: INewprojectProps) {
      * @name onSubmit
      * @param values form value object after clicking on submit button
      */
-    const onSubmit = async (values: ProjectFormDetails, resetForm: any) => {
+    const onSubmit = async (values: IProjectFormDetails, resetForm: any) => {
         try {
             getCurrentUserObject();
             resetForm({ values: '' });

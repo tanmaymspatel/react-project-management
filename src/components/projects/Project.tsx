@@ -6,7 +6,7 @@ import coreServices from "../../core/services/coreServices";
 import projectServices from "../../services/projectServices";
 import Button from "../../shared/components/UI/Button";
 import utlityServices from "../../shared/services/utilityServices";
-import { ProjectFormDetails } from "./models/formValues";
+import { IProjectFormDetails } from "./models/formValues";
 import ProjectDetails from "./ProjectDetails";
 
 /**
@@ -16,9 +16,10 @@ import ProjectDetails from "./ProjectDetails";
 function Project() {
     const [projectId, setprojectId] = useState([])
     const { getCurrentUSer } = coreServices;
-
     const email: string | null = localStorage.getItem('email');
-
+    /**
+     * @description set project ids associated with the logged in user 
+     */
     useEffect(() => {
         if (email) {
             try {
@@ -31,7 +32,6 @@ function Project() {
                 console.log(err);
             }
         }
-
     }, [email, getCurrentUSer])
 
     const navigate = useNavigate();
@@ -50,7 +50,7 @@ function Project() {
     /**
      * @description State for setting the projects list according to loggedin user
      */
-    const [currentProjects, setCurrentProjects] = useState<ProjectFormDetails[]>([])
+    const [currentProjects, setCurrentProjects] = useState<IProjectFormDetails[]>([])
     /**
      * @description remove active link from 'project' navlink, when the active link is other then 'projects'
      */
@@ -69,7 +69,7 @@ function Project() {
             /**
              * @description Store the data of project details after promise is resolved 
              */
-            const resolvedProjectData: ProjectFormDetails[] = await Promise.all(projectDetails);
+            const resolvedProjectData: IProjectFormDetails[] = await Promise.all(projectDetails);
             const projectData = resolvedProjectData.map((el: any) => el.data);
             setCurrentProjects(projectData);
         } catch (err) {
@@ -77,25 +77,19 @@ function Project() {
         }
     }, [projectId, getProjectDetailsById,]);
 
-
     const navigateToForm = () => {
         navigate('add-project');
     }
-
     /**
-     * @description To set the header title when the component is loaded, 
+     * @description To set the header title when the component is loaded, get details project of logged in user
      */
     useEffect(() => {
         setHeaderTitle('Projects');
         getUserProjectData();
-    }, [getUserProjectData, setHeaderTitle]);
-
-    useEffect(() => {
         removeProjectsActiveClass(id);
-    });
+    }, [getUserProjectData, setHeaderTitle, removeProjectsActiveClass, id]);
 
-
-    const projectCards = currentProjects.map((project: ProjectFormDetails) => {
+    const projectCards = currentProjects.map((project: IProjectFormDetails) => {
         return (
             <ProjectDetails id={project.id} key={project.id} projectName={project.projectName} description={project.description} duration={project.duration} cost={project.cost} />
         )

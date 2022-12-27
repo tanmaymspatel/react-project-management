@@ -11,8 +11,9 @@ import TeamStates from "./TeamStates";
 import TaskList from "./TaskList";
 import useTaskData from "../Hooks/useTaskData";
 import ProjectDetails from "./ProjectDetails";
-import { TaskDetails } from "../projects/models/formValues";
-import TaskContext from "../../contexts/user-context/taskContext";
+import { ITaskDetails } from "../projects/models/formValues";
+import TaskContext from "../../contexts/taskContext/taskContext";
+import { ITeamDepartment } from "../Teams/model/teamDetails";
 
 /**
  * @name Dasboard
@@ -29,7 +30,7 @@ function Dashboard() {
     const { setProjectId } = useContext(TaskContext);
 
     useEffect(() => {
-        setProjectId(id)
+        setProjectId(id as string)
     }, [])
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
@@ -49,8 +50,8 @@ function Dashboard() {
         return () => { };
     });
 
-    const [taskList, setTasklist] = useState<TaskDetails[]>([]);
-    const [teamMembers, setTeamMembers] = useState([]);
+    const [taskList, setTasklist] = useState<ITaskDetails[]>([]);
+    const [teamMembers, setTeamMembers] = useState<ITeamDepartment[]>([]);
     const [projectDuration, setProjectDuration] = useState('');
     const [projectCost, setProjectCost] = useState('');
     const [teamId, setTeamId] = useState('');
@@ -64,7 +65,7 @@ function Dashboard() {
             setTeamId(res.data.teamId);
             setProjectCost(res.data.cost);
             setProjectDuration(res.data.duration);
-            setTasklist((todoList as TaskDetails[]).concat((activeTaskList as TaskDetails[]), (completedTaskList as TaskDetails[])))
+            setTasklist((todoList as ITaskDetails[]).concat((activeTaskList as ITaskDetails[]), (completedTaskList as ITaskDetails[])))
         })
         const data = await getTeamsById(teamId);
         const teamData = await data.data;

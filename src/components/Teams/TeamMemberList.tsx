@@ -1,18 +1,29 @@
-import { useRef, useState } from "react";
+import { useEffect, useRef } from "react";
 import Loader from "../../shared/components/UI/Loader";
+import useDragDrop from "../Hooks/useDragDrop";
+import { IMemberDetails } from "./model/teamDetails";
 
-import { TeamMemberDetails } from "../projects/models/formValues";
 import TeamRow from "./TeamRow";
 
-function TeamMemberList({ teamMemberList, setTeamList }: any) {
+interface ITeamMemberListProps {
+    teamMemberList: IMemberDetails[],
+    setTeamList: (newList: IMemberDetails[]) => void
+}
 
-    const [dragging, setDragging] = useState<boolean>(false)
+function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
+    /**
+     * @description Using the properties of the custom drag and drop hook
+     */
+    // const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(teamMemberList as IMemberDetails[],);
+
+    // useEffect(()=>{
+    //     setTeamList(newList)
+    // },[newList])
 
     const draggingItem = useRef<any>(null);
     const dragOverItem = useRef<any>(null);
 
     const handleDragStart = (e: any, position: any) => {
-        setDragging(true);
         draggingItem.current = position;
     };
 
@@ -28,10 +39,9 @@ function TeamMemberList({ teamMemberList, setTeamList }: any) {
         draggingItem.current = null;
         dragOverItem.current = null;
         setTeamList(listCopy);
-        setDragging(false);
     };
 
-    const teamMemberData = teamMemberList?.map((member: TeamMemberDetails, index: number) => {
+    const teamMemberData = teamMemberList?.map((member: IMemberDetails, index: number) => {
         return (
             <tr
                 key={index}
@@ -40,14 +50,13 @@ function TeamMemberList({ teamMemberList, setTeamList }: any) {
                 onDragEnter={(e) => handleDragEnter(e, index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => e.preventDefault()}
-                className={`${dragging && index === draggingItem.current ? "dragged-item" : "null"}`}
             >
                 <TeamRow
-                    profilePicture={member.profilePicture}
-                    name={member.name}
-                    emailId={member.emailId}
-                    designation={member.designation}
-                    status={member.status}
+                    profilePicture={member?.profilePicture}
+                    name={member?.name}
+                    emailId={member?.emailId}
+                    designation={member?.designation}
+                    status={member?.status}
                 />
             </tr>
         );

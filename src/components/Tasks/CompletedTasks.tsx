@@ -1,25 +1,27 @@
-import React, { useContext } from "react";
+import React, { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import useDragDrop from "../Hooks/useDragDrop";
 import useTaskData from "../Hooks/useTaskData";
-import { TaskDetails } from "../projects/models/formValues";
+import { ITaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
 
 function CompletedTasks() {
     const { id } = useParams()
     const [, , completedTaskList, , setCompletedTaskList] = useTaskData(id as string)
 
-    console.log({ completedTaskList }, { setCompletedTaskList });
-
     /**
      * @description Using the properties of the custom drag and drop hook
      */
-    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(completedTaskList as TaskDetails[], setCompletedTaskList as any);
+    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(completedTaskList as ITaskDetails[]);
+
+    useEffect(() => {
+        setCompletedTaskList(newList);
+    }, [newList, setCompletedTaskList])
     /**
      * @description Rendering of the list with the props related to drag functionality
      */
-    const completedList = completedTaskList && (completedTaskList as TaskDetails[])?.map((item: any, index: number) => {
+    const completedList = completedTaskList && (completedTaskList as ITaskDetails[])?.map((item: any, index: number) => {
         return (
             <div
                 key={index}

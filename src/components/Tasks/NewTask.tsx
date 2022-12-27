@@ -2,10 +2,10 @@ import { useContext, useEffect, useState } from "react"
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import Model from "../../shared/components/UI/Model";
-import { TaskDetails } from "../projects/models/formValues";
+import { ITaskDetails } from "../projects/models/formValues";
 import Button from "../../shared/components/UI/Button";
 import projectServices from "../../services/projectServices";
-import TaskContext from "../../contexts/user-context/taskContext";
+import TaskContext from "../../contexts/taskContext/taskContext";
 import { taskValidationSchema } from "../../validations/taskFormValidatios";
 
 function NewTask() {
@@ -36,7 +36,7 @@ function NewTask() {
     /**
      * @description intial values object for formik
      */
-    const intitialValues: TaskDetails = {
+    const intitialValues: ITaskDetails = {
         taskName: '',
         status: '',
         priority: '',
@@ -48,7 +48,7 @@ function NewTask() {
      * @name onSubmit
      * @param values form value object after clicking on submit button
      */
-    const onSubmit = (values: TaskDetails, resetForm: any) => {
+    const onSubmit = (values: ITaskDetails, resetForm: any) => {
         modifyProjectDetails(values);
         resetForm({ values: '' });
         closeOverlay();

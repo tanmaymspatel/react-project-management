@@ -1,7 +1,9 @@
 import { useState } from "react";
 import useTaskData from "../../components/Hooks/useTaskData";
+import { ITaskDetails } from "../../components/projects/models/formValues";
+import { ITaskProvider } from "../InterFace/contextInterface";
 
-import TaskContext from "./taskContext"
+import TaskContext from "../taskContext/taskContext"
 
 type TaskContextProviderProps = {
     children: React.ReactNode
@@ -9,7 +11,7 @@ type TaskContextProviderProps = {
 
 function TaskProvider({ children }: TaskContextProviderProps) {
 
-    const [taskTobeEdited, setTaskTobeEdited] = useState({})
+    const [taskTobeEdited, setTaskTobeEdited] = useState<ITaskDetails>({} as ITaskDetails)
     const [isEdit, setIsEdit] = useState(false);
     const [id, setId] = useState('')
     const [isOpen, setIsOpen] = useState(false);

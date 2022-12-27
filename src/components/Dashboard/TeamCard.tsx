@@ -1,11 +1,14 @@
+import { IMemberDetails } from "../Teams/model/teamDetails";
 import TeamMembersProfile from "./TeamMembersProfile";
 
+interface ITeamCardProps {
+    department: string,
+    teamMembers: IMemberDetails[]
+}
 /**
  * @returns a single team members statistics card 
  */
-function TeamCard(props: any) {
-
-    const { department, teamMembers } = props;
+function TeamCard({ department, teamMembers }: ITeamCardProps) {
 
     return (
         <div className="col-3 text-center">

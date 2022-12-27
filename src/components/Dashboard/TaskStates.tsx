@@ -2,10 +2,10 @@
  * @returns cardhaving details of total no tasks in the current project 
  */
 
-import { TaskDetails } from "../projects/models/formValues";
+import { ITaskDetails } from "../projects/models/formValues";
 
 interface ITaskStatesProps {
-    taskList: TaskDetails[];
+    taskList: ITaskDetails[];
 }
 
 function TaskStates({ taskList }: ITaskStatesProps) {

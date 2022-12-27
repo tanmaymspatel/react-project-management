@@ -1,11 +1,11 @@
 import { NavLink, useParams } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
 import TaskListTable from './TaskListTable';
-import { TaskDetails } from '../projects/models/formValues';
+import { ITaskDetails } from '../projects/models/formValues';
 
 
 interface ITaskList {
-    taskList: TaskDetails[]
+    taskList: ITaskDetails[]
 }
 /**
  * @returns a tasklist to be showed on the dashboard

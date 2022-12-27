@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import TaskContext from "../../contexts/user-context/taskContext";
+import TaskContext from "../../contexts/taskContext/taskContext";
 import UserContext from "../../contexts/user-context/userContext";
 import Button from "../../shared/components/UI/Button";
 import utlityServices from "../../shared/services/utilityServices";

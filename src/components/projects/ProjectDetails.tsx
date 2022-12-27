@@ -3,13 +3,13 @@ import { useNavigate } from "react-router-dom";
 
 import coreServices from "../../core/services/coreServices";
 import projectServices from "../../services/projectServices";
-import { ProjectFormDetails } from "./models/formValues";
+import { IProjectFormDetails } from "./models/formValues";
 import { IUserDetails } from "./models/user.model";
 
 /**
  * @returns project cards of the logged in user
  */
-function ProjectDetails(props: ProjectFormDetails) {
+function ProjectDetails(props: IProjectFormDetails) {
     let [projectId, setprojectId] = useState<string[]>([]);
     const [currentUser, setCurrentUSer] = useState<IUserDetails>({} as IUserDetails);
     const navigate = useNavigate();

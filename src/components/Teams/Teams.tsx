@@ -1,14 +1,15 @@
-import { useCallback, useContext, useEffect, useState } from "react";
+import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
 import utlityServices from "../../shared/services/utilityServices";
 import UserContext from "../../contexts/user-context/userContext";
 import projectServices from "../../services/projectServices";
 import Button from "../../shared/components/UI/Button";
-import TeamContext from "../../contexts/user-context/teamContext";
+import TeamContext from "../../contexts/teamContext/teamContext";
 import AddTeamMember from "./AddTeamMember";
-import { TeamMemberDetails } from "../projects/models/formValues";
 import TeamMemberList from "./TeamMemberList";
+import useTeam from "../Hooks/useTeam";
+import { IMemberDetails } from "./model/teamDetails";
 
 /**
  * @name Tasks
@@ -28,112 +29,73 @@ function Teams() {
     /**
      * @description Remove active class from projects link when the dashboard link is selected
      */
-    const { removeProjectsActiveClass } = utlityServices;
+    const { removeProjectsActiveClass, editTeamDetails } = utlityServices;
     /**
      * @description To set the header title and remove active class when the component is loaded
      */
-    const { getProjectDetailsById, getTeamsById, updateTeamDetails } = projectServices;
+    const { updateTeamDetails } = projectServices;
+    /**
+     * @description change header title, removeactive class if id is not there, set the id of the current project
+     */
     useEffect(() => {
         setHeaderTitle('Teams');
         removeProjectsActiveClass(id);
         setProjectId(id);
     }, [id, removeProjectsActiveClass, setHeaderTitle, setProjectId]);
-
-    const [teamMembers, setTeamMembers] = useState<any[]>([]);
-    const [teamData, setTeamData] = useState<any>([]);
-    const [planningMemberList, setPlanningMemberList] = useState<any>([]);
-    const [designMemberList, setDesignMemberList] = useState<any>([]);
-    const [developmentMemberList, setDevelopmentMemberList] = useState<any>([]);
-    const [testingMemberList, setTestingMemberList] = useState<any>([]);
-    const [teamMemberList, setTeamMemberList] = useState<any>([]);
-    const [teamId, setTeamId] = useState('');
-
-    const getTeamList = useCallback(async () => {
-        getProjectDetailsById(id as string).then(res => {
-            setTeamId(res.data.teamId);
-        });
-        const data = await getTeamsById(teamId);
-        const teamData = await data.data;
-        setTeamData(teamData);
-        setTeamMembers(teamData.members);
-
-    }, [getProjectDetailsById, id, teamId, getTeamsById]);
-
-    useEffect(() => {
-        getTeamList();
-    }, [getTeamList]);
-
-
-    const setList = useCallback(() => {
-        setPlanningMemberList(teamMembers?.filter((list: any) => list.department === "plannng"))
-        setDesignMemberList(teamMembers?.filter((list: any) => list.department === "Design"))
-        setDevelopmentMemberList(teamMembers?.filter((list: any) => list.department === "development"))
-        setTestingMemberList(teamMembers?.filter((list: any) => list.department === "Testing"))
-        let teamList = teamMembers?.map(item => item.teamMembers);
-        teamList = teamList?.flat(1);
-        setTeamMemberList(teamList);
-    }, [teamMembers]);
-
-    useEffect(() => {
-        setList();
-    }, [setList])
-
-    const editTeamDetails = (deptList: any, values: TeamMemberDetails) => {
-        let list = deptList?.map((item: any) => item?.teamMembers);
-        list = list?.flat();
-        list?.splice(list?.length, 0, { id: list.length + 1, ...values })
-        let newDepObj: any;
-        newDepObj = deptList[0]
-        newDepObj = { ...newDepObj, teamMembers: list };
-        const index = teamMembers.findIndex(item => item.department === newDepObj.department)
-        teamMembers.splice(index, 1, newDepObj);
-        return teamMembers;
-    }
-
-    const modifyTeamDetails = async (values: TeamMemberDetails) => {
+    /**
+     * Using the useTeam custom hook
+     */
+    const [teamMembers, setTeamMembers, teamMemberList, setTeamMemberList, teamData, teamId, planningMemberList, designMemberList, developmentMemberList, testingMemberList, getTeamList] = useTeam(id as string);
+    /**
+     * @name modifyTeamDetails
+     * @description use to add object of team deatails to their respective department
+     * @param values member details object which is to be added in the team member list
+     */
+    const modifyTeamDetails = async (values: IMemberDetails) => {
 
         switch (values.designation) {
             case 'Planning': {
-                const newMembers = editTeamDetails(planningMemberList, values);
+                // edit the team list after adding new object and set the team/members
+                const newMembers = editTeamDetails(planningMemberList, values, teamMembers);
                 setTeamMembers(newMembers);
                 await updateTeamDetails(teamId, teamData);
+                getTeamList();
                 return;
             }
 
             case "Web designer": {
-                const newMembers = editTeamDetails(designMemberList, values);
+                const newMembers = editTeamDetails(designMemberList, values, teamMembers);
                 setTeamMembers(newMembers);
                 await updateTeamDetails(teamId, teamData);
+                getTeamList();
                 return;
             }
 
             case "Front-end Developer":
             case "Back-end Developer": {
-                const newMembers = editTeamDetails(developmentMemberList, values);
+                const newMembers = editTeamDetails(developmentMemberList, values, teamMembers);
                 setTeamMembers(newMembers);
                 await updateTeamDetails(teamId, teamData);
+                getTeamList();
                 return;
             }
 
             case "Tester": {
-                const newMembers = editTeamDetails(testingMemberList, values);
+                const newMembers = editTeamDetails(testingMemberList, values, teamMembers);
                 setTeamMembers(newMembers);
                 await updateTeamDetails(teamId, teamData);
+                getTeamList();
                 return;
             }
         }
     }
-
-    // const onEditHandler = (teamMember: TeamMemberDetails) => {
-    //     openOverlay();
-    //     setIsEdit(true);
-    //     setTeamMemberTobeEdited(teamMember);
-    // }
-
-    // const teamMemberData = 
-
-    const setTeamList = (newList: any) => {
-        setTeamMemberList(newList)
+    /**
+     * @name setTeamList
+     * @description Modifies the team list after dragging is done
+     * @param newList new list after dragging the element
+     */
+    const setTeamList = (newList: IMemberDetails[]) => {
+        setTeamMemberList(newList);
     }
 
     return (

@@ -1,10 +1,9 @@
-import { useContext } from "react";
+import { useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import TaskContext from "../../contexts/user-context/taskContext";
 import useDragDrop from "../Hooks/useDragDrop";
 import useTaskData from "../Hooks/useTaskData";
-import { TaskDetails } from "../projects/models/formValues";
+import { ITaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
 
 function TodoTasks() {
@@ -16,11 +15,15 @@ function TodoTasks() {
     /**
      * @description Using the properties of the custom drag and drop hook
      */
-    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd] = useDragDrop(todoList as TaskDetails[], setTodoList as any)
+    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(todoList as ITaskDetails[])
+
+    useEffect(() => {
+        setTodoList(newList);
+    }, [newList, setTodoList]);
     /**
      * @description Rendering of the list with the props related to drag functionality
      */
-    const todoTaskList = (todoList as TaskDetails[])?.map((item: any, index: number) => {
+    const todoTaskList = (todoList as ITaskDetails[])?.map((item: any, index: number) => {
         return (
             <div
                 key={index}

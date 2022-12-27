@@ -1,8 +1,8 @@
-import { TaskDetails } from "../projects/models/formValues";
+import { ITaskDetails } from "../projects/models/formValues";
 import SingleTask from "./SingleTask";
 
 interface ITaskListTable {
-    taskList: TaskDetails[]
+    taskList: ITaskDetails[]
 }
 
 /**
@@ -13,7 +13,7 @@ function TaskListTable({ taskList }: ITaskListTable) {
     /**
      * @description task List associated with the selected project
      */
-    const taskData = taskList?.slice(0, 4)?.map((task: TaskDetails, index: number) => {
+    const taskData = taskList?.slice(0, 4)?.map((task: ITaskDetails, index: number) => {
         return (
             <SingleTask
                 key={index}

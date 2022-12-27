@@ -1,7 +1,8 @@
 import { useRef, useState } from "react";
-import { TaskDetails } from "../projects/models/formValues";
 
-function useDragDrop(list: TaskDetails[], setList: React.Dispatch<React.SetStateAction<TaskDetails[]>>) {
+function useDragDrop<T>(list: T[]) {
+
+    const [newList, setNewList] = useState<T[]>(list);
 
     const [dragging, setDragging] = useState<boolean>(false);
     const draggingItem = useRef<any>(null);
@@ -39,11 +40,10 @@ function useDragDrop(list: TaskDetails[], setList: React.Dispatch<React.SetState
         listCopy.splice(dragOverItem.current, 0, draggingItemContent);
         draggingItem.current = null;
         dragOverItem.current = null;
-        setList(listCopy);
-        setDragging(false);
+        setNewList(listCopy);
     };
 
-    return [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd];
+    return [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList];
 }
 
 export default useDragDrop;
