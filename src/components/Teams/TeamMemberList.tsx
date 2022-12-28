@@ -1,4 +1,5 @@
-import { useEffect, useRef } from "react";
+import { useContext, useEffect, useRef } from "react";
+import { SearchContext } from "../../contexts/searchContext/searchContext";
 import Loader from "../../shared/components/UI/Loader";
 import useDragDrop from "../Hooks/useDragDrop";
 import { IMemberDetails } from "./model/teamDetails";
@@ -19,6 +20,13 @@ function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
     // useEffect(()=>{
     //     setTeamList(newList)
     // },[newList])
+
+    const { searchText, searchByDept } = useContext(SearchContext);
+
+    useEffect(() => {
+        console.log(searchText);
+        console.log(searchByDept);
+    }, [searchText, searchByDept]);
 
     const draggingItem = useRef<any>(null);
     const dragOverItem = useRef<any>(null);
