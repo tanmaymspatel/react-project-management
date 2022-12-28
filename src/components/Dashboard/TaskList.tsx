@@ -1,8 +1,16 @@
 import { NavLink, useParams } from 'react-router-dom';
 import { useAuth0 } from "@auth0/auth0-react";
+import TaskListTable from './TaskListTable';
+import { ITaskDetails } from '../projects/models/formValues';
 
 
-function TaskList({ taskList }: any) {
+interface ITaskList {
+    taskList: ITaskDetails[]
+}
+/**
+ * @returns a tasklist to be showed on the dashboard
+ */
+function TaskList({ taskList }: ITaskList) {
     /**
     * @description id of project
     */
@@ -16,23 +24,6 @@ function TaskList({ taskList }: any) {
     */
     const name = user?.nickname;
 
-    const taskData = taskList?.slice(0, 4)?.map((task: any, index: number) => {
-        return (
-            <tr key={index}>
-                <td>{task?.status}</td>
-                <td>{task?.taskName}</td>
-                <td>
-                    <p className="mb-0">
-                        <span className={`${task.priority === 'low' ? "bg-success" :
-                            task.priority === 'medium' ? "bg-secondary" :
-                                task.priority === 'high' ? "bg-danger" : null} px-3 py-1 rounded-circle`}>
-                        </span>
-                    </p>
-                </td>
-            </tr>
-        )
-    })
-
     return (
         <div className="card p-2">
             <div className="d-flex align-items-center justify-content-between p-3">
@@ -41,18 +32,7 @@ function TaskList({ taskList }: any) {
                     <span className='nav-text text-nowrap text-secondary ps-2'>View All</span>
                 </NavLink>
             </div>
-            <table className="table table-hover w-100 text-center">
-                <thead>
-                    <tr className="text-uppercase">
-                        <th>Status</th>
-                        <th>Name</th>
-                        <th>priority</th>
-                    </tr>
-                </thead>
-                <tbody>
-                    {taskData}
-                </tbody>
-            </table>
+            <TaskListTable taskList={taskList} />
         </div>
     );
 };

@@ -1,54 +1,46 @@
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
 
-import { useContext, useRef, useState } from "react";
-import TaskContext from "../../contexts/user-context/taskContext";
+import useDragDrop from "../Hooks/useDragDrop";
+import useTaskData from "../Hooks/useTaskData";
+import { ITaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
 
 function TodoTasks() {
 
-    const { todoList, setTodoList } = useContext(TaskContext);
+    const { id } = useParams()
 
-    const [dragging, setDragging] = useState<boolean>(false)
+    const [todoList, , , , setTodoList] = useTaskData(id as string);
 
-    const draggingItem = useRef<any>(null);
-    const dragOverItem = useRef<any>(null);
+    /**
+     * @description Using the properties of the custom drag and drop hook
+     */
+    const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(todoList as ITaskDetails[])
 
-    const handleDragStart = (e: any, position: any) => {
-        setDragging(true);
-        draggingItem.current = position;
-    };
-
-    const handleDragEnter = (e: any, position: any) => {
-        dragOverItem.current = position;
-    };
-
-    const handleDragEnd = (e: any) => {
-        const listCopy = JSON.parse(JSON.stringify(todoList))
-        const draggingItemContent = listCopy[draggingItem.current];
-        listCopy.splice(draggingItem.current, 1);
-        listCopy.splice(dragOverItem.current, 0, draggingItemContent);
-        draggingItem.current = null;
-        dragOverItem.current = null;
-        setTodoList(listCopy);
-        setDragging(false);
-    };
-
-    const todoTaskList = todoList?.map((item: any, index: number) => {
+    useEffect(() => {
+        setTodoList(newList);
+    }, [newList, setTodoList]);
+    /**
+     * @description Rendering of the list with the props related to drag functionality
+     */
+    const todoTaskList = (todoList as ITaskDetails[])?.map((item: any, index: number) => {
         return (
             <div
-                key={item.id}
+                key={index}
                 draggable
                 onDragStart={(e) => handleDragStart(e, index)}
                 onDragEnter={(e) => handleDragEnter(e, index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => e.preventDefault()}
-                className={`${dragging && index === draggingItem.current ? "dragged-item" : "null"}`}
+                className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}
             >
                 <TaskList
-                    id={item.id}
-                    taskName={item.taskName}
-                    subTasks={item.subTasks}
-                    status={item.status}
-                    priority={item.priority}
+                    key={index}
+                    id={item?.id}
+                    taskName={item?.taskName}
+                    subTasks={item?.subTasks}
+                    status={item?.status}
+                    priority={item?.priority}
                 />
             </div>
         );

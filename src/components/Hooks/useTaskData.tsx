@@ -1,36 +1,23 @@
 import { useCallback, useEffect, useState } from "react";
+
 import projectServices from "../../services/projectServices";
+import utlityServices from "../../shared/services/utilityServices";
+import { ITaskDetails } from "../projects/models/formValues";
 
-import TaskContext from "./taskContext"
+function useTaskData(id: string) {
 
-type TaskContextProviderProps = {
-    children: React.ReactNode
-}
-
-function TaskProvider({ children }: TaskContextProviderProps) {
-
-    const [taskTobeEdited, setTaskTobeEdited] = useState({})
-    const [isEdit, setIsEdit] = useState(false);
-    const [id, setId] = useState('')
-    const { getProjectDetailsById, updateProject } = projectServices;
     const [projectDetails, setProjectDetails] = useState<any>({});
-    const [todoList, setTodoList] = useState<any>([]);
-    const [activeTaskList, setActiveTaskList] = useState<any>([]);
-    const [completedTaskList, setCompletedTaskList] = useState<any>([]);
-    const [isOpen, setIsOpen] = useState(false);
-    const [isSubTaskOpen, setIsSubTaskIsOpen] = useState(false);
+    const [todoList, setTodoList] = useState<ITaskDetails[]>([]);
+    const [activeTaskList, setActiveTaskList] = useState<ITaskDetails[]>([]);
+    const [completedTaskList, setCompletedTaskList] = useState<ITaskDetails[]>([]);
 
-    const closeOverlay = () => {
-        setIsEdit(false);
-        setIsOpen(false);
-        setIsSubTaskIsOpen(false)
-    };
+    const { getMaxId, editedTaskList } = utlityServices;
+    const { getProjectDetailsById, updateProject } = projectServices;
 
-    const openOverlay = (overlayType: string) => {
-        if (overlayType === "NEW_TASK_OVERLAY") setIsOpen(true);
-        else if (overlayType === "SUB_TASK_OVERLAY") setIsSubTaskIsOpen(true);
-    };
-
+    /**
+     * @name getData
+     * @description Use to set the value of todo, active and completed tasks from the database 
+     */
     const getData = useCallback(async () => {
         try {
             getProjectDetailsById(id as string)
@@ -42,7 +29,6 @@ function TaskProvider({ children }: TaskContextProviderProps) {
                 });
         } catch (err) {
             console.log(err);
-
         }
     }, [id, getProjectDetailsById]);
 
@@ -50,17 +36,12 @@ function TaskProvider({ children }: TaskContextProviderProps) {
         getData();
     }, [getData]);
 
-    const getMaxId = (taskList: any) => {
-        return Math.max(...taskList.map((task: any) => task.id));
-    }
-
-    const editedTaskList = (TaskList: any[], updatedValues: any) => {
-        const index = TaskList.findIndex(item => item.id === updatedValues.id);
-        TaskList.splice(index, 1, updatedValues);
-        return TaskList;
-    }
-
-    const modifyProjectDetails = async (values: any) => {
+    /**
+     * @name modifyProjectDetails
+     * @description Use to add new task value and update existing value after clicking the submit button according to the status of the task, and after that updates the project details 
+     * @param values Values of for submission
+     */
+    const modifyProjectDetails = async (values: ITaskDetails) => {
 
         switch (values.status) {
             case "todo":
@@ -107,30 +88,8 @@ function TaskProvider({ children }: TaskContextProviderProps) {
         await getData();
     };
 
-    const taskContext = {
-        setTaskTobeEdited,
-        setIsEdit,
-        closeOverlay,
-        openOverlay,
-        modifyProjectDetails,
-        setId,
-        setTodoList,
-        setActiveTaskList,
-        setCompletedTaskList,
-        taskTobeEdited,
-        isEdit,
-        todoList,
-        activeTaskList,
-        completedTaskList,
-        isOpen,
-        isSubTaskOpen
-    };
 
-    return (
-        <TaskContext.Provider value={taskContext}>
-            {children}
-        </TaskContext.Provider>
-    )
+    return [todoList, activeTaskList, completedTaskList, setActiveTaskList, setCompletedTaskList, setTodoList, modifyProjectDetails] as const;
 }
 
-export default TaskProvider;
+export default useTaskData;

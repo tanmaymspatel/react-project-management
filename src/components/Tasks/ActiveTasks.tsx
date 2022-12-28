@@ -1,45 +1,42 @@
-import { useContext, useRef, useState } from "react";
-import TaskContext from "../../contexts/user-context/taskContext";
+import { useEffect } from "react";
+import { useParams } from "react-router-dom";
+
+import useDragDrop from "../Hooks/useDragDrop";
+import useTaskData from "../Hooks/useTaskData";
+import { ITaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
 
+/**
+ * @returns List of active tasks
+ */
 function ActiveTasks() {
 
-  const { activeTaskList, setActiveTaskList } = useContext(TaskContext);
-  const [dragging, setDragging] = useState<boolean>(false)
+  const { id } = useParams()
 
-  const draggingItem = useRef<any>(null);
-  const dragOverItem = useRef<any>(null);
+  const [, activeTaskList, , setActiveTaskList] = useTaskData(id as string);
 
-  const handleDragStart = (e: any, position: any) => {
-    setDragging(true);
-    draggingItem.current = position;
-  };
+  /**
+   * @description Using the properties of the custom drag and drop hook
+   */
+  const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(activeTaskList as ITaskDetails[]);
 
-  const handleDragEnter = (e: any, position: any) => {
-    dragOverItem.current = position;
-  };
+  useEffect(() => {
+    setActiveTaskList(newList);
+  }, [newList, setActiveTaskList])
 
-  const handleDragEnd = (e: any) => {
-    const listCopy = JSON.parse(JSON.stringify(activeTaskList))
-    const draggingItemContent = listCopy[draggingItem.current];
-    listCopy.splice(draggingItem.current, 1);
-    listCopy.splice(dragOverItem.current, 0, draggingItemContent);
-    draggingItem.current = null;
-    dragOverItem.current = null;
-    setActiveTaskList(listCopy);
-    setDragging(false);
-  };
-
-  const activeList = activeTaskList?.map((item: any, index: number) => {
+  /**
+   * @description Rendering of the list with the props related to drag functionality
+   */
+  const activeList = (activeTaskList as ITaskDetails[])?.map((item: any, index: number) => {
     return (
       <div
-        key={item.id}
+        key={index}
         draggable
-        onDragStart={(e) => handleDragStart(e, index)}
-        onDragEnter={(e) => handleDragEnter(e, index)}
+        onDragStart={() => handleDragStart(index)}
+        onDragEnter={() => handleDragEnter(index)}
         onDragEnd={handleDragEnd}
         onDragOver={(e) => e.preventDefault()}
-        className={`${dragging && index === draggingItem.current ? "dragged-item" : "null"}`}
+        className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}
       >
         <TaskList
           id={item.id}
@@ -51,6 +48,7 @@ function ActiveTasks() {
       </div>
     );
   });
+
   return (<>
     <div className="p-1">
       <h6>

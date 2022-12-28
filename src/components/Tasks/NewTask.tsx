@@ -1,12 +1,12 @@
 import { useContext, useEffect, useState } from "react"
-import * as Yup from 'yup';
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
 import Model from "../../shared/components/UI/Model";
-import { TaskDetails } from "../projects/models/formValues";
+import { ITaskDetails } from "../projects/models/formValues";
 import Button from "../../shared/components/UI/Button";
 import projectServices from "../../services/projectServices";
-import TaskContext from "../../contexts/user-context/taskContext";
+import TaskContext from "../../contexts/taskContext/taskContext";
+import { taskValidationSchema } from "../../validations/taskFormValidatios";
 
 function NewTask() {
 
@@ -36,7 +36,7 @@ function NewTask() {
     /**
      * @description intial values object for formik
      */
-    const intitialValues: TaskDetails = {
+    const intitialValues: ITaskDetails = {
         taskName: '',
         status: '',
         priority: '',
@@ -45,19 +45,10 @@ function NewTask() {
 
     const [patchValue, setPatchValue] = useState(intitialValues);
     /**
-     * @name validationSchema
-     * @description validation criteria for the form fields
-     */
-    const validationSchema = Yup.object({
-        taskName: Yup.string().required('Task Name is required!'),
-        status: Yup.string().required('Status is required!'),
-        priority: Yup.string().required('Priority is required!'),
-    });
-    /**
      * @name onSubmit
      * @param values form value object after clicking on submit button
      */
-    const onSubmit = (values: TaskDetails, resetForm: any) => {
+    const onSubmit = (values: ITaskDetails, resetForm: any) => {
         modifyProjectDetails(values);
         resetForm({ values: '' });
         closeOverlay();
@@ -72,7 +63,7 @@ function NewTask() {
                 <Formik
                     initialValues={patchValue}
                     onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
-                    validationSchema={validationSchema}
+                    validationSchema={taskValidationSchema}
                     enableReinitialize
                 >
                     <Form>

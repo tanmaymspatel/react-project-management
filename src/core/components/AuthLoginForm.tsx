@@ -24,14 +24,14 @@ function AuthLoginForm() {
      * @description name of the logged in user
      */
     const name = user?.nickname;
-    const email: any = user?.email
+    const email: string | undefined = user?.email
 
     /**
      * @description Redirect to projects page, if the user is logged in
      */
     useEffect(() => {
         if (isAuthenticated) {
-            localStorage.setItem("email", email)
+            localStorage.setItem("email", email as string)
             navigate(`/${name}/projects`)
         }
     });

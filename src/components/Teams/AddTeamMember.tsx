@@ -1,55 +1,42 @@
-import { useContext, useEffect, useState } from "react"
-import * as Yup from 'yup';
+import { useContext, useState } from "react"
 import { ErrorMessage, Field, Form, Formik } from 'formik';
 
-import TeamContext from "../../contexts/user-context/teamContext";
+import TeamContext from "../../contexts/teamContext/teamContext";
 import Button from "../../shared/components/UI/Button";
 import Model from "../../shared/components/UI/Model";
-import { TeamMemberDetails } from "../projects/models/formValues";
+import { teamValidationSchema } from "../../validations/teamFormValidations";
+import { IMemberDetails } from "./model/teamDetails";
 
-function AddTeamMember({ modifyTeamDetails }: any) {
+interface AddTeamMemberProps {
+    modifyTeamDetails: (values: IMemberDetails) => void
+}
 
+function AddTeamMember({ modifyTeamDetails }: AddTeamMemberProps) {
+    /**
+     * @description state for title of the form
+     */
     const [formTitle, setFormTitle] = useState('Add');
-    const { closeOverlay, teamMemberTobeEdited, isEdit } = useContext(TeamContext);
-
+    const { closeOverlay } = useContext(TeamContext);
     /**
      * @description intial values object for formik
      */
-    const intitialValues: TeamMemberDetails = {
+    const intitialValues: IMemberDetails = {
         name: '',
         profilePicture: 'https://www.svgrepo.com/show/105032/avatar.svg',
         emailId: '',
         status: '',
         designation: ''
     };
-    const [patchValue, setPatchValue] = useState(intitialValues);
-    /**
-     * @name validationSchema
-     * @description validation criteria for the form fields
-     */
-    const validationSchema = Yup.object({
-        name: Yup.string().required('Member Name is required!'),
-        emailId: Yup.string().required('Member Name is required!').email('Please enter a vallid email id!'),
-        status: Yup.string().required('Status is required!'),
-        designation: Yup.string().required('designation is required!')
-    });
-
+    const [patchValue, setPatchValue] = useState<IMemberDetails>(intitialValues);
     /**
      * @name onSubmit
      * @param values form value object after clicking on submit button
      */
-    const onSubmit = (values: TeamMemberDetails, resetForm: any) => {
+    const onSubmit = (values: IMemberDetails, resetForm: any) => {
         modifyTeamDetails(values);
         resetForm({ values: '' });
         closeOverlay();
     };
-
-    useEffect(() => {
-        if (isEdit) {
-            setFormTitle('Edit')
-            setPatchValue(teamMemberTobeEdited);
-        }
-    }, [teamMemberTobeEdited, isEdit])
 
     return (
         <Model>
@@ -58,7 +45,7 @@ function AddTeamMember({ modifyTeamDetails }: any) {
                 <Formik
                     initialValues={patchValue}
                     onSubmit={(values, { resetForm }) => onSubmit(values, resetForm)}
-                    validationSchema={validationSchema}
+                    validationSchema={teamValidationSchema}
                     enableReinitialize
                 >
                     <Form>

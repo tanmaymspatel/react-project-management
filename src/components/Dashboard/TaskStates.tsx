@@ -1,4 +1,14 @@
-function TaskStates({ taskList }: any) {
+/**
+ * @returns cardhaving details of total no tasks in the current project 
+ */
+
+import { ITaskDetails } from "../projects/models/formValues";
+
+interface ITaskStatesProps {
+    taskList: ITaskDetails[];
+}
+
+function TaskStates({ taskList }: ITaskStatesProps) {
 
     return (
         <div className="card p-3 d-flex flex-row justify-content-between">
@@ -10,7 +20,7 @@ function TaskStates({ taskList }: any) {
                 <span className="icon-task fs-4 mt-3"></span>
             </div>
         </div>
-    )
-}
+    );
+};
 
-export default TaskStates
+export default TaskStates;

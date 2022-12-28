@@ -1,7 +1,7 @@
 import { useContext, useEffect } from "react";
 import { useParams } from "react-router-dom";
 
-import TaskContext from "../../contexts/user-context/taskContext";
+import TaskContext from "../../contexts/taskContext/taskContext";
 import UserContext from "../../contexts/user-context/userContext";
 import Button from "../../shared/components/UI/Button";
 import utlityServices from "../../shared/services/utilityServices";
@@ -21,6 +21,10 @@ function Tasks() {
      */
     const { id } = useParams();
 
+    const { isOpen, openOverlay, setProjectId, isSubTaskOpen } = useContext(TaskContext);
+
+
+
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -29,7 +33,6 @@ function Tasks() {
      * @description Remove active class from projects link when the dashboard link is selected
      */
     const { removeProjectsActiveClass } = utlityServices;
-    const { isOpen, openOverlay, setId, isSubTaskOpen } = useContext(TaskContext);
 
     /**
      * @description To set the header title and remove active class when the component is loaded
@@ -37,8 +40,7 @@ function Tasks() {
     useEffect(() => {
         setHeaderTitle('Tasks');
         removeProjectsActiveClass(id);
-        setId(id);
-    }, [id, removeProjectsActiveClass, setHeaderTitle, setId]);
+    }, [removeProjectsActiveClass, setHeaderTitle]);
 
     return (
         <div className="h-100 px-4 d-flex flex-column">
