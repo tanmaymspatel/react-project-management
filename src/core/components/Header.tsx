@@ -29,7 +29,7 @@ function Header() {
     return (
         <div className="h-100 d-flex align-items-center justify-content-between ps-5 pe-2 px-md-4">
             {/* Page title in the header*/}
-            <h4 className="flex-grow-1">{headerTitle}</h4>
+            <h4 className="flex-grow-1 mx-1 mx-sm-0">{headerTitle}</h4>
             {/* search functionality */}
             <SearchProvider>
                 {isTeamPage ? <Search /> : null}

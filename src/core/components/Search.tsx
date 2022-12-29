@@ -19,12 +19,12 @@ function Search() {
     }
 
     return (
-        <div className="d-flex align-items-center">
-            <div className="form-control w-75">
+        <div className="d-none d-sm-flex align-items-center ">
+            <div className="form-control w-50">
                 <label htmlFor="search" className="bg-light align-self-center cursor-pointer" >
                     <span className="icon-search text-dark"></span>
                 </label>
-                <input id="search" className="border-0 p-0 ms-2" type="search" placeholder="Search" onChange={searchInputHandler} />
+                <input id="search" className="border-0 p-0 ms-2 w-50 w-md-100" type="search" placeholder="Search" onChange={searchInputHandler} value={searchVal} />
             </div>
             <div className="mx-3">
                 <select className="form-select cursor-pointer" onChange={dropDownHandler} value={searchDept}>

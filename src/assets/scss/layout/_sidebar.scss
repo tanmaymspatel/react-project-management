@@ -2,6 +2,10 @@
     width: $sidebar-width;
     z-index: 99;
 
+    @include media-breakpoint-between(md, xl) {
+        width: 200px;
+    }
+
     @include media-breakpoint-down(md) {
         position: absolute;
         transform: translate(-100%);
