@@ -24,3 +24,10 @@ export interface IUserContext {
     setHeaderTitle: (title: string) => void,
     currentUser: {},
 }
+
+export interface ISearchProvider {
+    searchText: string,
+    setSearchString: (text: string) => void,
+    searchByDept: string,
+    setDeptValue: (text: string) => void,
+}

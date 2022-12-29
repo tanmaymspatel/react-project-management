@@ -31,7 +31,7 @@ function Dashboard() {
 
     useEffect(() => {
         setProjectId(id as string)
-    }, [])
+    }, [id])
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -47,7 +47,6 @@ function Dashboard() {
     useEffect(() => {
         setHeaderTitle('Dashboard');
         removeProjectsActiveClass(id);
-        return () => { };
     });
 
     const [taskList, setTasklist] = useState<ITaskDetails[]>([]);
