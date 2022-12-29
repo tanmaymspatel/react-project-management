@@ -1,5 +1,6 @@
 #sidebar {
     width: $sidebar-width;
+    z-index: 99;
 
     @include media-breakpoint-down(md) {
         position: absolute;
@@ -34,10 +35,15 @@
 
 // mobile menu toggle icon
 .mobile-toggle {
-    top: 0px;
+    top: 15px;
     right: -10px;
     color: $dark;
     transform: translate(100%);
+    z-index: 100;
+
+    @include media-breakpoint-down(sm) {
+        top: 18px;
+    }
 }
 
 // after checking sidebar toggle checkbox

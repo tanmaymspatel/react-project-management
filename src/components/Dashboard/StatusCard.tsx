@@ -11,7 +11,7 @@ interface IStatusCardProps {
  */
 function StatusCard({ phase, progress, status }: IStatusCardProps) {
     return (
-        <div className="col-3">
+        <div className="col-sm-6 col-lg-3">
             <div className="p-3">
                 <div className="text-center">
                     <h6 className="m-0">{phase}</h6>

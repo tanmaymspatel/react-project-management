@@ -19,8 +19,8 @@ function Header() {
         <div className="h-100 d-flex align-items-center justify-content-between ps-5 pe-2 px-md-4">
             {/* Page title in the header
              */}
-            <h4 className="flex-grow-1">{headerTitle}</h4>
-            <div className="d-flex align-items-center pe-1 px-md-5">
+            <h4 className="flex-grow-1 fs-5">{headerTitle}</h4>
+            <div className="d-flex align-items-center pe-sm-5 pe-xxl-1 px-md-5">
                 {/* avatar of the logged in user */}
                 <figure className="header-profile-img m-0 d-none d-md-block">
                     <img className="img-fluid rounded-circle" src={(currentUser as IUserDetails)?.picture} alt="Profile" />

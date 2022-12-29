@@ -24,9 +24,21 @@
     left: 50%;
     transform: translate(-50%, -50%);
     width: 35%;
+
+    @include media-breakpoint-down(md) {
+        width: 75%;
+    }
 }
 
 // Dashboard
+.dashboard-container {
+    overflow: hidden;
+
+    @include media-breakpoint-down(lg) {
+        overflow-y: auto;
+    }
+}
+
 .icon-completed,
 .icon-waiting {
     font-size: 9.5rem;
@@ -42,5 +54,15 @@
 }
 
 .dashboard-icon {
-    font-size: 5rem;
+    font-size: 4rem;
+}
+
+// tasks page
+.task-container {
+    overflow-y: hidden;
+    overflow-x: hidden;
+
+    @include media-breakpoint-down(sm) {
+        overflow-y: auto;
+    }
 }
