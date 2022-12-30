@@ -96,7 +96,7 @@ function Project() {
     });
 
     return (
-        <div className="overflow-y-auto p-4">
+        <div className="overflow-y-auto px-2 px-sm-3 p-xl-4">
             <div className="pb-4 text-end">
                 <Button type='button' className="btn btn-secondary" handleClick={navigateToForm}>+ create Project</Button>
             </div>

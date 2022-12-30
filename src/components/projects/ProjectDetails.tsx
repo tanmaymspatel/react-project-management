@@ -53,7 +53,7 @@ function ProjectDetails(props: IProjectFormDetails) {
     const projectDuration: string = props?.duration ? props?.duration : "N/A";
 
     return (
-        <div className="project-card col-sm-6 project-card col-xxl-4 position-relative">
+        <div className="project-card col-lg-6 project-card col-xxl-4 position-relative">
             <div className="card bg-light p-4 cursor-pointer transition" onClick={() => onProjectClick(props?.id as string)}>
                 <h4 className="pb-2">{props?.projectName}</h4>
                 <p>{props?.description}</p>

@@ -2,6 +2,7 @@ import { NavLink, useParams } from 'react-router-dom'
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Button from '../../shared/components/UI/Button';
+import { useRef } from 'react';
 
 /**
  * @name Sidebar
@@ -9,6 +10,7 @@ import Button from '../../shared/components/UI/Button';
  */
 function Sidebar() {
 
+    const toggleMobileMenuRef = useRef<any>();
     /**
      * @description id in the url, if id is not there then not to show the dashboard, tasks and teams links
      */
@@ -31,12 +33,16 @@ function Sidebar() {
         logout({ returnTo: window.location.origin });
     }
 
+    const linkClickHandler = () => {
+        toggleMobileMenuRef.current.checked = false;
+    }
+
     return (
         <>
             <input type='checkbox' id='toggleSidebar' className='d-none' />
-            <input type='checkbox' id='mobileToggle' className='d-none' />
+            <input ref={toggleMobileMenuRef} type='checkbox' id='mobileToggle' className='d-none' />
             <aside id="sidebar" className="h-100 d-flex flex-column bg-secondary text-light overflow-hidden transition" >
-                <div className='side-header d-flex align-items-center justify-content-center'>
+                <div className='side-header d-flex align-items-center justify-content-center mt-5 mt-md-0'>
                     <h4 className='d-flex align-items-center'>
                         <span className='icon-logo'></span>
                         <span className='ps-2 logo-text text-nowrap'>Cube Solution</span>
@@ -46,25 +52,25 @@ function Sidebar() {
                     <nav className='nav-options flex-grow-1 overflow-y-auto transition'>
                         <ul className='nav d-flex flex-column'>
                             <li className='nav-item p-2 '>
-                                <NavLink className='projects-link nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects'}>
+                                <NavLink className='projects-link nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects'} onClick={linkClickHandler}>
                                     <span className='icon-dashboard'></span>
                                     <span className='nav-text text-nowrap ps-2'>Projects</span>
                                 </NavLink>
                             </li>
                             {id && <><li className='nav-item p-2'>
-                                <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/dashboard'}>
+                                <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/dashboard'} onClick={linkClickHandler}>
                                     <span className='icon-dashboard'></span>
                                     <span className='nav-text text-nowrap ps-2'>Dashboard</span>
                                 </NavLink>
                             </li>
                                 <li className='nav-item p-2'>
-                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/tasks'}>
+                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/tasks'} onClick={linkClickHandler}>
                                         <span className='icon-task'></span>
                                         <span className='nav-text text-nowrap ps-2'>Tasks</span>
                                     </NavLink>
                                 </li>
                                 <li className='nav-item p-2'>
-                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/teams'}>
+                                    <NavLink className='nav-link d-flex align-items-center border-radius' to={'/' + name + '/projects/' + id + '/teams'} onClick={linkClickHandler}>
                                         <span className='icon-users'></span>
                                         <span className='nav-text text-nowrap ps-2'>Teams</span>
                                     </NavLink>
@@ -89,8 +95,8 @@ function Sidebar() {
                 <span className='icon-down border border-3 border-dark rounded-circle p-1'></span>
             </label>
             {/* mobile menu icon */}
-            <label htmlFor='mobileToggle' className='mobile-toggle position-absolute fs-1 transition d-md-none'>
-                <span className='icon-new-task'></span>
+            <label htmlFor='mobileToggle' className='mobile-toggle position-absolute fs-1 transition d-md-none cursor-pointer'>
+                <span className='icon-menu'></span>
             </label>
         </>
     );

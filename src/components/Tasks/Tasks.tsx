@@ -43,22 +43,22 @@ function Tasks() {
     }, [removeProjectsActiveClass, setHeaderTitle]);
 
     return (
-        <div className="h-100 px-4 d-flex flex-column">
-            <div className="text-end pt-1 pb-4">
+        <div className="h-100 px-2 px-md-4 d-flex flex-column">
+            <div className="text-end pt-1 pb-3 pb-sm-4">
                 <Button type="button" className="btn btn-secondary" handleClick={() => openOverlay("NEW_TASK_OVERLAY")}>+ New Task</Button>
                 {isOpen ? <NewTask /> : null}
                 {isSubTaskOpen ? <SubTasks /> : null}
 
             </div>
-            <div className="flex-grow-1 overflow-hidden py-2">
+            <div className="task-container flex-grow-1 px-2 px-sm-0 py-2">
                 <div className="row h-100">
-                    <div className="col-4 h-100 d-flex flex-column overflow-hidden">
+                    <div className="col-sm-4 h-100 d-flex flex-column overflow-hidden">
                         <TodoTasks />
                     </div>
-                    <div className="col-4 h-100 d-flex flex-column overflow-hidden">
+                    <div className="col-sm-4 h-100 d-flex flex-column overflow-hidden">
                         <ActiveTasks />
                     </div>
-                    <div className="col-4 h-100 d-flex flex-column overflow-hidden">
+                    <div className="col-sm-4 h-100 d-flex flex-column overflow-hidden">
                         <CompletedTasks />
                     </div>
                 </div>

@@ -31,7 +31,7 @@ function Master() {
                 <header id='header' className="bg-info flex-shrink-0">
                     <Header />
                 </header>
-                <main className="d-flex flex-column flex-grow-1 bg-primary p-4 overflow-hidden">
+                <main className="d-flex flex-column flex-grow-1 bg-primary p-3 px-md-4 overflow-hidden">
                     {/* <Outlet /> */}
                     <ProtectedRoute />
                 </main>

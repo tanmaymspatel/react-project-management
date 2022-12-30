@@ -99,7 +99,7 @@ function Teams() {
     }
 
     return (
-        <div className="h-100 p-4">
+        <div className="h-100 d-flex flex-column px-2 px-sm-3 p-xl-4">
             <div className="text-end pb-3 mb-2">
                 <Button className="btn btn-secondary" type="button" handleClick={openOverlay}><span className="me-1">+</span>Add Member</Button>
                 {isNewMemberOpen ? <AddTeamMember modifyTeamDetails={modifyTeamDetails} /> : null}

@@ -31,7 +31,7 @@ function Dashboard() {
 
     useEffect(() => {
         setProjectId(id as string)
-    }, [])
+    }, [id])
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -47,7 +47,6 @@ function Dashboard() {
     useEffect(() => {
         setHeaderTitle('Dashboard');
         removeProjectsActiveClass(id);
-        return () => { };
     });
 
     const [taskList, setTasklist] = useState<ITaskDetails[]>([]);
@@ -77,24 +76,24 @@ function Dashboard() {
     }, [getTaskList]);
 
     return (
-        <div className="h-100 p-4">
+        <div className="dashboard-container h-100 px-2 px-md-4 p-xl-4">
             <ProgressBar progress='67' bgColor="secondary" />
             <div className="my-4">
                 <ProjectStatus />
             </div>
-            <div className="row my-4">
-                <div className="col-3">
+            <div className="row my-4 gy-3 gy-lg-0">
+                <div className="col-lg-3 my-3 my-lg-0">
                     <TaskStates taskList={taskList} />
                 </div>
-                <div className="col-9">
+                <div className="col-lg-9">
                     <TeamStates teamMembers={teamMembers} />
                 </div>
             </div>
-            <div className="row my-4">
-                <div className="col-8">
+            <div className="row mt-4 gy-3 gy-lg-0">
+                <div className="col-lg-8 my-3 my-lg-0">
                     <TaskList taskList={taskList} />
                 </div>
-                <div className="col-4">
+                <div className="col-lg-4">
                     <ProjectDetails projectDuration={projectDuration} projectCost={projectCost} />
                 </div>
             </div>
