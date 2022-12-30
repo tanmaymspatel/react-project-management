@@ -15,8 +15,8 @@ function AddTeamMember({ modifyTeamDetails }: AddTeamMemberProps) {
     /**
      * @description state for title of the form
      */
-    const [formTitle, setFormTitle] = useState('Add');
-    const { closeOverlay } = useContext(TeamContext);
+    const [formTitle] = useState('Add');
+    const { closeTeamOverlay } = useContext(TeamContext);
     /**
      * @description intial values object for formik
      */
@@ -27,7 +27,7 @@ function AddTeamMember({ modifyTeamDetails }: AddTeamMemberProps) {
         status: '',
         designation: ''
     };
-    const [patchValue, setPatchValue] = useState<IMemberDetails>(intitialValues);
+    const [patchValue] = useState<IMemberDetails>(intitialValues);
     /**
      * @name onSubmit
      * @param values form value object after clicking on submit button
@@ -35,7 +35,7 @@ function AddTeamMember({ modifyTeamDetails }: AddTeamMemberProps) {
     const onSubmit = (values: IMemberDetails, resetForm: any) => {
         modifyTeamDetails(values);
         resetForm({ values: '' });
-        closeOverlay();
+        closeTeamOverlay();
     };
 
     return (
@@ -90,7 +90,7 @@ function AddTeamMember({ modifyTeamDetails }: AddTeamMemberProps) {
                             </ ErrorMessage>
                         </div>
                         <div className='text-end pt-4 pb-2'>
-                            <Button type='button' className='btn btn-danger text-light me-3' handleClick={closeOverlay}>Cancel</Button>
+                            <Button type='button' className='btn btn-danger text-light me-3' handleClick={closeTeamOverlay}>Cancel</Button>
                             <Button type='submit' className='btn btn-secondary'>Submit</Button>
                         </div>
                     </Form>

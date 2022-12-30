@@ -1,5 +1,9 @@
-import { ButtonProps } from "../../models/buttonProps.model";
-
+interface ButtonProps {
+    type: `button` | `submit` | `reset` | undefined,
+    className: string,
+    handleClick?: () => void,
+    children: React.ReactNode,
+}
 /**
  * @name Button
  * @param props button props

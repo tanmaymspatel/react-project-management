@@ -8,12 +8,10 @@ import LoginImage from "./LoginImage";
  * @returns Login page for user authentication 
  */
 function Login() {
-
     /**
      * method destructuring from the useAuth0() hook
      */
     const { isLoading } = useAuth0();
-
     /**
      * @description Shows the loader when the component is loading
      */

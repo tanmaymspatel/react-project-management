@@ -35,7 +35,6 @@ function AuthLoginForm() {
             navigate(`/${name}/projects`)
         }
     });
-
     /**
      * @description Shows loader when the component is loading
      */

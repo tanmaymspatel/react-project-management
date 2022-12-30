@@ -1,8 +1,8 @@
 import { Route, Routes } from "react-router-dom";
-import Dashboard from "../../components/Dashboard/Dashboard";
-import Project from "../../components/projects/Project";
-import Tasks from "../../components/Tasks/Tasks";
-import Teams from "../../components/Teams/Teams";
+import Dashboard from "../../../components/Dashboard/Dashboard";
+import Project from "../../../components/projects/Project";
+import Tasks from "../../../components/Tasks/Tasks";
+import Teams from "../../../components/Teams/Teams";
 
 export default function ProjectRouting() {
     return (

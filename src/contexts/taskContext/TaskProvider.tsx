@@ -1,14 +1,15 @@
 import { useState } from "react";
+
 import useTaskData from "../../components/Hooks/useTaskData";
 import { ITaskDetails } from "../../components/projects/models/formValues";
-import { ITaskProvider } from "../InterFace/contextInterface";
-
 import TaskContext from "../taskContext/taskContext"
 
 type TaskContextProviderProps = {
     children: React.ReactNode
 }
-
+/**
+ * @returns Task Provider component to provide context data to the consumer 
+ */
 function TaskProvider({ children }: TaskContextProviderProps) {
 
     const [taskTobeEdited, setTaskTobeEdited] = useState<ITaskDetails>({} as ITaskDetails)
@@ -16,21 +17,34 @@ function TaskProvider({ children }: TaskContextProviderProps) {
     const [id, setId] = useState('')
     const [isOpen, setIsOpen] = useState(false);
     const [isSubTaskOpen, setIsSubTaskIsOpen] = useState(false);
-
-    const [modifyProjectDetails, todoList, activeTaskList, completedTaskList, setActiveTaskList, setCompletedTaskList, setTodoList] = useTaskData(id);
-
+    /**
+     * @description from custom hook
+     */
+    const [modifyProjectDetails] = useTaskData(id);
+    /**
+     * @name closeOverlay
+     * @description To close the task overlay
+     */
     const closeOverlay = () => {
         setIsEdit(false);
         setIsOpen(false);
-        setIsSubTaskIsOpen(false)
+        setIsSubTaskIsOpen(false);
     };
-
+    /**
+     * @name setProjectId
+     * @description set the clicked project id
+     * @param pid id of the clicked project
+     */
     const setProjectId = (pid: string) => {
         setId(pid);
     }
-
+    /**
+     * @name openOverlay
+     * @description To open task for overlay
+     * @param overlayType To differentiate between what to open in overlay, taskform or subtask form 
+     */
     const openOverlay = (overlayType: string) => {
-        if (overlayType === "NEW_TASK_OVERLAY") setIsOpen(true);
+        if (overlayType === "TASK_OVERLAY") setIsOpen(true);
         else if (overlayType === "SUB_TASK_OVERLAY") setIsSubTaskIsOpen(true);
     };
 
@@ -39,16 +53,10 @@ function TaskProvider({ children }: TaskContextProviderProps) {
         setIsEdit,
         closeOverlay,
         openOverlay,
-        modifyProjectDetails,
         setProjectId,
-        setTodoList,
-        setActiveTaskList,
-        setCompletedTaskList,
+        modifyProjectDetails,
         taskTobeEdited,
         isEdit,
-        todoList,
-        activeTaskList,
-        completedTaskList,
         isOpen,
         isSubTaskOpen
     };

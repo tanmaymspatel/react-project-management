@@ -5,7 +5,6 @@ import useDragDrop from "../Hooks/useDragDrop";
 import useTaskData from "../Hooks/useTaskData";
 import { ITaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
-
 /**
  * @returns List of active tasks
  */
@@ -22,8 +21,7 @@ function ActiveTasks() {
 
   useEffect(() => {
     setActiveTaskList(newList);
-  }, [newList, setActiveTaskList])
-
+  }, [newList, setActiveTaskList]);
   /**
    * @description Rendering of the list with the props related to drag functionality
    */
@@ -39,11 +37,11 @@ function ActiveTasks() {
         className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}
       >
         <TaskList
-          id={item.id}
-          taskName={item.taskName}
-          subTasks={item.subTasks}
-          status={item.status}
-          priority={item.priority}
+          id={item?.id}
+          taskName={item?.taskName}
+          subTasks={item?.subTasks}
+          status={item?.status}
+          priority={item?.priority}
         />
       </div>
     );

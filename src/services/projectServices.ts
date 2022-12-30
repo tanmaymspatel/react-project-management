@@ -1,4 +1,5 @@
 import axios from "axios";
+
 import { IProjectFormDetails } from "../components/projects/models/formValues";
 import { ITeamDetails } from "../components/Teams/model/teamDetails";
 /**
@@ -18,7 +19,6 @@ const getProjectDetailsById = (id: string) => axios.get(`${baseUrl}/projects/${i
  * @description use to edit the details of the existing project
  * @param id project id of which data is to be edited
  */
-
 const deleteProjectDetailsById = (id: string | undefined) => axios.delete(`${baseUrl}/projects/${id}`);
 /**
  * @param id id of peoject which is to be edited
@@ -34,9 +34,6 @@ const addNewProject = (project: IProjectFormDetails) => axios.post(`${baseUrl}/p
  * @param user edited user details
  */
 const editedUser = (id: any, user: IProjectFormDetails) => axios.put(`${baseUrl}/users/${id}`, user);
-/**
- * @description all services in the form of object and can be destructured where it is to be used
- */
 /**
  * @returns array of all status objects
  */
@@ -56,7 +53,7 @@ const getTeamsById = (id: string) => axios.get(`${baseUrl}/teams/${id}`);
  */
 const updateTeamDetails = (teamId: string, updatedTeam: ITeamDetails[]) => axios.put(`${baseUrl}/teams/${teamId}`, updatedTeam)
 /**
- * @description 
+ * @description all services in the form of object and can be destructured where it is to be used
  */
 const projectServices = {
     getProjectDetailsById,

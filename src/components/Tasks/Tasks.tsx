@@ -20,11 +20,10 @@ function Tasks() {
      * @description project id which is clicked
      */
     const { id } = useParams();
-
-    const { isOpen, openOverlay, setProjectId, isSubTaskOpen } = useContext(TaskContext);
-
-
-
+    /**
+     * @description consuming the task context
+     */
+    const { isOpen, openOverlay, isSubTaskOpen } = useContext(TaskContext);
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -33,22 +32,20 @@ function Tasks() {
      * @description Remove active class from projects link when the dashboard link is selected
      */
     const { removeProjectsActiveClass } = utlityServices;
-
     /**
      * @description To set the header title and remove active class when the component is loaded
      */
     useEffect(() => {
         setHeaderTitle('Tasks');
         removeProjectsActiveClass(id);
-    }, [removeProjectsActiveClass, setHeaderTitle]);
+    }, [removeProjectsActiveClass, setHeaderTitle, id]);
 
     return (
         <div className="h-100 px-2 px-md-4 d-flex flex-column">
             <div className="text-end pt-1 pb-3 pb-sm-4">
-                <Button type="button" className="btn btn-secondary" handleClick={() => openOverlay("NEW_TASK_OVERLAY")}>+ New Task</Button>
+                <Button type="button" className="btn btn-secondary" handleClick={() => openOverlay("TASK_OVERLAY")}>+ New Task</Button>
                 {isOpen ? <NewTask /> : null}
                 {isSubTaskOpen ? <SubTasks /> : null}
-
             </div>
             <div className="task-container flex-grow-1 px-2 px-sm-0 py-2">
                 <div className="row h-100">

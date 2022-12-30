@@ -4,21 +4,15 @@ import { ITaskProvider } from "../InterFace/contextInterface";
 
 const initVal: any = {
     taskTobeEdited: {} as ITaskDetails,
-    setTaskTobeEdited: (task: ITaskDetails) => { },
+    setTaskTobeEdited: () => { },
     isEdit: false,
-    setIsEdit: (value: boolean) => { },
-    todoList: [] as ITaskDetails[],
-    activeTaskList: [] as ITaskDetails[],
-    completedTaskList: [] as ITaskDetails[],
+    setIsEdit: () => { },
     closeOverlay: () => { },
     openOverlay: (type: string) => { },
     modifyProjectDetails: (value: ITaskDetails) => { },
     isOpen: false,
     isSubTaskOpen: false,
-    setProjectId: (id: string) => { },
-    setTodoList: (value: ITaskDetails[]) => { },
-    setActiveTaskList: (value: ITaskDetails[]) => { },
-    setCompletedTaskList: (value: ITaskDetails[]) => { },
+    setProjectId: () => { },
 }
 
 /**

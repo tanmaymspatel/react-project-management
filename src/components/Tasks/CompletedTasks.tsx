@@ -26,8 +26,8 @@ function CompletedTasks() {
             <div
                 key={index}
                 draggable
-                onDragStart={(e) => handleDragStart(e, index)}
-                onDragEnter={(e) => handleDragEnter(e, index)}
+                onDragStart={(e) => handleDragStart(index)}
+                onDragEnter={(e) => handleDragEnter(index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => e.preventDefault()}
                 className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}
