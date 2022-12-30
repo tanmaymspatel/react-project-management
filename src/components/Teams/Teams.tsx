@@ -40,7 +40,7 @@ function Teams() {
     useEffect(() => {
         setHeaderTitle('Teams');
         removeProjectsActiveClass(id);
-        setProjectId(id);
+        setProjectId(id as string);
     }, [id, removeProjectsActiveClass, setHeaderTitle, setProjectId]);
     /**
      * Using the useTeam custom hook

@@ -1,9 +1,9 @@
 import { Formik, Form, Field, ErrorMessage } from "formik";
 import * as Yup from 'yup';
-import Button from "../../shared/components/UI/Button";
 
-import { ILoginDetails } from "../models/loginDetails.model";
 import { useNavigate } from 'react-router-dom';
+import { ILoginDetails } from "./models/loginDetails.model";
+import Button from "../../../shared/components/UI/Button";
 
 /**
  * @name LoginForm

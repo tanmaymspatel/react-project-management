@@ -5,7 +5,9 @@ import useDragDrop from "../Hooks/useDragDrop";
 import useTaskData from "../Hooks/useTaskData";
 import { ITaskDetails } from "../projects/models/formValues";
 import TaskList from "./TaskList";
-
+/**
+ * @returns List of Todo tasks
+ */
 function TodoTasks() {
 
     const { id } = useParams()
@@ -28,8 +30,8 @@ function TodoTasks() {
             <div
                 key={index}
                 draggable
-                onDragStart={(e) => handleDragStart(e, index)}
-                onDragEnter={(e) => handleDragEnter(e, index)}
+                onDragStart={() => handleDragStart(index)}
+                onDragEnter={() => handleDragEnter(index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => e.preventDefault()}
                 className={`${dragging && index === draggingItemIndex ? "dragged-item" : "null"}`}

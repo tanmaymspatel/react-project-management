@@ -13,16 +13,17 @@ function Header() {
 
     const [url, setUrl] = useState<string>('');
     const [isTeamPage, setIsTeamPage] = useState<boolean>(false);
-
+    /**
+     * @description condition for current path is team page or not
+     */
     useEffect(() => {
         setUrl(window.location.href);
         let urlArr = url.split("/");
         setIsTeamPage((urlArr[urlArr.length - 1]) === 'teams');
-    });
-
+    }, [url]);
     /**
      * @description headertitle - To show the respective page title in the header
-     * @description user - details of the logged in user
+     * @description currentUser - details of the logged in user
      */
     const { headerTitle, currentUser } = useContext(UserContext);
 

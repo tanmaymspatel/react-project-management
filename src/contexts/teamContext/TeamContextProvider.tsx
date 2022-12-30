@@ -14,7 +14,7 @@ function TeamContextProvider({ children }: TeamContextProviderProps) {
     /**
      * @description to close the task form overlay
      */
-    const closeOverlay = () => {
+    const closeTeamOverlay = () => {
         setIsNewMemberOpen(false);
     };
     /**
@@ -28,7 +28,7 @@ function TeamContextProvider({ children }: TeamContextProviderProps) {
      */
     const teamCtx = {
         setProjectId,
-        closeOverlay,
+        closeTeamOverlay,
         openOverlay,
         isNewMemberOpen,
         projectId,

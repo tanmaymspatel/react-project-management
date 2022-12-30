@@ -15,11 +15,13 @@ function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
     /**
      * @description Using the properties of the custom drag and drop hook
      */
-    // const [dragging, draggingItemIndex, handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(teamMemberList as IMemberDetails[],);
-
-    // useEffect(()=>{
-    //     setTeamList(newList)
-    // },[newList])
+    const [, , handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(teamMemberList as IMemberDetails[],);
+    /**
+     * @description set the new list when list item is dragged
+     */
+    useEffect(() => {
+        setTeamList(newList);
+    }, [newList]);
 
     const { searchText, searchByDept } = useContext(SearchContext);
 
@@ -27,27 +29,6 @@ function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
         console.log(searchText);
         console.log(searchByDept);
     }, [searchText, searchByDept]);
-
-    const draggingItem = useRef<any>(null);
-    const dragOverItem = useRef<any>(null);
-
-    const handleDragStart = (e: any, position: any) => {
-        draggingItem.current = position;
-    };
-
-    const handleDragEnter = (e: any, position: any) => {
-        dragOverItem.current = position;
-    };
-
-    const handleDragEnd = (e: any) => {
-        const listCopy = [...teamMemberList];
-        const draggingItemContent = listCopy[draggingItem.current];
-        listCopy.splice(draggingItem.current, 1);
-        listCopy.splice(dragOverItem.current, 0, draggingItemContent);
-        draggingItem.current = null;
-        dragOverItem.current = null;
-        setTeamList(listCopy);
-    };
 
     const teamMemberCards = teamMemberList?.map((member: IMemberDetails, index: number) => {
         return (
@@ -76,8 +57,8 @@ function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
             <tr
                 key={index}
                 draggable
-                onDragStart={(e) => handleDragStart(e, index)}
-                onDragEnter={(e) => handleDragEnter(e, index)}
+                onDragStart={() => handleDragStart(index)}
+                onDragEnter={() => handleDragEnter(index)}
                 onDragEnd={handleDragEnd}
                 onDragOver={(e) => e.preventDefault()}
             >
@@ -117,6 +98,6 @@ function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
             </div>
         </div>
     )
-}
+};
 
-export default TeamMemberList
+export default TeamMemberList;

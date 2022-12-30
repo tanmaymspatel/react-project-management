@@ -1,8 +1,8 @@
 import { NavLink, useParams } from 'react-router-dom'
+import { useRef } from 'react';
 import { useAuth0 } from "@auth0/auth0-react";
 
 import Button from '../../shared/components/UI/Button';
-import { useRef } from 'react';
 
 /**
  * @name Sidebar
@@ -32,15 +32,21 @@ function Sidebar() {
         localStorage.removeItem('email');
         logout({ returnTo: window.location.origin });
     }
-
+    /**
+     * @name linkClickHandler
+     * @description To close mobile menu, after any navigation link is selected
+     */
     const linkClickHandler = () => {
         toggleMobileMenuRef.current.checked = false;
     }
 
     return (
         <>
+            {/* Checkbox for toggling the sidebar */}
             <input type='checkbox' id='toggleSidebar' className='d-none' />
+            {/* Checkbox for toggling mobile menu*/}
             <input ref={toggleMobileMenuRef} type='checkbox' id='mobileToggle' className='d-none' />
+            {/* Sidebar  */}
             <aside id="sidebar" className="h-100 d-flex flex-column bg-secondary text-light overflow-hidden transition" >
                 <div className='side-header d-flex align-items-center justify-content-center mt-5 mt-md-0'>
                     <h4 className='d-flex align-items-center'>
@@ -94,7 +100,7 @@ function Sidebar() {
             <label htmlFor='toggleSidebar' className='toggle position-absolute bottom-50 start-100 text-dark fs-4 transition cursor-pointer d-none d-md-block'>
                 <span className='icon-down border border-3 border-dark rounded-circle p-1'></span>
             </label>
-            {/* mobile menu icon */}
+            {/* mobile menu toggle icon */}
             <label htmlFor='mobileToggle' className='mobile-toggle position-absolute fs-1 transition d-md-none cursor-pointer'>
                 <span className='icon-menu'></span>
             </label>

@@ -3,7 +3,6 @@ import { useAuth0 } from "@auth0/auth0-react";
 import TaskListTable from './TaskListTable';
 import { ITaskDetails } from '../projects/models/formValues';
 
-
 interface ITaskList {
     taskList: ITaskDetails[]
 }

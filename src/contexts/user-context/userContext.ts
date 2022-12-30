@@ -1,11 +1,10 @@
 import { createContext } from "react";
-import { IUserDetails } from "../../components/projects/models/user.model";
 import { IUserContext } from "../InterFace/contextInterface";
 
 const initialValue: IUserContext = {
     headerTitle: '',
-    setHeaderTitle: (title: string) => { },
-    currentUser: {} as any,
+    setHeaderTitle: () => { },
+    currentUser: {},
 }
 /**
  * @name UserContext

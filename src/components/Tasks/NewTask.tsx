@@ -14,14 +14,13 @@ function NewTask() {
     const [statusList, setStatusList] = useState<any>([]);
     const [priorityList, setPriorityList] = useState<any>([]);
     const { getStatus, getPriority } = projectServices;
-    const { modifyProjectDetails, closeOverlay } = useContext(TaskContext)
+    const { modifyProjectDetails, closeOverlay, taskTobeEdited, isEdit, setIsEdit } = useContext(TaskContext)
 
     useEffect(() => {
         getStatus().then(res => setStatusList(res.data))
         getPriority().then(res => setPriorityList(res.data))
     }, [getPriority, getStatus]);
 
-    const { taskTobeEdited, isEdit, setIsEdit } = useContext(TaskContext)
 
     useEffect(() => {
         if (isEdit) {

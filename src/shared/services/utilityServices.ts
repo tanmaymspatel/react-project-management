@@ -19,7 +19,7 @@ const getMaxId = (List: ITaskDetails[]) => {
     return Math.max(...List.map((task: any) => task.id));
 }
 /**
- * 
+ * @name editedTaskList
  * @param TaskList list of tasks
  * @param updatedValues value after submitting, and which is to be updated
  * @returns new task list with updated value

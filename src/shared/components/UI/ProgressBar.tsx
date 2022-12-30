@@ -1,12 +1,10 @@
-/**
- * @returns a progress bar of asked percentage value and color 
- */
-
 interface IProgressBarProps {
     progress: string,
     bgColor: string
 }
-
+/**
+ * @returns a progress bar of asked percentage value and color 
+ */
 function ProgressBar({ progress, bgColor }: IProgressBarProps) {
     return (
         <div className="bg-light rounded-4">
@@ -15,6 +13,6 @@ function ProgressBar({ progress, bgColor }: IProgressBarProps) {
             </div>
         </div>
     )
-}
+};
 
 export default ProgressBar;

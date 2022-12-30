@@ -15,7 +15,7 @@ function TaskList({ ...taskDetails }: ITaskDetails) {
      * @param task new value of the task
      */
     const editHandler = (task: ITaskDetails) => {
-        openOverlay("NEW_TASK_OVERLAY");
+        openOverlay("TASK_OVERLAY");
         setIsEdit(true);
         setTaskTobeEdited(task);
     }

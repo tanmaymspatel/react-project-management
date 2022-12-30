@@ -14,7 +14,6 @@ function Master() {
      * @description To do some action when the componenet is loading
      */
     const { isLoading } = useAuth0();
-
     /**
      * @description Shows a loader when the componenet is loading
      */
@@ -32,7 +31,6 @@ function Master() {
                     <Header />
                 </header>
                 <main className="d-flex flex-column flex-grow-1 bg-primary p-3 px-md-4 overflow-hidden">
-                    {/* <Outlet /> */}
                     <ProtectedRoute />
                 </main>
             </div>

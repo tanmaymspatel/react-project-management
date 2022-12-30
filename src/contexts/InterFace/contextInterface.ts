@@ -4,7 +4,7 @@ export interface ITaskProvider {
     taskTobeEdited: {},
     setTaskTobeEdited: React.Dispatch<React.SetStateAction<ITaskDetails | null>>,
     isEdit: boolean,
-    setIsEdit: (value: boolean) => void,
+    setIsEdit: React.Dispatch<React.SetStateAction<boolean>>,
     todoList: ITaskDetails[],
     activeTaskList: ITaskDetails[],
     completedTaskList: ITaskDetails[],
@@ -12,16 +12,16 @@ export interface ITaskProvider {
     openOverlay: (type: string) => void,
     modifyProjectDetails: (value: ITaskDetails) => void,
     isOpen: boolean,
-    setProjectId: (id: string) => void,
+    setProjectId: React.Dispatch<React.SetStateAction<string>>,
     isSubTaskOpen: boolean,
-    setTodoList: (value: ITaskDetails[]) => void,
-    setActiveTaskList: (value: ITaskDetails[]) => void,
-    setCompletedTaskList: (value: ITaskDetails[]) => void
+    setTodoList: React.Dispatch<React.SetStateAction<ITaskDetails[]>>,
+    setActiveTaskList: React.Dispatch<React.SetStateAction<ITaskDetails[]>>,
+    setCompletedTaskList: React.Dispatch<React.SetStateAction<ITaskDetails[]>>
 }
 
 export interface IUserContext {
     headerTitle: string,
-    setHeaderTitle: (title: string) => void,
+    setHeaderTitle: React.Dispatch<React.SetStateAction<string>>,
     currentUser: {},
 }
 
@@ -30,4 +30,12 @@ export interface ISearchProvider {
     setSearchString: (text: string) => void,
     searchByDept: string,
     setDeptValue: (text: string) => void,
+}
+
+export interface ITeamProvider {
+    setProjectId: React.Dispatch<React.SetStateAction<string>>,
+    closeTeamOverlay: () => void,
+    openOverlay: () => void,
+    isNewMemberOpen: boolean,
+    projectId: string,
 }

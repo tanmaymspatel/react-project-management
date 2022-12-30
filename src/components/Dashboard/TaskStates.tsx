@@ -7,7 +7,9 @@ import { ITaskDetails } from "../projects/models/formValues";
 interface ITaskStatesProps {
     taskList: ITaskDetails[];
 }
-
+/**
+ * @returns A componenet showing the count of all the tasks of the clicked project id card form
+ */
 function TaskStates({ taskList }: ITaskStatesProps) {
 
     return (

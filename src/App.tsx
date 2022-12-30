@@ -4,7 +4,9 @@ import TaskProvider from './contexts/taskContext/TaskProvider';
 import TeamContextProvider from './contexts/teamContext/TeamContextProvider';
 import UserProvider from './contexts/user-context/UserProvider';
 import MainRouting from './core/components/MainRouting';
-
+/**
+ * @returns  Main App component of the website
+ */
 function App() {
 
   return (
@@ -18,6 +20,6 @@ function App() {
       </TaskProvider>
     </UserProvider>
   );
-}
+};
 
 export default App;
