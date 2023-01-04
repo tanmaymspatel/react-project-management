@@ -1,5 +1,4 @@
 import { useContext, useEffect } from "react";
-
 import { SearchContext } from "../../contexts/searchContext/searchContext";
 import Loader from "../../shared/components/UI/Loader";
 import { IMemberDetails } from "./model/teamDetails";
@@ -10,15 +9,16 @@ interface ITeamMemberListProps {
     teamMemberList: IMemberDetails[],
     setTeamList: (newList: IMemberDetails[]) => void
 }
-
+/**
+ * @returns Team member Details
+ */
 function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
 
-    const { searchText, searchByDept } = useContext(SearchContext);
+    const { searchByDept, searchText } = useContext(SearchContext);
 
     useEffect(() => {
-        console.log(searchText);
-        console.log(searchByDept);
-    }, [searchText, searchByDept]);
+        console.log("team member list", { searchByDept }, { searchText });
+    }, [searchByDept, searchText])
 
     if (teamMemberList?.length === 0) return <Loader />;
 

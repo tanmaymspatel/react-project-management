@@ -3,9 +3,9 @@ import { ISearchProvider } from "../InterFace/contextInterface";
 
 const initialValue: ISearchProvider = {
     searchText: "",
-    setSearchString: (text: string) => { },
     searchByDept: "",
-    setDeptValue: (text: string) => { }
+    setSearchText: () => { },
+    setSearchByDept: () => { }
 }
 
 export const SearchContext = createContext(initialValue);

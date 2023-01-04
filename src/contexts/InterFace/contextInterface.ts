@@ -22,9 +22,9 @@ export interface IUserContext {
 
 export interface ISearchProvider {
     searchText: string,
-    setSearchString: (text: string) => void,
+    setSearchText: React.Dispatch<React.SetStateAction<string>>,
     searchByDept: string,
-    setDeptValue: (text: string) => void,
+    setSearchByDept: React.Dispatch<React.SetStateAction<string>>,
 }
 
 export interface ITeamProvider {

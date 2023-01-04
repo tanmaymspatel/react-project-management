@@ -1,6 +1,6 @@
 import { useContext, useEffect, useState } from "react"
+import { useLocation } from "react-router-dom";
 import { IUserDetails } from "../../components/projects/models/user.model";
-import SearchProvider from "../../contexts/searchContext/SearchProvider";
 
 import UserContext from "../../contexts/user-context/userContext";
 import Search from "./Search";
@@ -11,16 +11,18 @@ import Search from "./Search";
  */
 function Header() {
 
-    const [url, setUrl] = useState<string>('');
+    const [, setUrl] = useState<string>('');
     const [isTeamPage, setIsTeamPage] = useState<boolean>(false);
+    const location = useLocation();
+    const { pathname } = location;
     /**
      * @description condition for current path is team page or not
      */
     useEffect(() => {
-        setUrl(window.location.href);
-        let urlArr = url.split("/");
+        setUrl(pathname);
+        let urlArr = pathname.split('/');
         setIsTeamPage((urlArr[urlArr.length - 1]) === 'teams');
-    }, [url]);
+    }, [pathname]);
     /**
      * @description headertitle - To show the respective page title in the header
      * @description currentUser - details of the logged in user
@@ -32,9 +34,7 @@ function Header() {
             {/* Page title in the header*/}
             <h4 className="flex-grow-1 mx-1 mx-sm-0">{headerTitle}</h4>
             {/* search functionality */}
-            <SearchProvider>
-                {isTeamPage ? <Search /> : null}
-            </SearchProvider>
+            {isTeamPage ? <Search /> : null}
             <div className="d-flex align-items-center pe-1 ps-md-2 pe-md-4">
                 {/* avatar of the logged in user */}
                 <figure className="header-profile-img m-0 d-none d-md-block">
