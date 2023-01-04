@@ -1,3 +1,4 @@
+import React from "react";
 import { ITaskDetails } from "../../components/projects/models/formValues";
 
 export interface ITaskProvider {
@@ -5,18 +6,12 @@ export interface ITaskProvider {
     setTaskTobeEdited: React.Dispatch<React.SetStateAction<ITaskDetails | null>>,
     isEdit: boolean,
     setIsEdit: React.Dispatch<React.SetStateAction<boolean>>,
-    todoList: ITaskDetails[],
-    activeTaskList: ITaskDetails[],
-    completedTaskList: ITaskDetails[],
     closeOverlay: () => void,
     openOverlay: (type: string) => void,
     modifyProjectDetails: (value: ITaskDetails) => void,
     isOpen: boolean,
     setProjectId: React.Dispatch<React.SetStateAction<string>>,
     isSubTaskOpen: boolean,
-    setTodoList: React.Dispatch<React.SetStateAction<ITaskDetails[]>>,
-    setActiveTaskList: React.Dispatch<React.SetStateAction<ITaskDetails[]>>,
-    setCompletedTaskList: React.Dispatch<React.SetStateAction<ITaskDetails[]>>
 }
 
 export interface IUserContext {
