@@ -1,6 +1,5 @@
 import { createContext } from "react";
 import { ITaskDetails } from "../../components/projects/models/formValues";
-import { ITaskProvider } from "../InterFace/contextInterface";
 
 const initVal: any = {
     taskTobeEdited: {} as ITaskDetails,

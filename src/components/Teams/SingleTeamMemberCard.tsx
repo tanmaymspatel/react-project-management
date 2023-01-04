@@ -11,7 +11,7 @@ interface ISingleTeamMemberCardProps {
  */
 function SingleTeamMemberCard({ index, profilePicture, status, name, designation, emailId }: ISingleTeamMemberCardProps) {
     return (
-        <div className="col-sm-6" key={index}>
+        <div className="col-sm-6">
             <div className="card py-3 px-3">
                 <div className="d-flex align-items-center justify-content-between">
                     <div className="col-5">

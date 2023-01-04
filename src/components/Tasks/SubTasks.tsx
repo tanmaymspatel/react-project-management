@@ -5,7 +5,6 @@ import { ErrorMessage, Field, FieldArray, Form, Formik } from 'formik';
 import TaskContext from "../../contexts/taskContext/taskContext";
 import Button from "../../shared/components/UI/Button";
 import Model from "../../shared/components/UI/Model";
-import { ISubTaskDetails } from "../projects/models/formValues";
 
 function SubTasks() {
 
@@ -20,7 +19,7 @@ function SubTasks() {
         },
         ],
     };
-    const [patchValue, setPatchValue] = useState(intitialValues);
+    const [patchValue] = useState(intitialValues);
     /**
      * @name validationSchema
      * @description validation criteria for the form fields

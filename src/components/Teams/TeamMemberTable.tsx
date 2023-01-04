@@ -1,22 +1,32 @@
-import { useEffect } from "react";
+import { useCallback, useEffect } from "react";
 
 import useDragDrop from "../Hooks/useDragDrop";
 import { IMemberDetails } from "./model/teamDetails";
 import TeamRow from "./TeamRow";
+
+interface ITeamMemberTableProps {
+    teamMemberList: IMemberDetails[],
+    setTeamList: (newList: IMemberDetails[]) => void
+}
 /**
  * @returns A component to display the team member data in the tabular form 
  */
-function TeamMemberTable({ teamMemberList, setTeamList }: any) {
+function TeamMemberTable({ teamMemberList, setTeamList }: ITeamMemberTableProps) {
     /**
      * @description Using the properties of the custom drag and drop hook
      */
     const [, , handleDragStart, handleDragEnter, handleDragEnd, newList] = useDragDrop(teamMemberList as IMemberDetails[]);
     /**
-   * @description set the new list when list item is dragged
-   */
-    useEffect(() => {
-        setTeamList(newList);
+     * @name setDraggedList
+     * @description set the new list when list item is dragged
+     */
+    const setDraggedList = useCallback(() => {
+        if (newList) setTeamList(newList);
     }, [newList, setTeamList]);
+
+    useEffect(() => {
+        setDraggedList();
+    }, [setDraggedList]);
 
     const teamMemberData = teamMemberList?.map((member: IMemberDetails, index: number) => {
         return (

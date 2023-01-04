@@ -13,6 +13,7 @@ function TeamMemberCards({ teamMemberList }: ITeamMemberCardsProps) {
         return (
             <SingleTeamMemberCard
                 index={index}
+                key={index}
                 profilePicture={member?.profilePicture}
                 status={member?.status}
                 name={member?.name}

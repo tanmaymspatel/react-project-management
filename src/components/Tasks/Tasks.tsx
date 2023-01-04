@@ -8,7 +8,6 @@ import utlityServices from "../../shared/services/utilityServices";
 import ActiveTasks from "./ActiveTasks";
 import CompletedTasks from "./CompletedTasks";
 import NewTask from "./NewTask";
-import SubTasks from "./SubTasks";
 import TodoTasks from "./TodoTasks";
 
 /** 
@@ -23,7 +22,7 @@ function Tasks() {
     /**
      * @description consuming the task context
      */
-    const { isOpen, openOverlay, isSubTaskOpen } = useContext(TaskContext);
+    const { isOpen, openOverlay } = useContext(TaskContext);
     /**
      * @description Set the title of header to "Dashboard" when click on the dashboard link
      */
@@ -45,7 +44,7 @@ function Tasks() {
             <div className="text-end pt-1 pb-3 pb-sm-4">
                 <Button type="button" className="btn btn-secondary" handleClick={() => openOverlay("TASK_OVERLAY")}>+ New Task</Button>
                 {isOpen ? <NewTask /> : null}
-                {isSubTaskOpen ? <SubTasks /> : null}
+                {/* {isSubTaskOpen ? <SubTasks /> : null} */}
             </div>
             <div className="task-container flex-grow-1 px-2 px-sm-0 py-2">
                 <div className="row h-100">
