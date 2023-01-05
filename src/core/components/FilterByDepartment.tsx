@@ -19,7 +19,7 @@ function FilterByDepartment() {
                 onChange={handleDropDown}
                 value={searchByDept}
             >
-                <option value="" disabled>Department</option>
+                <option value="">Department</option>
                 <option value="Planning">Planning</option>
                 <option value="Web Designer">Web Designer</option>
                 <option value="Front-end Developer">Front-end Developer</option>
