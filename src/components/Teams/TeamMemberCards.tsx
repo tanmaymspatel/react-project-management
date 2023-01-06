@@ -1,3 +1,4 @@
+import React from "react";
 import { IMemberDetails } from "./model/teamDetails";
 import SingleTeamMemberCard from "./SingleTeamMemberCard";
 
@@ -30,4 +31,4 @@ function TeamMemberCards({ teamMemberList }: ITeamMemberCardsProps) {
     )
 };
 
-export default TeamMemberCards;
+export default React.memo(TeamMemberCards);

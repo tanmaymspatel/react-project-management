@@ -1,4 +1,5 @@
 import { useContext } from "react";
+
 import { SearchContext } from "../../contexts/searchContext/searchContext";
 
 /**
@@ -9,7 +10,7 @@ function SeachBar() {
     const { searchText, setSearchText } = useContext(SearchContext);
 
     const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
-        setSearchText(preValue => preValue = e.target.value);
+        setSearchText(e.target.value);
     }
     return (
         <div className="ms-2 d-flex bg-light border-radius input-padding">

@@ -1,4 +1,4 @@
-import { useCallback, useContext, useEffect, useMemo } from "react";
+import React, { useContext, useEffect, useState } from "react";
 import { SearchContext } from "../../contexts/searchContext/searchContext";
 import Loader from "../../shared/components/UI/Loader";
 import { IMemberDetails } from "./model/teamDetails";
@@ -15,99 +15,75 @@ interface ITeamMemberListProps {
 function TeamMemberList({ teamMemberList, setTeamList }: ITeamMemberListProps) {
 
     const { searchByDept, searchText } = useContext(SearchContext);
+    //---------------------------------------------------------------- all in one ----------------------
 
-    // const getSearchListByText = useCallback(() => {
+    // /**
+    //  * @description list filtering logic
+    //  */
+    // const filteredData = useCallback(() => {
+    //     // console.log("filter");
 
-    //     if (searchText) {
-    //         let arr: IMemberDetails[] = []
-    //         teamMemberList.forEach(member => {
-    //             if (member.name.toLowerCase().includes(searchText.toLowerCase())) {
-    //                 arr.push(member);
+    //     if (searchByDept || searchText) {
+    //         return teamMemberList.filter(member => {
+    //             if (searchByDept) {
+    //                 return member.designation === searchByDept;
     //             }
+    //             else return teamMemberList;
     //         })
-    //         // setTeamList(arr);
-    //         console.log(arr);
-    //     }
-    // }, [teamMemberList, searchText]);
+    //             .filter(member => {
+    //                 if (searchText) {
+    //                     return member.name.toLowerCase().includes(searchText.toLowerCase());
+    //                 } else return teamMemberList;
+    //             })
+    //     } else return teamMemberList;
+    // }, [teamMemberList, searchByDept, searchText]);
+    // /**
+    //  * @description stroring the filter data
+    //  */
+    // const newList = useMemo(() => {
+    //     return filteredData();
+    // }, [filteredData]);
+    // /**
+    //  * @description setting the filtered data
+    //  */
+    // const setList = useCallback(() => {
+    //     if (newList) setTeamList(newList);
+    // }, [newList, setTeamList])
 
     // useEffect(() => {
-    //     getSearchListByText()
-    // }, [getSearchListByText]);
+    //     setList();
+    // }, [setList])
 
-    // const getListByDepartment = useCallback(() => {
-    //     if (searchByDept) {
-    //         console.log(teamMemberList.filter(member => member.designation.toLowerCase() === searchByDept.toLowerCase()));
-    //         // setTeamList(teamMemberList.filter(member => member.designation.toLowerCase() === searchByDept.toLowerCase()));
-    //     }
-    // }, [searchByDept, teamMemberList]);
+    // let newList: IMemberDetails[] = []
 
-    // useEffect(() => {
-    //     getListByDepartment();
-    // }, [getListByDepartment]);
 
-    /**
-     * @description list filtering logic
-     */
-    const filteredData = useCallback(() => {
-        if (searchByDept || searchText) {
-            return teamMemberList.filter(member => {
-                if (searchByDept) {
-                    return member.designation === searchByDept;
-                }
-                else return teamMemberList;
-            })
-                .filter(member => {
-                    if (searchText) {
-                        return member.name.toLowerCase().includes(searchText.toLowerCase());
-                    } else return teamMemberList;
-                })
-        } else return teamMemberList;
-    }, [teamMemberList, searchByDept, searchText]);
-    /**
-     * @description stroring the filter data
-     */
-    const newList = useMemo(() => {
-        return filteredData();
-    }, [filteredData]);
-    /**
-     * @description setting the filtered data
-     */
-    const setList = useCallback(() => {
-        if (newList) setTeamList(newList);
-    }, [newList, setTeamList])
+
+    const [newList, setNewList] = useState<IMemberDetails[]>([])
+    useEffect(() => {
+        if (searchText) setNewList(teamMemberList?.filter(member => member.name.toLowerCase().includes(searchText.toLowerCase())))
+    }, [teamMemberList, searchText,])
+
 
     useEffect(() => {
-        setList();
-    }, [setList])
+        if (searchByDept) setNewList(teamMemberList?.filter(member => member.designation.toLowerCase() === searchByDept.toLowerCase()))
+    }, [teamMemberList, searchByDept])
 
 
-    // const setNewMemberList = useCallback(() => {
-    //     if (searchByDept || searchText) {
-    //         const newList: IMemberDetails[] | undefined = filteredData()
-    //         setTeamList(newList as IMemberDetails[]);
-    //         // console.log(newList);
-    //     }
-    // }, [searchByDept, searchText, setTeamList, filteredData]);
-
-    // useEffect(() => {
-    //     setNewMemberList()
-    // }, [setNewMemberList]);
-
-    if (teamMemberList?.length === 0) return <Loader />;
+    if (!teamMemberList?.length) return <Loader />;
 
     return (
         <div className="overflow-y-auto h-100 px-1">
             <div>
-                <TeamMemberTable teamMemberList={teamMemberList} setTeamList={setTeamList} />
+                <TeamMemberTable teamMemberList={searchText || searchByDept ? newList : teamMemberList} setTeamList={setTeamList} />
             </div>
 
             <div className="d-md-none mx-sm-3">
                 <div className="row g-3">
-                    <TeamMemberCards teamMemberList={teamMemberList} />
+                    <TeamMemberCards teamMemberList={searchText || searchByDept ? newList : teamMemberList} />
                 </div>
             </div>
         </div>
     )
 };
 
-export default TeamMemberList;
+export default React.memo(TeamMemberList);
