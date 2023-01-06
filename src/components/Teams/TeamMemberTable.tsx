@@ -1,4 +1,4 @@
-import { useCallback, useEffect } from "react";
+import React, { useCallback, useEffect } from "react";
 
 import useDragDrop from "../Hooks/useDragDrop";
 import { IMemberDetails } from "./model/teamDetails";
@@ -47,7 +47,9 @@ function TeamMemberTable({ teamMemberList, setTeamList }: ITeamMemberTableProps)
                 />
             </tr>
         );
-    });
+    })
+
+    // if (!teamMemberList?.length) return <h5>No Records Found!</h5>
 
     return (
         <table className="w-100 team-table table table-hover position-relative align-middle mb-0 d-none d-md-table">
@@ -61,10 +63,13 @@ function TeamMemberTable({ teamMemberList, setTeamList }: ITeamMemberTableProps)
                 </tr>
             </thead>
             <tbody>
-                {teamMemberData}
+                {teamMemberList?.length ? teamMemberData
+                    : <tr>
+                        <td colSpan={5} className="text-center fs-4 border-0">No Records Found</td>
+                    </tr>}
             </tbody>
         </table>
     )
 };
 
-export default TeamMemberTable;
+export default React.memo(TeamMemberTable);
